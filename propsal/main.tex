@@ -19,9 +19,10 @@
 \usepackage{amsthm}
 \usepackage{upquote}
 \usepackage{listings}
-\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\usepackage{enumitem}
 \usepackage{dirtytalk}
 \usepackage{hyperref}
+\usepackage{float}
 
 \def\therefore{\boldsymbol{\text{ }
 \leavevmode
@@ -86,17 +87,33 @@ Advanced techniques like shading, texture, arbitrary clipping, aliasing would ma
 Lecture hasn't covered those topics yet, so we will think about this later.
 \section{Notable References}
 \subsection{Fragmentarium}
-\section{Gallery}[h!]
-\begin{figure}
+\section{Gallery}
+\begin{figure}[H]
 \centering
-\subfigure[scene from a Youtube video(\url{https://youtu.be/S530Vwa33G0})]{
+\subfigure[scene from a Youtube video(\url{https://youtu.be/S530Vwa33G0})]
+{
     \label{fig:subfig1}
     \includegraphics[scale=0.3]{cap1.PNG}
 }
 \end{figure}
+
+\begin{figure}[H]
+\centering
+\subfigure[a Mandelbrot Set(\url{https://en.wikipedia.org/wiki/Mandelbrot_set})]
+{
+    \label{fig:subfig1}
+    \includegraphics[scale=0.3]{mandel.jpg}
+}
+\end{figure}
 \section{Discussion}
-
-
-
+There are some issues in this project.
+\begin{description}[style=nextline]
+\item[Is rendering such high resoultion 3D fractals possible in realtime?]
+We agree that it's difficult generally, so some loss of quality could be inevitable.
+But we belive most of overheads can be optimized using very specialized techniques with well-developed program.
+\item[What are our roles?]
+Not clearly separated, but we have some our own background. Junha has exeperienced fractals before and familiar with machine leanring. (Not sure if it is useful)
+Sangwoo knowledge about dealing with the video(PBS). Haebin is good at low-level and system programming.
+\end{description}
 
 \end{document}
