@@ -41,34 +41,34 @@ This project is about rendering 3D fractals in an interactive, real-time-process
 We persue both aesthetic achievement, and optimized, well-programmed rendering pipeline as well.
 \section{Motivation}
 Fractals are so beautiful.
-We can see tons of fractal video in Youtube, and many people get inspiration from such elegant mathematical geometry.
+We can see tons of fractal videos on Youtube, and many people get inspiration from such elegant mathematical geometry.
 But we realized that it could be even more better with real-time interaction.
 \section{What to do}
-\say{A Journey to the Interactive 3D Fractal World}, in one word.
-\subsection{High Resoultion Fractals}
-We will generate high resoultion fractals without any pre-calculated textures.
+\say{A Journey to the Interactive 3D Fractal World}, briefly speaking.
+\subsection{High Resolution Fractals}
+We will generate high resolution fractals without any pre-calculated textures.
 Which means, it involves direct pixel-level calculation.
-The mathematical fractal model that would be used is not determined, but we're considering to start from a famous model, such as the Mandelbrot Set.
+The mathematical fractal model we're going to use is not determined, but we're considering to start from a famous model, such as the Mandelbrot Set.
 We can generate creative and unique new fractals from such well known fractal models, by distorting and adjusting some parameters.
-Because fractals are so sensitve and fine-tuned, and there lies kind of butterfly effect around fractal world.
-(And it also demand us to be very delicate and exquisite to do such mathematics)
+Because fractals are so sensitve and fine-tuned, there lies a kind of butterfly effect around fractal world.
+(Thus it requires delicate and exquisite calculations)
 \subsection{3D Geometry}
-Again, we will present fractals in 3D world and even fractals can be '3d fractal' in some way.
-The basic process of 3D viewing and transformation will be of course adopted, but there would be some more than that.
-Some of ideas are using viewing parameters in extreme order, mixing or partially omit some part of pipeline, or many weired things.
-Use of hierarchy model would be also helpful, as we see in midterm exam, but need to be more complex.
+Again, we will present a 3D fractal world.
+The basic process of 3D viewing and transformation will of course be adopted, but there would be something more than that.
+Some of the ideas are reordering viewing parameters, mixing or partially omitting some part of the pipeline, or many weird things.
+Usage of hierarchical models could be also helpful, like what we saw in the midterm exam, but we would need more complex models than that.
 \subsection{Animation}
-Changing parameters of fractal or camera would yield beautiful animation.
+Changing the parameters of fractal or camera would yield beautiful animation.
 \subsection{Realtime Rendering and Interaction}
-We are particularly considering the spatial aspect of fractal world (that's why this project is about 3D).
-So wandering for yourself in the fractal world is essential to perceive full structure of comlex fractal space.
-Therefore we aim to provide people the realtime-rendering experience rather than just video after long-time procesing.
-Then you can actually control the camera and do some action on the program.
+We particularly want to emphasize the spatial impression of fractal world (that's why this project is about 3D).
+So wandering by yourself in the fractal world is essential to perceive the full structure of complex fractal space.
+Therefore we aim to provide people the realtime-rendering experience rather than just a video after long-time processing,
+meaning you can actually control the camera and do some action on the program.
 \section{How to achieve}
 \subsection{Development Enviornment}
-In this project we need to access the direct control of shaders, especially fragment shaders.
+In this project we need direct controlling of the shaders, especially fragment shaders.
 Or even there could be some arbitrary change of pipeline in overall, because extreme features of fractal geometry could require some modification of typical graphics procedures.
-And also one of our goal is about optimization of this particular task so we consider low-level programming.
+And also one of our goal is about optimization of this particular task, so we consider low-level programming.
 
 And fractals are not highly related to photo realism, so many pre-developed presets and modules provided by
 graphics engines such as Unity won't be particularly helpful.
@@ -76,22 +76,22 @@ Thus we'll develop this project with pure OpenGL(with glut, glm, ...)
 \subsection{Shaders}
 The key idea of rendering fractals is using fragment shaders wisely.
 'Escape-time fractals', such as Mandelbrot set is rendered based on the speed of diversion for every complex coordinates.
-So those kinds of fractals will require renderer to perform per-pixel calculation, which is the reason fragment shaders are for.
+So those kinds of fractals will require the renderer to perform per-pixel calculation, which is the reason fragment shaders are for.
 
 And vertex shaders are also important.
-To construct 3D space of fractls, we should choose either voxel rendering or 3D polygons with 2D fractal textures.
-Voxel is very intutive and expressive, but needs enormous amount of calculation.
-Thus we considers 3D polygons, but those polygon should be also complex and fractalistic enough.
+To construct 3D space of fractals, we should choose either voxel rendering or 3D polygons with 2D fractal textures.
+Voxel is very intutive and expressive, but needs an enormous amount of calculation.
+Thus we consider 3D polygons, but those polygons should be also complex and fractalistic enough.
 We also expect an animation of fractal space, so vertex shaders also must be used well.
 \subsection{Advanced Rendering Techniques}
 Advanced techniques like shading, texture, arbitrary clipping, aliasing would make the final quality better or even produce some novel graphic.
-Lecture hasn't covered those topics yet, so we will think about this later.
+Our lecture hasn't covered those topics yet, so we will think about this later.
 \section{Notable References}
 \subsection{Textbooks}
 There are 3 reference textbooks we'll study.
 \textit{Interactive Computer Graphics}\cite{c1}, our course textbook, introduces some background of fractal geometry and examples like Mandelbrot Set.
 \textit{OpenGL SuperBible}\cite{c2} introduces rendering methods of Julia fractals using shader.
-\textit{Rendering Methods for 3D Fractals}\cite{c3} ntroduces volume rendering methods for fractal rendering and methods for 3D Fractal high resolution image. We can choose techniques for 3D fractal calculation and rendering.
+\textit{Rendering Methods for 3D Fractals}\cite{c3} introduces volume rendering methods for fractal rendering and methods for 3D Fractal high resolution image. We can choose techniques for 3D fractal calculation and rendering.
 
 \subsection{Fragmentarium}
 \textbf{Fragmentarium} is an open source, pixel-based graphics rendering tool, which is part of what we want to do.
@@ -121,15 +121,15 @@ You could get more details from \url{http://syntopia.github.io/Fragmentarium/ind
 \section{Discussion}
 There are some issues in this project.
 \begin{description}[style=nextline]
-\item[Is rendering such high resoultion 3D fractals possible in realtime?]
+\item[Is rendering such high resolution 3D fractals possible in realtime?]
 We agree that it's difficult generally, so some loss of quality could be inevitable.
-But we belive most of overheads can be optimized using very specialized techniques with well-developed program.
+But we believe most of the overhead can be optimized using very specialized techniques with a well-developed program.
 \item[What level of achievement do we expect?]
 Studying, researching and implementing all those features mentioned will be our goal.
-The quality of product that we desire is slightly less than common things in Youtube, because we're doing in realtime. (search \say{3D fractal})
+The quality of product that we desire is slightly less than common fractal videos in Youtube, because we're doing in realtime. (search \say{3D fractal})
 \item[What are our roles?]
-Not clearly separated, but we have some our own background. Junha has exeperienced fractals before and familiar with machine leanring. (Not sure if it is useful)
-Sangwoo knowledge about dealing with the video(PBS). Haebin is good at low-level and system programming.
+Not clearly separated, but we have some background knowledge. Junha has exeperienced fractals before and familiar with machine learning. (Not sure if it is useful)
+Sangwoo knows about dealing with videos(PBS). Haebin is good at low-level and system programming.
 \end{description}
 
 \begin{thebibliography}{1}
