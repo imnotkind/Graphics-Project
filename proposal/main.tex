@@ -86,6 +86,30 @@ We also expect an animation of fractal space, so vertex shaders also must be use
 \subsection{Advanced Rendering Techniques}
 Advanced techniques like shading, texture, arbitrary clipping, aliasing would make the final quality better or even produce some novel graphic.
 Our lecture hasn't covered those topics yet, so we will think about this later.
+
+\subsection{Optimization}
+If we want to render fractals in real time, optimization will be important.
+Here are some schemes we've thought about.
+
+\textbf{Parallel Processing}
+Yes, of course shaders are exactly for parallel procesing.
+We will exploit the benefits of using parallel programming as much as we can, trying to put many works on shaders.
+Or even cpu may need to be parallized.
+
+\textbf{Cache}
+Some fractals may have symetric features or repeated geometry (for strict fractals).
+Instead of just re-calculating those parts, we can keep them and reuse.
+If the data we want to keep is result of shaders, then we need to think about whether saving some calculated data in gpu is possible and eventhough, if it is efficient.
+
+\textbf{Dynamic Resolution}
+Rendering fractals in high resolution will be necessary, but not for everywhere.
+If the polygon we want to render fractal on is too far or too tilted, then we can consider lowering resolution for only that place.
+(Remember that what we try to do is rendering fractals \textit{on polygons})
+
+\textbf{Keeping the buffer}
+We can reuse some part of frame buffer for last scene, which is not common.
+
+
 \section{Notable References}
 \subsection{Textbooks}
 There are 3 reference textbooks we'll study.
