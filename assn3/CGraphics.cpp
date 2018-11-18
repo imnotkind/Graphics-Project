@@ -55,6 +55,9 @@ void CGraphics::M_Initialize2(void)
 	V_ViewMode = false;
 	V_CurrentDrawing = false;
 	M_SetupHieraModels();
+
+	V_Camera_Pos = Vec3d(0, 0, 10);
+	V_Camera_Look = Vec3d(0, 0, 0);
 }
 
 void CGraphics::M_ListenMessages(void)
@@ -122,6 +125,8 @@ void CGraphics::M_CallbackDisplay()
 	V_CTM_View = glm::mat4(1.0f);
 	M_RenderFractal();
 
+
+
 	glm::vec3 up(0, 0, 1);
 	M_MoveCamera();
 	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 1000.0f);
@@ -147,15 +152,32 @@ void CGraphics::M_CallbackIdle()
 
 void CGraphics::M_RenderFractal(void)
 {
+	static double height = 1.0;
+	height -= 0.005;
+
+	auto ui = CUserInput::getInstance();
+	
+	V_Camera_Pos[2] = exp(height) + 0.001;
+
+	V_Camera_Pos[0] += 0.1*(ui->M_MouseGet_Normalized()[0] - 0.5) * atan(V_Camera_Pos[2]);
+	V_Camera_Pos[1] -= 0.1*(ui->M_MouseGet_Normalized()[1] - 0.5) * atan(V_Camera_Pos[2]);
+
+	Vec3d realcamera = V_Camera_Pos;
+
+	glm::vec3 up(0, 1, 0);
+	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 1000.0f);
+	V_CTM_View = glm::lookAt(realcamera, realcamera - Vec3d(0,0,1), up);
+
 	M_Mandelbrot();
 }
 void CGraphics::M_Mandelbrot(void)
 {
 	static double t = 0.0;
 	t += 0.01;
+
 	GLuint p = glGetUniformLocation(V_SM->M_GetProgram(), "scale");
 	GLuint q = glGetUniformLocation(V_SM->M_GetProgram(), "t");
-	glUniform1f(p, 1.0); 
+	glUniform1f(p, 1); 
 	glUniform1f(q, t); //this shouldn't be called before program use
 	M_DrawModel(Vec3d(0.0, 0.0, 0.0), "square", 1, 0, T4Int(255, 255, 255, 255));
 }

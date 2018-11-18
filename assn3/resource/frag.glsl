@@ -9,10 +9,22 @@ uniform float t;
 void main()
 {
 
-	float x = coord[0]; 
-	float y = coord[1];
+	float x = 0; 
+	float y = 0;
 
-	vec4 r = vec4(sin(x+t), cos(y+t), sin(x)*cos(y)*sin(t), 1);
+	float cr = coord[0];
+	float ci = coord[1];
+
+	for(int i = 0; i < 20; i++)
+	{
+		float nx = x*x-y*y + cr;
+		float ny = 2*x*y + ci;
+
+		x = nx;
+		y = ny;
+	}
+
+	vec4 r = vec4(tanh(x),tanh(y),tanh(x*x+y*y), 1);
 
 	color = (r + vec4(1,1,1,1))*0.5;
 
