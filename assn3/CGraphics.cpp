@@ -58,6 +58,8 @@ void CGraphics::M_Initialize2(void)
 
 	V_Camera_Pos = Vec3d(0, 0, 10);
 	V_Camera_Look = Vec3d(0, 0, 0);
+
+	V_Height = 1;
 }
 
 void CGraphics::M_ListenMessages(void)
@@ -83,6 +85,11 @@ bool CGraphics::M_Event_KeyPress(int key, bool special)
 	if (key == 'v' && special == false)
 	{
 		V_ViewMode = !V_ViewMode;
+		return true;
+	}
+	if (key == 'r' && special == false)
+	{
+		V_Height = 1;
 		return true;
 	}
 	return false;
@@ -150,23 +157,37 @@ void CGraphics::M_CallbackIdle()
 	glutPostRedisplay();
 }
 
+void coutmat(glm::mat4 m)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			cout << m[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
 void CGraphics::M_RenderFractal(void)
 {
-	static double height = 1.0;
-	height -= 0.005;
+	V_Height -= 0.015;
 
 	auto ui = CUserInput::getInstance();
 	
-	V_Camera_Pos[2] = exp(height) + 0.001;
+	V_Camera_Pos[2] = exp(V_Height);
+	
 
-	V_Camera_Pos[0] += 0.1*(ui->M_MouseGet_Normalized()[0] - 0.5) * atan(V_Camera_Pos[2]);
-	V_Camera_Pos[1] -= 0.1*(ui->M_MouseGet_Normalized()[1] - 0.5) * atan(V_Camera_Pos[2]);
+	if (V_Height < 0.9)
+	{
+		V_Camera_Pos[0] += 0.1*(ui->M_MouseGet_Normalized()[0] - 0.5) * atan(V_Camera_Pos[2]);
+		V_Camera_Pos[1] -= 0.1*(ui->M_MouseGet_Normalized()[1] - 0.5) * atan(V_Camera_Pos[2]);
+	}
 
 	Vec3d realcamera = V_Camera_Pos;
 
 	glm::vec3 up(0, 1, 0);
-	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 1000.0f);
-	V_CTM_View = glm::lookAt(realcamera, realcamera - Vec3d(0,0,1), up);
+	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1.0f, float(V_Camera_Pos[2]*0.5), 1000.0f);
+	V_CTM_View = glm::lookAt(realcamera, realcamera - Vec3d(0, 0, 10), up);
 
 	M_Mandelbrot();
 }

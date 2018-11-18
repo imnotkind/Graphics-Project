@@ -50,6 +50,7 @@ class CGraphics : public CHandler
 	void M_DrawFont(Vec3d p, Vec2d size, string str, T4Int rgba);
 
 	
+	double V_Height;
 	void M_Mandelbrot(void);
 
 	void M_ListenMessages(void);
