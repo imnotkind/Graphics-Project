@@ -1,22 +1,21 @@
 #pragma once
 #include "MainHeader.h"
 #include "CGraphics.h"
-#include "CEngine.h"
 #include "CHandler.h"
 #include "CShaderManager.h"
 
 #include "CMesh.h"
 #include "CHierModel.h"
 
+#include "CUserInput.h"
+
 #include <ctime>
 
 class CGraphics : public CHandler
 {
-	CEngine * V_PEngine;
 	CShaderManager* V_SM;
 
 	T2Double V_Screen_Size;
-
 
 
 	Vec3d V_Camera_Pos;
@@ -37,18 +36,21 @@ class CGraphics : public CHandler
 	LARGE_INTEGER new_count;
 	LARGE_INTEGER freq;
 
-	void M_RenderGame(void);
-	void M_RenderUI(void);
+	void M_RenderWorld(void); // world 3d coord
+	void M_RenderFractal(void); //-1~1 coord
+	void M_RenderUI(void); //screen coord
+
+
 	void M_MoveCamera(void);
 
 	glm::mat4 M_GetBillboardMat(void);
 
 	void M_DrawLine(Vec3d p1, Vec3d p2, T4Int rgba);
 	void M_DrawModel(Vec3d p, string name, double r, double rotate, T4Int rgba); //lying on xy
-	void M_DrawFont(Vec2d p, string str, T4Int rgba);
-	void M_DrawFontBig(Vec2d p, string str, double scale, T4Int rgba);
-	void M_DrawItem(Vec3d p, double r, int z);
-	void M_DrawNumber(Vec3d p, double r, int num, T4Int rgba);
+	void M_DrawFont(Vec3d p, Vec2d size, string str, T4Int rgba);
+
+	
+	void M_Mandelbrot(void);
 
 	void M_ListenMessages(void);
 	bool M_Event_KeyPress(int key, bool special);
@@ -65,7 +67,7 @@ public:
 	void M_CallbackReshape(int w, int h);
 	void M_CallbackIdle();
 
-	int M_Initialize(CEngine * P);
+	int M_Initialize(void);
 	void M_Initialize2(void);
 
 	CGraphics();

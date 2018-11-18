@@ -1,17 +1,13 @@
 
-
-#include "CEngine.h"
 #include "CGraphics.h"
-
 CGraphics Graphics;
-CEngine Engine;
+
 
 CMath* CMath::Instance = NULL;
 CUserInput* CUserInput::Instance = NULL;
 CGeneral* CGeneral::Instance = NULL;
 CShaderManager* CShaderManager::Instance = NULL;
 
-map<int, CMessageQueue<SScriptMessage>*> CMessageQueue<SScriptMessage>::V_Multiton = map<int, CMessageQueue<SScriptMessage>*>();
 map<int, CMessageQueue<SInputMessage>*> CMessageQueue<SInputMessage>::V_Multiton = map<int, CMessageQueue<SInputMessage>*>();
 
 
@@ -43,7 +39,6 @@ void cb_idle()
 		old_count = new_count;
 
 		Graphics.M_CallbackIdle();
-		Engine.M_Loop();
 
 	}
 	else {
@@ -114,7 +109,7 @@ int main(int argc, char **argv) {
 	}
 
 	glutInit(&argc, argv);
-	winid = Graphics.M_Initialize(&Engine);
+	winid = Graphics.M_Initialize();
 
 	glutDisplayFunc(cb_display);
 	glutReshapeFunc(cb_reshape);
@@ -135,10 +130,6 @@ int main(int argc, char **argv) {
 	glewInit();
 
 	Graphics.M_Initialize2();
-	
-
-	
-	Engine.M_Initialize();
 
 	glutMainLoop();
 

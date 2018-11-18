@@ -64,13 +64,6 @@ CShaderManager::CShaderManager(string config_path)
 	}
 	else CError("Config file " + config_path + " not found.", true);
 
-	ObjData.insert("resource/OBJ files/dummy_obj_meta.txt");
-	ObjData.insert("resource/OBJ files/dummy_obj_red_meta.txt");
-	ObjData.insert("resource/OBJ files/M1911_meta.txt");
-	ObjData.insert("resource/OBJ files/Skeleton_meta.txt");
-	ObjData.insert("resource/OBJ files/sphere_meta.txt");
-	
-
 	for (auto p : VerShaderPaths)
 	{
 		M_LoadShader(p.second, p.first, GL_VERTEX_SHADER);

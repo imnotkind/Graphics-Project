@@ -1,11 +1,13 @@
 #version 330 core
+
 in vec4 position;
 uniform mat4 trans;
-uniform vec4 vicolor;
-out vec4 vocolor;
+uniform float scale;
+
+out vec2 coord;
 
 void main()
 {
-    vocolor = vicolor;
+    coord = (scale*position).xy;
     gl_Position = trans*position ;
 }

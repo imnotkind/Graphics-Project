@@ -229,11 +229,8 @@ void CMesh::M_Rec_Construct(map<int, SHierModelNode>& all, vector<treenode>& tre
 	SHierModelNode N;
 	SDrawingInfo D;
 	D.DrawMode = 0;
-	D.Global_Color.set(1.0, 0.0, 0.0, 1.0);
-	D.Line_Color.set(1.0, 1.0, 0.0, 1.0);
 	D.PolygonName = "NULL";
 	D.Program = "prg1";
-
 
 	N.draw.reset(new CDrawing(D));
 	N.port = V_Groups[root].port; 
@@ -303,9 +300,6 @@ void CMesh::M_ConstructHierModel(void)
 		SHierModelNode N;
 		SDrawingInfo D;
 
-		
-		D.Global_Color = V_SurfaceColor;
-		D.Line_Color = V_LineColor;
 		D.PolygonName = os.str();
 		D.Program = "prg1";
 
