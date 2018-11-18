@@ -1,3 +1,4 @@
+# latex
 *.aux
 *.blg
 *.fdb_latexmk
@@ -6,3 +7,12 @@
 *.out
 *.pdf
 *.gz
+
+# from any subdir, matching this name
+.vs/
+Debug/
+Release/
+x64/
+
+#exception
+!/Lib/*

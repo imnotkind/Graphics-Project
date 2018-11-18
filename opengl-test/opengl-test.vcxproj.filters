@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="sltest.cpp" />
+    <ClCompile Include="test2.cpp" />
+    <ClCompile Include="objloader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="objloader.hpp" />
+    <ClInclude Include="OBJ_Loader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ver.glsl" />
+    <None Include="frag.glsl" />
+  </ItemGroup>
+</Project>
