@@ -19,13 +19,19 @@ void CGraphics::M_SimplePolyFractal(void)
 	SFractal node;
 
 	node.V_Draw.reset(new CDrawing(temptemp("cubobj", T4Double(1.0, 0.0, 0.0, 1.0))));
+	double d = 0.5;
+
 	
-	for (int i = 0; i < 3; i++)
+	Vec3d v(1, 0, 0);
+	for (int i = 0; i < 4; i++)
 	{
+		glm::mat4 t = glm::mat4(1.0);
+		t = glm::rotate(t, float(DTR(i*90)), glm::vec3(0,0,1))
 		for (int y = -1; y <= 1; y += 2)
 		{
 			Vec3d off;
 			off[i] = y;
+			node.V_Grow.push_back()
 			node.draw.reset(new CDrawing(temptemp("cubobj", T4Double(1.0, 0.0, 0.0, 1.0))));
 			node.
 		}
