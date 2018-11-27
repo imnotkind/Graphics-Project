@@ -15,14 +15,17 @@ SDrawingInfo temptemp(string s, T4Double c)
 }
 void CGraphics::M_SimplePolyFractal(void)
 {
-	SHierModelNode node;
+	V_Fractals;
+	SFractal node;
 
-	node.draw.reset(new CDrawing(temptemp("cubobj", T4Double(1.0, 0.0, 0.0, 1.0))));
+	node.V_Draw.reset(new CDrawing(temptemp("cubobj", T4Double(1.0, 0.0, 0.0, 1.0))));
 	
 	for (int i = 0; i < 3; i++)
 	{
 		for (int y = -1; y <= 1; y += 2)
 		{
+			Vec3d off;
+			off[i] = y;
 			node.draw.reset(new CDrawing(temptemp("cubobj", T4Double(1.0, 0.0, 0.0, 1.0))));
 			node.
 		}

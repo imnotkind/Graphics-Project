@@ -4,26 +4,26 @@
 
 struct SFractal
 {
+	vector<glm::mat4> V_Initial;
+	vector<glm::mat4> V_Grow;
+	glm::mat4 V_Trans_S; // no inheritance
 	
-	glm::mat4 trans;
-	glm::mat4 trans_s; // no inheritance
+	shared_ptr<CDrawing> V_Draw;
+
 };
 
 class CFractal :
 	public CHandler
 {
-	shared_ptr<CDrawing> V_Draw;
-
-
-	vector<glm::mat4> V_Initial;
-	vector<glm::mat4> V_Grow;
-
-	void M_DrawRec(glm::mat4 CTM, int depth);
-
+	SFractal V_Info;
+	void M_Draw_Rec(glm::mat4 CTM, int depth);
 	int V_MaxDepth;
 	SRenderInfo V_RenderInfo;
+
 public:
-	CFractal();
+	CFractal(const SFractal& i) : V_Info(i) {}
+
+	void M_Draw(const SRenderInfo& r);
 	virtual ~CFractal(){}
 };
 

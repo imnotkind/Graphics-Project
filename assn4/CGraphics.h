@@ -8,6 +8,8 @@
 #include "CMesh.h"
 #include "CHierModel.h"
 
+#include "CFractal.h"
+
 #include <ctime>
 
 class CGraphics : public CHandler
@@ -60,6 +62,8 @@ class CGraphics : public CHandler
 	void M_SimplePolyFractal(void);
 
 	map<string, shared_ptr<CHierModel>> V_Models;
+
+	map<string, shared_ptr<CFractal>> V_Fractals;
 
 public:
 
