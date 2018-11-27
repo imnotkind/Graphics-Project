@@ -18,14 +18,15 @@ uniform vec4 light1;
 uniform vec4 light2;
 uniform vec4 light3;
 
+uniform float t;
 
 out vec4 color;
 
 void main()
 {
 
-	double x = 0; 
-	double y = 0;
+	double x = vpos[0] * sin(t * 0.9); 
+	double y = vpos[1] * cos(t);
 
 	double cr = vpos[0];
 	double ci = vpos[1];

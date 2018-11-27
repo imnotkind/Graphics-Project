@@ -60,6 +60,10 @@ void CGraphics::M_RenderFractal(void)
 	ri.light1 = V_CTM_View * Vec4d(V_Light1[0], V_Light1[1], V_Light1[2], 1);
 	ri.normtrans = m;
 
+	V_SM->M_UseProgram("prg4");
+	auto l = V_SM->M_GetUniformLoc("t");
+	glUniform1f(l, (float)t);
+
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
 	V_Fractals["basic"]->M_Draw(ri, 7);
 
