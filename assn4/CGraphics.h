@@ -40,7 +40,6 @@ class CGraphics : public CHandler
 	LARGE_INTEGER new_count;
 	LARGE_INTEGER freq;
 
-	void M_RenderGame(void);
 	void M_RenderUI(void);
 	void M_MoveCamera(void);
 
@@ -50,7 +49,6 @@ class CGraphics : public CHandler
 	void M_DrawModel(Vec3d p, string name, double r, double rotate, T4Int rgba); //lying on xy
 	void M_DrawFont(Vec2d p, string str, T4Int rgba);
 	void M_DrawFontBig(Vec2d p, string str, double scale, T4Int rgba);
-	void M_DrawItem(Vec3d p, double r, int z);
 	void M_DrawNumber(Vec3d p, double r, int num, T4Int rgba);
 
 	void M_ListenMessages(void);
@@ -59,6 +57,7 @@ class CGraphics : public CHandler
 
 
 	void M_SetupHieraModels(void);
+	void M_SimplePolyFractal(void);
 
 	map<string, shared_ptr<CHierModel>> V_Models;
 

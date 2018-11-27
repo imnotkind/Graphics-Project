@@ -4,26 +4,11 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{cc69111b-59a7-48c5-a370-1b8d80d2bd63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Something">
-      <UniqueIdentifier>{31cecfaf-c069-43dc-b3a8-6a80776ea383}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Something\Character">
-      <UniqueIdentifier>{b4949669-84a4-4296-9c24-1d32e4dc9f87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Something\Enemy">
-      <UniqueIdentifier>{2f76d61f-cc30-4237-b830-f21ef4cf39bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Something\Item">
-      <UniqueIdentifier>{dd1f180c-d136-4e49-9e89-b63bc13b56ec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Helper">
       <UniqueIdentifier>{ee4f6eb3-8211-471a-a8f6-ac7aa042eb81}</UniqueIdentifier>
     </Filter>
     <Filter Include="Helper\CMath">
       <UniqueIdentifier>{aa64264c-f1a5-43ae-be7c-f5d8e4beb375}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Something\Bullet">
-      <UniqueIdentifier>{7d033344-f6c7-45f2-88d0-40efa15b2b8e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Handler">
       <UniqueIdentifier>{b67628ca-033c-4304-907c-857e28039833}</UniqueIdentifier>
@@ -73,6 +58,9 @@
     <Filter Include="Helper\IMGLoader">
       <UniqueIdentifier>{dcf0c691-86e2-4a7b-aba1-d2d2ad21d3af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graphics\HierModel\Fractal">
+      <UniqueIdentifier>{f55c873c-6336-4cf1-aa82-d79133acef3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -85,29 +73,14 @@
     <ClCompile Include="CTexture.cpp">
       <Filter>Engine\Graphics\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="CEnemy.cpp">
-      <Filter>Engine\Something\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="CItem.cpp">
-      <Filter>Engine\Something\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="CCharacter.cpp">
-      <Filter>Engine\Something\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CMath.cpp">
       <Filter>Helper\CMath</Filter>
-    </ClCompile>
-    <ClCompile Include="CBullet.cpp">
-      <Filter>Engine\Something\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="CHandler.cpp">
       <Filter>Handler</Filter>
     </ClCompile>
     <ClCompile Include="CError.cpp">
       <Filter>Helper\CError</Filter>
-    </ClCompile>
-    <ClCompile Include="CSomething.cpp">
-      <Filter>Engine\Something</Filter>
     </ClCompile>
     <ClCompile Include="CUserInput.cpp">
       <Filter>Engine\UserInput</Filter>
@@ -139,6 +112,9 @@
     <ClCompile Include="readbmp.cpp">
       <Filter>Helper\IMGLoader</Filter>
     </ClCompile>
+    <ClCompile Include="CFractal.cpp">
+      <Filter>Engine\Graphics\HierModel\Fractal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEngine.h">
@@ -149,15 +125,6 @@
     </ClInclude>
     <ClInclude Include="CTexture.h">
       <Filter>Engine\Graphics\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemy.h">
-      <Filter>Engine\Something\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="CItem.h">
-      <Filter>Engine\Something\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="CCharacter.h">
-      <Filter>Engine\Something\Character</Filter>
     </ClInclude>
     <ClInclude Include="MainHeader.h">
       <Filter>Helper</Filter>
@@ -177,17 +144,11 @@
     <ClInclude Include="MessageQueue.h">
       <Filter>Helper</Filter>
     </ClInclude>
-    <ClInclude Include="CBullet.h">
-      <Filter>Engine\Something\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="CHandler.h">
       <Filter>Handler</Filter>
     </ClInclude>
     <ClInclude Include="CError.h">
       <Filter>Helper\CError</Filter>
-    </ClInclude>
-    <ClInclude Include="CSomething.h">
-      <Filter>Engine\Something</Filter>
     </ClInclude>
     <ClInclude Include="CUserInput.h">
       <Filter>Engine\UserInput</Filter>
@@ -215,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="readbmp.h">
       <Filter>Helper\IMGLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="CFractal.h">
+      <Filter>Engine\Graphics\HierModel\Fractal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,10 +9,25 @@ SDrawingInfo temptemp(string s, T4Double c)
 	d.PolygonName = s;
 	d.Program = "prg1";
 	d.Line_Color.set(1.0, 0.0, 0.0, 1.0);
+	d.light = false;
 
 	return d;
 }
+void CGraphics::M_SimplePolyFractal(void)
+{
+	SHierModelNode node;
 
+	node.draw.reset(new CDrawing(temptemp("cubobj", T4Double(1.0, 0.0, 0.0, 1.0))));
+	
+	for (int i = 0; i < 3; i++)
+	{
+		for (int y = -1; y <= 1; y += 2)
+		{
+			node.draw.reset(new CDrawing(temptemp("cubobj", T4Double(1.0, 0.0, 0.0, 1.0))));
+			node.
+		}
+	}
+}
 void CGraphics::M_SetupHieraModels(void)
 {
 	auto p = CShaderManager::getInstance();
