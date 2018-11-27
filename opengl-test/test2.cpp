@@ -4,6 +4,14 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define TINYOBJLOADER_IMPLEMENTATION
 
+#ifndef HID_USAGE_PAGE_GENERIC
+#define HID_USAGE_PAGE_GENERIC         ((USHORT) 0x01)
+#endif
+#ifndef HID_USAGE_GENERIC_MOUSE
+#define HID_USAGE_GENERIC_MOUSE        ((USHORT) 0x02)
+#endif
+
+
 // Include all GLM core / GLSL features
 #include <glm/glm.hpp> // vec2, vec3, mat4, radians
 
@@ -66,7 +74,10 @@ std::vector<tinyobj::shape_t> shapes;
 std::vector<tinyobj::material_t> materials;
 std::string warn, err;
 
-
+int mouse_x_diff = 0;
+int mouse_y_diff = 0;
+int mouse_x_pin = 1000;
+int mouse_y_pin = 1000;
 
 int meshcount = 0;
 
@@ -385,6 +396,16 @@ void reshape1(int w, int h) {
 
 void idle1()
 {
+	POINT t;
+	GetCursorPos(&t);
+	//cout << t.x << " " << t.y << endl;
+	mouse_x_diff += t.x - mouse_x_pin;
+	mouse_y_diff += t.y - mouse_y_pin;
+
+
+
+	SetCursorPos(mouse_x_pin, mouse_y_pin);
+
 	glutPostRedisplay();
 }
 
@@ -399,7 +420,7 @@ void display1() {
 
 
 	glm::mat4 Projection = glm::perspective(glm::radians(100.0f), 1.0f, 0.1f, 1000.0f);
-	glm::mat4 View = glm::lookAt(glm::vec3(150, 150, 150), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	glm::mat4 View = glm::lookAt(glm::vec3(150 + mouse_x_diff, 150 + mouse_x_diff, 150 + mouse_x_diff), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	glm::mat4 Model = glm::mat4(1.0f);
 	glm::mat4 mvp = Projection * View * Model;
 
@@ -446,21 +467,21 @@ void display1() {
 	glBindVertexArray(VertexArrayID3);
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 	glUniform4f(colorLoc, 1.0, 1.0, 0.0, 1.0);
-	//glDrawArrays(GL_LINES, 0, vertices.size());
+	glDrawArrays(GL_LINES, 0, vertices.size());
 
 
 	//Model = glm::scale(glm::mat4(1.0f), glm::vec3(10, 10, 10));
 	mvp = Projection * View * Model;
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 	//glUniform4f(colorLoc, 1.0, 0.0, 0.0, 1.0);
-	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+	//glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
 
 
 	glBindVertexArray(VertexArrayID4);
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 	glUniform4f(colorLoc, 0.0, 1.0, 0.0, 1.0);
-	//glDrawArrays(GL_LINES, 0, normals.size());
+	glDrawArrays(GL_LINES, 0, normals.size());
 
 
 	glutSwapBuffers();
@@ -595,12 +616,8 @@ void init_shader(int p)
 
 void key1(unsigned char key, int x, int y)
 {
-
-	init_shader(meshcount);
-	meshcount++;
-	if (meshcount > 29) //15 groups
-		meshcount = -1;
-
+	cout << "dd" << endl;
+	
 
 }
 
