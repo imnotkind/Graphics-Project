@@ -420,7 +420,7 @@ void display1() {
 
 
 	glm::mat4 Projection = glm::perspective(glm::radians(100.0f), 1.0f, 0.1f, 1000.0f);
-	glm::mat4 View = glm::lookAt(glm::vec3(150 + mouse_x_diff, 150 + mouse_x_diff, 150 + mouse_x_diff), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	glm::mat4 View = glm::lookAt(glm::vec3(0, 0, 300), glm::vec3(0 + mouse_x_diff, 0 + mouse_y_diff, 0), glm::vec3(0, 1, 0));
 	glm::mat4 Model = glm::mat4(1.0f);
 	glm::mat4 mvp = Projection * View * Model;
 
