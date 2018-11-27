@@ -78,6 +78,7 @@ int mouse_x_diff = 0;
 int mouse_y_diff = 0;
 int mouse_x_pin = 1000;
 int mouse_y_pin = 1000;
+int lookat_z = 0;
 
 int meshcount = 0;
 
@@ -411,6 +412,7 @@ void idle1()
 
 
 void display1() {
+	SetCursor(NULL);
 
 	static double k = 0.0;
 	k += 0.01;
@@ -419,8 +421,8 @@ void display1() {
 	glUseProgram(programID);
 
 
-	glm::mat4 Projection = glm::perspective(glm::radians(100.0f), 1.0f, 0.1f, 1000.0f);
-	glm::mat4 View = glm::lookAt(glm::vec3(0, 0, 300), glm::vec3(0 + mouse_x_diff, 0 + mouse_y_diff, 0), glm::vec3(0, 1, 0));
+	glm::mat4 Projection = glm::perspective(glm::radians(100.0f), 1.0f, 0.1f, 10000.0f);
+	glm::mat4 View = glm::lookAt(glm::vec3(0, 0, 300), glm::vec3(0 + mouse_x_diff, 0 + mouse_y_diff, 0 + lookat_z), glm::vec3(0, 1, 0));
 	glm::mat4 Model = glm::mat4(1.0f);
 	glm::mat4 mvp = Projection * View * Model;
 
@@ -616,9 +618,9 @@ void init_shader(int p)
 
 void key1(unsigned char key, int x, int y)
 {
-	cout << "dd" << endl;
+	//lookat_z -= 10000;
 	
-
+	
 }
 
 
@@ -652,6 +654,7 @@ int main(int argc, char **argv)
 
 
 	init_shader(-1);
+	
 
 	glutMainLoop();
 
