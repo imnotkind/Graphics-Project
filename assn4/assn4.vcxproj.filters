@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{cc69111b-59a7-48c5-a370-1b8d80d2bd63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Something">
+      <UniqueIdentifier>{31cecfaf-c069-43dc-b3a8-6a80776ea383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Something\Character">
+      <UniqueIdentifier>{b4949669-84a4-4296-9c24-1d32e4dc9f87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Something\Enemy">
+      <UniqueIdentifier>{2f76d61f-cc30-4237-b830-f21ef4cf39bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Something\Item">
+      <UniqueIdentifier>{dd1f180c-d136-4e49-9e89-b63bc13b56ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper">
+      <UniqueIdentifier>{ee4f6eb3-8211-471a-a8f6-ac7aa042eb81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper\CMath">
+      <UniqueIdentifier>{aa64264c-f1a5-43ae-be7c-f5d8e4beb375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Something\Bullet">
+      <UniqueIdentifier>{7d033344-f6c7-45f2-88d0-40efa15b2b8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Handler">
+      <UniqueIdentifier>{b67628ca-033c-4304-907c-857e28039833}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper\CError">
+      <UniqueIdentifier>{8140ad51-3f74-45f1-af41-2ed13a32b818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics">
+      <UniqueIdentifier>{75334f49-91f5-4865-856d-d57c85ed5953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Texture">
+      <UniqueIdentifier>{262517c3-cf85-4256-a12b-edbd4f220aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UserInput">
+      <UniqueIdentifier>{b40f2e8c-bf1d-4b7a-909c-efbedbe82687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper\General">
+      <UniqueIdentifier>{b091d0fb-62bb-479a-98b1-797dd269c507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\HierModel">
+      <UniqueIdentifier>{47badd1c-e1af-40d9-a76c-c6ece40351f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\ShaderManager">
+      <UniqueIdentifier>{8c820817-96e2-447d-b407-5ff94901d423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{8cc90865-1c43-4456-9616-1d5e1bcfc2f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\HierModel\Drawing">
+      <UniqueIdentifier>{8e7ddf70-55ae-4fdc-ae81-1082ff08352a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Mesh">
+      <UniqueIdentifier>{55e65afa-2f8b-4a36-976c-82fd26ef02a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\pol">
+      <UniqueIdentifier>{e64106f8-f7b7-4a4d-8b47-0b10812f7280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\glsl">
+      <UniqueIdentifier>{5f07335c-2a16-47a9-aaf6-6b356b765c77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\obj">
+      <UniqueIdentifier>{16edca21-6857-4104-9b74-8db67e9991db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper\OBJLoader">
+      <UniqueIdentifier>{b34ba27f-9d0c-4946-afd2-8fe4eade3cda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper\IMGLoader">
+      <UniqueIdentifier>{dcf0c691-86e2-4a7b-aba1-d2d2ad21d3af}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CEngine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="CGraphics.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="CTexture.cpp">
+      <Filter>Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>Engine\Something\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>Engine\Something\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CCharacter.cpp">
+      <Filter>Engine\Something\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CMath.cpp">
+      <Filter>Helper\CMath</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>Engine\Something\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CHandler.cpp">
+      <Filter>Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="CError.cpp">
+      <Filter>Helper\CError</Filter>
+    </ClCompile>
+    <ClCompile Include="CSomething.cpp">
+      <Filter>Engine\Something</Filter>
+    </ClCompile>
+    <ClCompile Include="CUserInput.cpp">
+      <Filter>Engine\UserInput</Filter>
+    </ClCompile>
+    <ClCompile Include="CGeneral.cpp">
+      <Filter>Helper\General</Filter>
+    </ClCompile>
+    <ClCompile Include="CHierModel.cpp">
+      <Filter>Engine\Graphics\HierModel</Filter>
+    </ClCompile>
+    <ClCompile Include="CShaderManager.cpp">
+      <Filter>Engine\Graphics\ShaderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HieraModels.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="StringHelper.h">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="CDrawing.cpp">
+      <Filter>Engine\Graphics\HierModel\Drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="CShaderManager_load.cpp">
+      <Filter>Engine\Graphics\ShaderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CMesh.cpp">
+      <Filter>Engine\Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="readbmp.cpp">
+      <Filter>Helper\IMGLoader</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CEngine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="CGraphics.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>Engine\Something\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>Engine\Something\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CCharacter.h">
+      <Filter>Engine\Something\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="MainHeader.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="TGrid.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="TVector.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="CMath.h">
+      <Filter>Helper\CMath</Filter>
+    </ClInclude>
+    <ClInclude Include="TVector_speical.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageQueue.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>Engine\Something\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CHandler.h">
+      <Filter>Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="CError.h">
+      <Filter>Helper\CError</Filter>
+    </ClInclude>
+    <ClInclude Include="CSomething.h">
+      <Filter>Engine\Something</Filter>
+    </ClInclude>
+    <ClInclude Include="CUserInput.h">
+      <Filter>Engine\UserInput</Filter>
+    </ClInclude>
+    <ClInclude Include="CGeneral.h">
+      <Filter>Helper\General</Filter>
+    </ClInclude>
+    <ClInclude Include="CHierModel.h">
+      <Filter>Engine\Graphics\HierModel</Filter>
+    </ClInclude>
+    <ClInclude Include="Pointer.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="CShaderManager.h">
+      <Filter>Engine\Graphics\ShaderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CDrawing.h">
+      <Filter>Engine\Graphics\HierModel\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="CMesh.h">
+      <Filter>Engine\Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyobjloader.h">
+      <Filter>Helper\OBJLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="readbmp.h">
+      <Filter>Helper\IMGLoader</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\program.prg">
+      <Filter>Resource</Filter>
+    </None>
+    <None Include="resource\7seg.pol">
+      <Filter>Resource\pol</Filter>
+    </None>
+    <None Include="resource\item.pol">
+      <Filter>Resource\pol</Filter>
+    </None>
+    <None Include="resource\polygon.pol">
+      <Filter>Resource\pol</Filter>
+    </None>
+    <None Include="resource\ver.glsl">
+      <Filter>Resource\glsl</Filter>
+    </None>
+    <None Include="resource\frag.glsl">
+      <Filter>Resource\glsl</Filter>
+    </None>
+    <None Include="resource\ver2.glsl">
+      <Filter>Resource\glsl</Filter>
+    </None>
+    <None Include="resource\frag2.glsl">
+      <Filter>Resource\glsl</Filter>
+    </None>
+    <None Include="resource\ver_shd.glsl">
+      <Filter>Resource\glsl</Filter>
+    </None>
+    <None Include="resource\frag_shd.glsl">
+      <Filter>Resource\glsl</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resource\map.txt">
+      <Filter>Resource</Filter>
+    </Text>
+    <Text Include="resource\config.txt">
+      <Filter>Resource</Filter>
+    </Text>
+    <Text Include="resource\OBJ files\dummy_obj_meta.txt">
+      <Filter>Resource\obj</Filter>
+    </Text>
+    <Text Include="resource\OBJ files\M1911_meta.txt">
+      <Filter>Resource\obj</Filter>
+    </Text>
+    <Text Include="resource\OBJ files\dummy_obj_red_meta.txt">
+      <Filter>Resource\obj</Filter>
+    </Text>
+    <Text Include="resource\OBJ files\Skeleton_meta.txt">
+      <Filter>Resource\obj</Filter>
+    </Text>
+    <Text Include="resource\OBJ files\sphere_meta.txt">
+      <Filter>Resource\obj</Filter>
+    </Text>
+    <Text Include="resource\OBJ files\cube_meta.txt">
+      <Filter>Resource\obj</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

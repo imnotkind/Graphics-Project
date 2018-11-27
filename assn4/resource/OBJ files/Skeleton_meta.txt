@@ -1,0 +1,35 @@
+%obj_name
+skeleton
+
+%obj_file_path
+resource/OBJ files/Skeleton.obj
+
+%group_number
+1
+
+%group_info
+0, 1, 2, 3, 4, 5, 6, 7
+
+%group_translation
+0, 0, 0
+
+%group_rotation
+90, 1, 0, 0
+
+%group_port
+0
+
+%parent_info
+-1
+
+%parent_rotation
+0, 0, 0, 1
+
+%parent_translation
+0, 0, 0
+
+%line_color
+0, 0, 0, 255
+
+%surface_color
+150, 150, 150, 255

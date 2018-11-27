@@ -20,8 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{3DE750A2-2EA0-4697-B253-9661B5FC1DB3}</ProjectGuid>
-    <RootNamespace>opengltest</RootNamespace>
+    <ProjectGuid>{64AE67C9-A5F6-4C6A-B725-5455239B6190}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>assn2</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -69,33 +70,49 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\Lib\glew-2.1.0\include;$(SolutionDir)\Lib\freeglut\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Lib\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\Lib\freeglut\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Lib\freeglut\include;$(SolutionDir)Lib\glew-2.1.0\include;$(SolutionDir)Lib\glm-0.9.9.2;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Lib\freeglut\lib\x64;$(SolutionDir)Lib\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)Lib\freeglut\include;$(SolutionDir)Lib\glew-2.1.0\include;$(SolutionDir)Lib\glm-0.9.9.2;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\glew-2.1.0\lib\Release\x64;$(SolutionDir)Lib\freeglut\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-    </ClCompile>
-  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\Lib\glew-2.1.0\include;$(SolutionDir)\Lib\freeglut\include;$(SolutionDir)Lib\glm-0.9.9.2;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Lib\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\Lib\freeglut\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)\Lib\glew-2.1.0\include;$(SolutionDir)\Lib\freeglut\include;$(SolutionDir)Lib\glm-0.9.9.2;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Lib\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\Lib\freeglut\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)Lib\freeglut\include;$(SolutionDir)Lib\glew-2.1.0\include;$(SolutionDir)Lib\glm-0.9.9.2;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\glew-2.1.0\lib\Release\x64;$(SolutionDir)Lib\freeglut\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -103,12 +120,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -117,23 +136,90 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="test2.cpp" />
+    <ClCompile Include="CBullet.cpp" />
+    <ClCompile Include="CCharacter.cpp" />
+    <ClCompile Include="CDrawing.cpp" />
+    <ClCompile Include="CEnemy.cpp" />
+    <ClCompile Include="CEngine.cpp" />
+    <ClCompile Include="CError.cpp" />
+    <ClCompile Include="CGeneral.cpp" />
+    <ClCompile Include="CGraphics.cpp" />
+    <ClCompile Include="CHandler.cpp" />
+    <ClCompile Include="CHierModel.cpp" />
+    <ClCompile Include="CItem.cpp" />
+    <ClCompile Include="CMath.cpp" />
+    <ClCompile Include="CMesh.cpp" />
+    <ClCompile Include="CShaderManager.cpp" />
+    <ClCompile Include="CShaderManager_load.cpp" />
+    <ClCompile Include="CSomething.cpp" />
+    <ClCompile Include="CTexture.cpp" />
+    <ClCompile Include="CUserInput.cpp" />
+    <ClCompile Include="HieraModels.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="readbmp.cpp" />
+    <ClCompile Include="StringHelper.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="frag.glsl" />
-    <None Include="ver.glsl" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="CBullet.h" />
+    <ClInclude Include="CCharacter.h" />
+    <ClInclude Include="CDrawing.h" />
+    <ClInclude Include="CEnemy.h" />
+    <ClInclude Include="CEngine.h" />
+    <ClInclude Include="CError.h" />
+    <ClInclude Include="CGeneral.h" />
+    <ClInclude Include="CGraphics.h" />
+    <ClInclude Include="CHandler.h" />
+    <ClInclude Include="CHierModel.h" />
+    <ClInclude Include="CItem.h" />
+    <ClInclude Include="CMath.h" />
+    <ClInclude Include="CMesh.h" />
+    <ClInclude Include="CShaderManager.h" />
+    <ClInclude Include="CSomething.h" />
+    <ClInclude Include="CTexture.h" />
+    <ClInclude Include="CUserInput.h" />
+    <ClInclude Include="MainHeader.h" />
+    <ClInclude Include="MessageQueue.h" />
+    <ClInclude Include="Pointer.h" />
+    <ClInclude Include="readbmp.h" />
+    <ClInclude Include="TGrid.h" />
     <ClInclude Include="tinyobjloader.h" />
+    <ClInclude Include="TVector.h" />
+    <ClInclude Include="TVector_speical.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\7seg.pol" />
+    <None Include="resource\frag.glsl" />
+    <None Include="resource\frag2.glsl" />
+    <None Include="resource\frag_shd.glsl" />
+    <None Include="resource\item.pol" />
+    <None Include="resource\polygon.pol" />
+    <None Include="resource\program.prg" />
+    <None Include="resource\ver.glsl" />
+    <None Include="resource\ver2.glsl" />
+    <None Include="resource\ver_shd.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resource\config.txt" />
+    <Text Include="resource\map.txt" />
+    <Text Include="resource\OBJ files\cube_meta.txt" />
+    <Text Include="resource\OBJ files\dummy_obj_meta.txt" />
+    <Text Include="resource\OBJ files\dummy_obj_red_meta.txt" />
+    <Text Include="resource\OBJ files\M1911_meta.txt" />
+    <Text Include="resource\OBJ files\Skeleton_meta.txt" />
+    <Text Include="resource\OBJ files\sphere_meta.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,21 @@
+%vs_start
+ver : resource/ver.glsl
+ver2 : resource/ver2.glsl
+ver3 : resource/ver_shd.glsl
+%vs_end
+
+%fs_start
+frag : resource/frag.glsl
+frag2 : resource/frag.glsl
+frag3 : resource/frag_shd.glsl
+%fs_end
+
+%polygon_start
+resource/polygon.pol
+resource/7seg.pol
+resource/item.pol
+%polygon_end
+
+%program_start
+resource/program.prg
+%program_end
