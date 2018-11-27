@@ -36,10 +36,16 @@ class CShaderManager :
 	static CShaderManager* Instance;
 	CShaderManager(string config_path);
 	~CShaderManager();
+
+	map<pair<string, GLuint>, GLuint> V_LocCache;
 public:
 
 	set<string> V_Meshes; // meta path
 	map<string, int> V_Polygon_suggested_mode;
+	
+	GLuint M_GetUniformLoc(string s);
+
+
 	
 
 	SVerArray M_GetPolygon(string s) { return V_Polygons[s]; }

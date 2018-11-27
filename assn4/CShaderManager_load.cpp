@@ -278,7 +278,7 @@ void CShaderManager::M_LoadProgram(string name, string ver, string frag)
 			glVertexAttribPointer(tl, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 4 * a.num));
 		}
 	}
-	else if (name == "prg3")
+	else if (name == "prg3" || name == "prg4")
 	{
 		V_Programs[name] = id;
 		auto vl = glGetAttribLocation(id, "position");

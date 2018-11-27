@@ -18,7 +18,53 @@ void CGraphics::M_RenderUI(void)
 
 
 }
+void CGraphics::M_MoveCamera(void)
+{
+	static double t = 0.0;
+	t += 0.00461;
 
+	V_Camera_Look = glm::vec3(0.0, 0.0, 0.0);
+	V_Camera_Pos = glm::vec3(3.0 * cos(t), 3.0 * sin(t), 3.0);
+	return;
+
+}
+
+void CGraphics::M_RenderFractal(void)
+{
+	static double t = 0.0;
+	t += 0.01;
+	V_Light1[0] = 5 * cos(t);
+	V_Light1[1] = 5 * sin(t);
+	V_Light1[2] = 5;
+
+	T4Int rgba(255, 255, 0, 255);
+
+	SRenderInfo ri;
+
+	double rotate = 0.0;
+	glm::vec3 p(0.0);
+	double scale = 1.0;
+
+	glm::mat4 m = V_CTM_View;
+	m = glm::translate(m, p);
+	m = glm::rotate(m, float(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
+	m = glm::scale(m, glm::vec3(scale, scale, scale));
+
+	ri.modelview = m;
+	ri.projection = V_CTM_Project;
+
+	ri.keeplight = false;
+	ri.amb = Vec4d(0.1, 0.1, 0.1, 1.0);
+	ri.dif = Vec4d(0.5, 0.5, 0.5, 1.0);
+	ri.spc = Vec4d(0.5, 0.5, 0.5, 1.0);
+	ri.light1 = V_CTM_View * Vec4d(V_Light1[0], V_Light1[1], V_Light1[2], 1);
+	ri.normtrans = m;
+
+	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
+	V_Fractals["basic"]->M_Draw(ri, 7);
+
+	//M_DrawModel(Vec3d(0, 0, 0), "sphere", 0.1, 0, T4Int(255, 0, 255, 255));
+}
 
 int CGraphics::M_Initialize(CEngine * P)
 {
@@ -56,6 +102,7 @@ void CGraphics::M_Initialize2(void)
 	V_CurrentDrawing = false;
 
 	M_SetupHieraModels();
+
 }
 
 void CGraphics::M_ListenMessages(void)
@@ -96,11 +143,7 @@ glm::mat4 CGraphics::M_GetBillboardMat(void)
 
 	return glm::transpose(view);
 }
-void CGraphics::M_MoveCamera(void)
-{
-	return;
 
-}
 void CGraphics::M_CallbackDisplay()
 {
 	M_ListenMessages();
@@ -132,7 +175,7 @@ void CGraphics::M_CallbackDisplay()
 	V_CTM_View = glm::lookAt(V_Camera_Pos, V_Camera_Look, up);
 
 	//world
-	
+	M_RenderFractal();
 
 	glutSwapBuffers();
 }
@@ -168,7 +211,6 @@ void CGraphics::M_DrawLine(Vec3d p1, Vec3d p2, T4Int rgba)
 
 void CGraphics::M_DrawModel(Vec3d p, string name, double r, double rotate, T4Int rgba)
 {
-
 	SRenderInfo ri;
 
 	glm::mat4 m = V_CTM_View;

@@ -64,10 +64,13 @@ CShaderManager::CShaderManager(string config_path)
 	}
 	else CError("Config file " + config_path + " not found.", true);
 
+	/*
 	ObjData.insert("resource/OBJ files/dummy_obj_meta.txt");
 	ObjData.insert("resource/OBJ files/dummy_obj_red_meta.txt");
 	ObjData.insert("resource/OBJ files/M1911_meta.txt");
 	ObjData.insert("resource/OBJ files/Skeleton_meta.txt");
+	*/
+
 	ObjData.insert("resource/OBJ files/sphere_meta.txt");
 	ObjData.insert("resource/OBJ files/cube_meta.txt");
 	
@@ -146,4 +149,17 @@ void CShaderManager::M_UseProgram(string name)
 	if (V_CurrentProgram == V_Programs[name]) return; // no redundant binding
 	V_CurrentProgram = V_Programs[name];
 	glUseProgram(V_CurrentProgram); 
+}
+
+GLuint CShaderManager::M_GetUniformLoc(string s)
+{
+	auto k = pair<string, GLuint>(s, M_GetProgram());
+	auto i = V_LocCache.find(k);
+	if (i == V_LocCache.end())
+	{
+		auto x = glGetUniformLocation(M_GetProgram(), s.c_str());
+		V_LocCache[k] = x;
+		return x;
+	}
+	return i->second;
 }

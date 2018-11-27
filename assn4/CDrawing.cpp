@@ -21,33 +21,33 @@ void CDrawing::M_Draw(const SRenderInfo& r)
 	glBindVertexArray(V_Array.aindex);
 
 	GLuint p;
-	p = glGetUniformLocation(V_PSM->M_GetProgram(), "projection");
+	p = V_PSM->M_GetUniformLoc("projection");
 	glUniformMatrix4fv(p, 1, GL_FALSE, &r.projection[0][0]);
-	p = glGetUniformLocation(V_PSM->M_GetProgram(), "modelview");
+	p = V_PSM->M_GetUniformLoc("modelview");
 	glUniformMatrix4fv(p, 1, GL_FALSE, &r.modelview[0][0]);
 
-	p = glGetUniformLocation(V_PSM->M_GetProgram(), "vicolor");
+	p = V_PSM->M_GetUniformLoc("vicolor");
 	float col[4];
 	for (int i = 0; i< 4; i++) col[i] = V_Color[i] * r.color[i];
 	glUniform4fv(p, 1, col);
 
 	if (V_Light && !r.keeplight)
 	{
-		p = glGetUniformLocation(V_PSM->M_GetProgram(), "normaltrans");
+		p = V_PSM->M_GetUniformLoc("normaltrans");
 		glUniformMatrix4fv(p, 1, GL_FALSE, &r.normtrans[0][0]);
 
-		p = glGetUniformLocation(V_PSM->M_GetProgram(), "ambient");
+		p = V_PSM->M_GetUniformLoc("ambient");
 		glUniform4fv(p, 1, &r.amb[0]);
-		p = glGetUniformLocation(V_PSM->M_GetProgram(), "diffuse");
+		p = V_PSM->M_GetUniformLoc("diffuse");
 		glUniform4fv(p, 1, &r.dif[0]);
-		p = glGetUniformLocation(V_PSM->M_GetProgram(), "specular");
+		p = V_PSM->M_GetUniformLoc("specular");
 		glUniform4fv(p, 1, &r.spc[0]);
 
-		p = glGetUniformLocation(V_PSM->M_GetProgram(), "light1");
+		p = V_PSM->M_GetUniformLoc("light1");
 		glUniform4fv(p, 1, &r.light1[0]);
-		p = glGetUniformLocation(V_PSM->M_GetProgram(), "light2");
+		p = V_PSM->M_GetUniformLoc("light2");
 		glUniform4fv(p, 1, &r.light2[0]);
-		p = glGetUniformLocation(V_PSM->M_GetProgram(), "lgiht3");
+		p = V_PSM->M_GetUniformLoc("lgiht3");
 		glUniform4fv(p, 1, &r.light3[0]);
 
 	}

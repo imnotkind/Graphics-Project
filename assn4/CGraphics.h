@@ -44,6 +44,7 @@ class CGraphics : public CHandler
 
 	void M_RenderUI(void);
 	void M_MoveCamera(void);
+	void M_RenderFractal(void);
 
 	glm::mat4 M_GetBillboardMat(void);
 

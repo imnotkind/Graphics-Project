@@ -8,6 +8,7 @@ ver3 : resource/ver_shd.glsl
 frag : resource/frag.glsl
 frag2 : resource/frag.glsl
 frag3 : resource/frag_shd.glsl
+frag4 : resource/frag_test.glsl
 %fs_end
 
 %polygon_start

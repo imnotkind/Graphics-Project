@@ -23,7 +23,7 @@ class CFractal :
 public:
 	CFractal(const SFractal& i) : V_Info(i) {}
 
-	void M_Draw(const SRenderInfo& r);
+	void M_Draw(const SRenderInfo& r, int max);
 	virtual ~CFractal(){}
 };
 

@@ -17,24 +17,19 @@ void main()
 
 	int max_iter = 1000;
 
+	float max = 10;
+
 	int i;
 	for(i = 0; i < max_iter; i++)
 	{
 		double nx = x*x-y*y + cr;
 		double ny = 2*x*y + ci;
 
-		if (nx*nx + ny * ny > 4.0) break;
+		if (nx*nx + ny * ny > max) break;
 
 		x = nx;
 		y = ny;
 	}
 
-	//vec4 r = vec4(tanh(float(x)),tanh(float(y)),tanh(float(x*x+y*y)), 1);
-
-	//color = (r + vec4(1,1,1,1))*0.5;
-
-	if (i == max_iter)
-		color = vec4(1, 1, 1, 1);
-	else
-		color = vec4(0, 0, 0, 1);
+	color = vec4(float(i)/max_iter, 0, 0, 1);
 }
