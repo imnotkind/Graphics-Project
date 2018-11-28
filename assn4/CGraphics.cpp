@@ -24,10 +24,26 @@ void CGraphics::M_MoveCamera(void)
 	t += 0.00461;
 	
 	T2Double mouse = V_UserInput->M_MouseGet_Normalized();
+	mouse[1] = clamp(mouse[1], DTR(-80), DTR(80));
 
+	double th = mouse[0]; double pi = mouse[1]/abs(mouse[1]) * std::min(abs(mouse[1]), DTR(80.0));
 
-	V_Camera_Look = glm::vec3(0.0, 0.0, 0.0);
-	V_Camera_Pos = glm::vec3(3.0 * cos(mouse[0]), 3.0 * sin(mouse[0]), 3.0);
+	V_Camera_Look = glm::vec3(cos(-th) * cos(pi), sin(-th) *cos(pi), sin(-pi));
+
+	Vec3d hor = glm::vec3(-sin(-th) *cos(pi), cos(-th) * cos(pi), 0);
+	
+	auto old = V_Camera_Pos;
+
+	if (V_UserInput->M_IfPressed('a', false)) V_Camera_Pos += hor *(float)0.01;
+	if (V_UserInput->M_IfPressed('d', false)) V_Camera_Pos -= hor  * (float)0.01;
+	if (V_UserInput->M_IfPressed('s', false)) V_Camera_Pos -= V_Camera_Look * (float)0.01;
+	if (V_UserInput->M_IfPressed('w', false)) V_Camera_Pos += V_Camera_Look * (float)0.01;
+
+	V_Camera_Look += old;
+
+	//V_Camera_Look = vec3(0, 0, 0);
+	//V_Camera_Pos = vec3(cos(t) * 3, sin(t) * 3, 2);
+
 	return;
 
 }
@@ -93,7 +109,7 @@ int CGraphics::M_Initialize(CEngine * P)
 
 	glClearColor(1, 1, 1, 1); //background white
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glEnable(GL_MULTISAMPLE);
 
@@ -106,12 +122,15 @@ void CGraphics::M_Initialize2(void)
 {
 	glEnable(GL_DEPTH_TEST);
 
-	glDepthFunc(GL_LESS);
-	//glDepthFunc(GL_ALWAYS);
+	glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
+	glEnable(GL_BLEND);
+
 	V_SM = CShaderManager::getInstance();
 
 	V_ViewMode = false;
 	V_CurrentDrawing = false;
+
+	//V_Camera_Pos = Vec3d(-3, -3, 2.5);
 
 	M_SetupHieraModels();
 

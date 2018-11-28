@@ -4,7 +4,7 @@
 // Ouput data
 in vec3 vnormal;
 in vec4 vpos;
-
+in vec2 vtex;
 
 uniform mat4 projection;
 uniform mat4 modelview;
@@ -47,6 +47,12 @@ int mandel(double x, double y, double cr, double ci)
 
 void main()
 {
+	float fk = 0.42;
+	if(vtex[0] < 0.5 + 0.5*fk && vtex[0] > 0.5 - 0.5*fk)
+		if(vtex[1] < 0.5 + 0.5*fk && vtex[1] > 0.5 - 0.5*fk)
+		{
+			color = vec4(0,1,0,0); return;
+		}
 
 	double x = vpos[0] * sin(t * 0.9); 
 	double y = vpos[1] * cos(t);
@@ -54,12 +60,11 @@ void main()
 	double cr = vpos[0];
 	double ci = vpos[1];
 
-	int z = max_iter;//mandel(x, y, cr, ci);
+	int z = mandel(x, y, cr, ci);
+
+	vec4 mcolor = vec4(float(z)/max_iter, 0, 0, 1);
 
 
-	x = vpos[1] * sin(t * 1.13); y = vpos[0] * cos(t * 0.98);
-	int zz = 0; //mandel(x, y, cr*1.2, ci*1.2);
-	vec4 mcolor = vec4(float(z)/max_iter, float(zz)/max_iter, 0, 1);
 
 
 	vec3 L = normalize((light1 - vpos).xyz); //vector of light
@@ -73,8 +78,4 @@ void main()
 	vec4 spc_r = mcolor * katt * pow(max(dot(R,E), 0.0), 0.8);
 
 	color = amb_r + clamp(dif_r, 0.0, 1.0) + clamp(spc_r, 0.0, 0.5);
-
-
-	
-
 }

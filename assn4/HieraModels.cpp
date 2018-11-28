@@ -21,7 +21,7 @@ void CGraphics::M_SimplePolyFractal(void)
 	node.V_Draw.reset(new CDrawing(temptemp("cubeobj_0", T4Double(1.0, 1.0, 1.0, 1.0))));
 	node.V_Trans_S = glm::mat4(1.0);
 	double d = 0.5;
-	double s = 0.45;
+	double s = 0.42;
 	
 	Vec3d v(1, 0, 0);
 	for (int i = 0; i < 4; i++)
@@ -29,7 +29,8 @@ void CGraphics::M_SimplePolyFractal(void)
 		glm::mat4 t = glm::mat4(1.0);
 	
 		t = glm::rotate(t, float(DTR(i * 90)), glm::vec3(0, 0, 1));
-		t = glm::translate(t, glm::vec3(d + d * s + 0.01, 0, 0));
+		t = glm::rotate(t, float(-DTR(90)), glm::vec3(0, -1, 0));
+		t = glm::translate(t, glm::vec3(0, 0, d + d * s + 0.01));
 		t = glm::scale(t, glm::vec3(s, s, s));
 
 		
