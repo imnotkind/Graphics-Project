@@ -131,6 +131,7 @@ void CGraphics::M_Initialize2(void)
 	V_CurrentDrawing = false;
 
 	//V_Camera_Pos = Vec3d(-3, -3, 2.5);
+	V_UserInput->M_MouseSet(T2Int(0, 0));
 
 	M_SetupHieraModels();
 
