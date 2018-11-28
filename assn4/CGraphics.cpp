@@ -27,7 +27,7 @@ void CGraphics::M_MoveCamera(void)
 
 
 	V_Camera_Look = glm::vec3(0.0, 0.0, 0.0);
-	V_Camera_Pos = glm::vec3(3.0 * cos(mouse[0]), 3.0 * sin(mouse[0]), 3.0);
+	V_Camera_Pos = glm::vec3(3.0 * cos(mouse[0]), 3.0 * sin(mouse[0]), 3.0 + 5*mouse[1]);
 	return;
 
 }

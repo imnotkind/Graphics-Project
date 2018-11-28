@@ -23,10 +23,7 @@ POINT mouse_coord;
 int winid;
 void cb_display()
 {
-	SetCursor(NULL);
 	Graphics.M_CallbackDisplay();
-	SetCursor(NULL);
-
 }
 
 void cb_reshape(int w, int h)
