@@ -23,10 +23,7 @@ POINT mouse_coord;
 int winid;
 void cb_display()
 {
-	SetCursor(NULL);
 	Graphics.M_CallbackDisplay();
-	SetCursor(NULL);
-
 }
 
 void cb_reshape(int w, int h)
@@ -45,10 +42,9 @@ void cb_idle()
 		if (((new_count.QuadPart - old_count.QuadPart) * 1000000) / freq.QuadPart < 1000000 / 90) return;
 
 		old_count = new_count;
-
+		
 		Graphics.M_CallbackIdle();
 		Engine.M_Loop();
-
 	}
 	else {
 		cout << "counter fail" << endl;
