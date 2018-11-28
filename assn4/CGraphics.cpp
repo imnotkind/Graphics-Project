@@ -24,7 +24,9 @@ void CGraphics::M_MoveCamera(void)
 	t += 0.00461;
 
 	V_Camera_Look = glm::vec3(0.0, 0.0, 0.0);
-	V_Camera_Pos = glm::vec3(3.0 * cos(t), 3.0 * sin(t), 3.0);
+	V_Camera_Pos = glm::vec3(2.0 * cos(t), 2.0 * sin(t), 0.5);
+
+	swap(V_Camera_Pos, V_Camera_Look);
 	return;
 
 }
@@ -93,6 +95,7 @@ int CGraphics::M_Initialize(CEngine * P)
 	glEnable(GL_BLEND);
 	glEnable(GL_MULTISAMPLE);
 
+
 	return id;
 
 }
@@ -100,6 +103,9 @@ int CGraphics::M_Initialize(CEngine * P)
 void CGraphics::M_Initialize2(void)
 {
 	glEnable(GL_DEPTH_TEST);
+
+	glDepthFunc(GL_LESS);
+	//glDepthFunc(GL_ALWAYS);
 	V_SM = CShaderManager::getInstance();
 
 	V_ViewMode = false;

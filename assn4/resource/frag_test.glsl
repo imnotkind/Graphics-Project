@@ -22,16 +22,11 @@ uniform float t;
 
 out vec4 color;
 
-void main()
+int max_iter = 50;
+int mandel(double x, double y, double cr, double ci)
 {
-
-	double x = vpos[0] * sin(t * 0.9); 
-	double y = vpos[1] * cos(t);
-
-	double cr = vpos[0];
-	double ci = vpos[1];
-
-	int max_iter = 100;
+	
+	//if(cr*cr + ci*ci < 0.08) return max_iter;
 
 	float max_d = 10;
 
@@ -47,7 +42,24 @@ void main()
 		y = ny;
 	}
 
-	vec4 mcolor = vec4(float(i)/max_iter, 0, 0, 1);
+	return i;
+}
+
+void main()
+{
+
+	double x = vpos[0] * sin(t * 0.9); 
+	double y = vpos[1] * cos(t);
+
+	double cr = vpos[0];
+	double ci = vpos[1];
+
+	int z = max_iter;//mandel(x, y, cr, ci);
+
+
+	x = vpos[1] * sin(t * 1.13); y = vpos[0] * cos(t * 0.98);
+	int zz = 0; //mandel(x, y, cr*1.2, ci*1.2);
+	vec4 mcolor = vec4(float(z)/max_iter, float(zz)/max_iter, 0, 1);
 
 
 	vec3 L = normalize((light1 - vpos).xyz); //vector of light
