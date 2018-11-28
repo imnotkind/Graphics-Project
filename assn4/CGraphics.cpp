@@ -89,13 +89,13 @@ int CGraphics::M_Initialize(CEngine * P)
 	glutInitWindowSize(1080, 1080);
 
 	int id = glutCreateWindow("Graphics Assn3");
-	cout << id << endl;
 
 	glClearColor(1, 1, 1, 1); //background white
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glEnable(GL_MULTISAMPLE);
+	glutSetCursor(GLUT_CURSOR_NONE);
 
 	return id;
 
