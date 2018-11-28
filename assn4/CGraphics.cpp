@@ -22,11 +22,12 @@ void CGraphics::M_MoveCamera(void)
 {
 	static double t = 0.0;
 	t += 0.00461;
+	
+	T2Double mouse = V_UserInput->M_MouseGet_Normalized();
+
 
 	V_Camera_Look = glm::vec3(0.0, 0.0, 0.0);
-	V_Camera_Pos = glm::vec3(2.0 * cos(t), 2.0 * sin(t), 0.5);
-
-	swap(V_Camera_Pos, V_Camera_Look);
+	V_Camera_Pos = glm::vec3(3.0 * cos(mouse[0]), 3.0 * sin(mouse[0]), 3.0);
 	return;
 
 }
@@ -79,8 +80,9 @@ int CGraphics::M_Initialize(CEngine * P)
 
 	V_PEngine = P;
 	V_Screen_Size = T2Double(1080, 1080);
-	auto ui = CUserInput::getInstance();
-	ui->M_SetWinSize(V_Screen_Size);
+	V_UserInput = CUserInput::getInstance();
+
+	V_UserInput->M_SetWinSize(V_Screen_Size);
 
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
 	glutInitWindowPosition(0, 0);

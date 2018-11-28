@@ -15,7 +15,7 @@ void main()
 	double cr = coord[0];
 	double ci = coord[1];
 
-	int max_iter = 1000;
+	int max_iter = 500;
 
 	float max = 10;
 

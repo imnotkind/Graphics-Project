@@ -16,6 +16,7 @@ class CGraphics : public CHandler
 {
 	CEngine * V_PEngine;
 	CShaderManager* V_SM;
+	CUserInput* V_UserInput;
 
 	T2Double V_Screen_Size;
 
