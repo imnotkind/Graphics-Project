@@ -18,10 +18,15 @@ LARGE_INTEGER old_count;
 LARGE_INTEGER new_count;
 LARGE_INTEGER freq;
 
+POINT mouse_coord;
+
 int winid;
 void cb_display()
 {
+	SetCursor(NULL);
 	Graphics.M_CallbackDisplay();
+	SetCursor(NULL);
+
 }
 
 void cb_reshape(int w, int h)
@@ -48,6 +53,16 @@ void cb_idle()
 	else {
 		cout << "counter fail" << endl;
 	}
+
+	
+	GetCursorPos(&mouse_coord);
+	T2Int mouse_diff = T2Int(mouse_coord.x - 500, mouse_coord.y - 500);
+	SetCursorPos(500, 500);
+
+	auto iq = CUserInput::getInstance();
+	T2Int m = iq->M_MouseGet();
+	iq->M_MouseSet(m + mouse_diff);
+
 	
 }
 
@@ -77,8 +92,7 @@ void cb_skeyup(int key, int x, int y)
 
 void cb_mousemove(int x, int y)
 {
-	auto iq = CUserInput::getInstance();
-	iq->M_MouseSet(T2Int(x, y));
+	
 }
 
 void cb_mouseclick(int button, int state, int x, int y)
