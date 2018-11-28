@@ -412,7 +412,6 @@ void idle1()
 
 
 void display1() {
-	SetCursor(NULL);
 
 	static double k = 0.0;
 	k += 0.01;
@@ -651,7 +650,7 @@ int main(int argc, char **argv)
 	// Create and compile our GLSL program from the shaders
 	bool hae = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, "OBJ files/dummy_obj.obj");
 
-
+	glutSetCursor(GLUT_CURSOR_NONE);
 
 	init_shader(-1);
 	
