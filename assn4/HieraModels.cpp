@@ -18,7 +18,7 @@ void CGraphics::M_SimplePolyFractal(void)
 	
 	SFractal node;
 
-	node.V_Draw.reset(new CDrawing(temptemp("cubeobj_0", T4Double(1.0, 1.0, 1.0, 1.0))));
+	node.V_Draw.reset(new CDrawing(temptemp("cubeobj2_0", T4Double(1.0, 1.0, 1.0, 1.0))));
 	node.V_Trans_S = glm::mat4(1.0);
 	double d = 0.5;
 	double s = 0.42;

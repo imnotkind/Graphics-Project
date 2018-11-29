@@ -1,5 +1,5 @@
 %obj_name
-cubeobj
+cubeobj2
 
 %obj_file_path
 resource/OBJ files/cube2.obj

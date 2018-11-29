@@ -73,8 +73,8 @@ void CGraphics::M_RenderFractal(void)
 
 	ri.keeplight = false;
 	ri.amb = Vec4d(0.1, 0.1, 0.1, 1.0);
-	ri.dif = Vec4d(0.5, 0.5, 0.5, 1.0);
-	ri.spc = Vec4d(0.5, 0.5, 0.5, 1.0);
+	ri.dif = Vec4d(0.3, 0.3, 0.3, 1.0);
+	ri.spc = Vec4d(0.3, 0.3, 0.3, 1.0);
 	ri.light1 = V_CTM_View * Vec4d(V_Light1[0], V_Light1[1], V_Light1[2], 1);
 	ri.normtrans = m;
 
@@ -85,6 +85,7 @@ void CGraphics::M_RenderFractal(void)
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
 	V_Fractals["basic"]->M_Draw(ri, 7);
 
+	return;
 	for (int i = -50; i <= 50; i++)
 	{
 		float x = i * 0.1;
