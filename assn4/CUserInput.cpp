@@ -4,6 +4,7 @@
 
 CUserInput::CUserInput()
 {
+	V_MousePrison = true;
 }
 
 

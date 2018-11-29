@@ -57,8 +57,8 @@ void main()
 	double x = vpos[0] * sin(t * 0.9); 
 	double y = vpos[1] * cos(t);
 
-	double cr = vpos[0];
-	double ci = vpos[1];
+	double cr = opos[0] + opos[2];
+	double ci = opos[2] + opos[1];
 
 	int z = mandel(x, y, cr, ci);
 

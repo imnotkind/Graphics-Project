@@ -26,28 +26,21 @@ void CGraphics::M_MoveCamera(void)
 	T2Double mouse = V_UserInput->M_MouseGet_Normalized();
 	mouse[1] = clamp(mouse[1], DTR(-80), DTR(80));
 
-	double th = mouse[0]; double pi = mouse[1]/abs(mouse[1]) * std::min(abs(mouse[1]), DTR(80.0));
+	double th = mouse[0]; double pi = mouse[1] == 0 ? 0 : mouse[1] / abs(mouse[1]) * std::min(abs(mouse[1]), DTR(80.0));
 
 	V_Camera_Look = glm::vec3(cos(-th) * cos(pi), sin(-th) *cos(pi), sin(-pi));
 
 	Vec3d hor = glm::vec3(-sin(-th) *cos(pi), cos(-th) * cos(pi), 0);
 	
-	auto old = V_Camera_Pos;
-
 	if (V_UserInput->M_IfPressed('a', false)) V_Camera_Pos += hor *(float)0.01;
 	if (V_UserInput->M_IfPressed('d', false)) V_Camera_Pos -= hor  * (float)0.01;
 	if (V_UserInput->M_IfPressed('s', false)) V_Camera_Pos -= V_Camera_Look * (float)0.01;
 	if (V_UserInput->M_IfPressed('w', false)) V_Camera_Pos += V_Camera_Look * (float)0.01;
 
-	V_Camera_Look += old;
+	V_Camera_Look += V_Camera_Pos;
 
 	//V_Camera_Look = vec3(0, 0, 0);
 	//V_Camera_Pos = vec3(cos(t) * 3, sin(t) * 3, 2);
-
-
-	
-
-
 
 	return;
 
@@ -90,18 +83,54 @@ void CGraphics::M_RenderFractal(void)
 	glUniform1f(l, (float)t);
 
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
-	//V_Fractals["basic"]->M_Draw(ri, 7);
+	V_Fractals["basic"]->M_Draw(ri, 7);
 
 	for (int i = -50; i <= 50; i++)
 	{
 		float x = i * 0.1;
-		M_DrawLine(Vec3d(x, -5, 0), Vec3d(x, 5, 0), T4Int(8, 255, 255, 255));
-		M_DrawLine(Vec3d(-5, x, 0), Vec3d(5, x, 0), T4Int(8, 255, 255, 255));
+		M_DrawLine(Vec3d(x, -5.0, 0), Vec3d(x, 5.0, 0), T4Int(8, 255, 255, 255));
+		M_DrawLine(Vec3d(-5.0, x, 0), Vec3d(5.0, x, 0), T4Int(8, 255, 255, 255));
 
 	}
+
+	
 	//M_DrawModel(Vec3d(0, 0, 0), "sphere", 0.1, 0, T4Int(255, 0, 255, 255));
 }
+void CGraphics::M_CallbackDisplay()
+{
+	M_ListenMessages();
 
+	V_CTM_Temp = glm::mat4(1.0);
+
+	static double count = 0;
+	count += 0.02;
+	M_MoveCamera();
+
+	V_CurrentDrawing = false;
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	V_SM->M_UseProgram("prg1");
+
+	V_CTM_Project = glm::mat4(1.0f);
+	V_CTM_Project = glm::translate(V_CTM_Project, glm::vec3(-1.0, -1.0, 0.0));
+	V_CTM_Project = glm::scale(V_CTM_Project, glm::vec3(2.0 / V_Screen_Size[0], 2.0 / V_Screen_Size[1], 1));
+	V_CTM_View = glm::mat4(1.0f);
+	M_RenderUI();
+
+
+	V_CurrentDrawing = true;
+
+	glm::vec3 v(0.0f);
+	glm::vec3 up(0.0, 0.0, 1.0);
+
+	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 1000.0f);
+	V_CTM_View = glm::lookAt(V_Camera_Pos, V_Camera_Look, up);
+
+	//world
+	M_RenderFractal();
+
+	glutSwapBuffers();
+}
 int CGraphics::M_Initialize(CEngine * P)
 {
 	CTexture t;
@@ -174,6 +203,8 @@ bool CGraphics::M_Event_KeyPress(int key, bool special)
 {
 	if (key == 'v' && special == false)
 	{
+		V_UserInput->V_MousePrison = !V_UserInput->V_MousePrison;
+
 		V_ViewMode = !V_ViewMode;
 		return true;
 	}
@@ -191,41 +222,7 @@ glm::mat4 CGraphics::M_GetBillboardMat(void)
 	return glm::transpose(view);
 }
 
-void CGraphics::M_CallbackDisplay()
-{
-	M_ListenMessages();
 
-	V_CTM_Temp = glm::mat4(1.0);
-
-	static double count = 0;
-	count += 0.02;
-	M_MoveCamera();
-
-	V_CurrentDrawing = false;
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	V_SM->M_UseProgram("prg1");
-	
-	V_CTM_Project = glm::mat4(1.0f);
-	V_CTM_Project = glm::translate(V_CTM_Project, glm::vec3(-1.0, -1.0, 0.0));
-	V_CTM_Project = glm::scale(V_CTM_Project, glm::vec3(2.0 / V_Screen_Size[0], 2.0 / V_Screen_Size[1], 1));
-	V_CTM_View = glm::mat4(1.0f);
-	M_RenderUI();
-
-	
-	V_CurrentDrawing = true;
-
-	glm::vec3 v(0.0f);
-	glm::vec3 up(0, 0, 1);
-
-	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 1000.0f);
-	V_CTM_View = glm::lookAt(V_Camera_Pos, V_Camera_Look, up);
-
-	//world
-	M_RenderFractal();
-
-	glutSwapBuffers();
-}
 
 void CGraphics::M_CallbackReshape(int w, int h)
 {

@@ -20,8 +20,10 @@ class CUserInput : public CHandler
 
 	T2Int V_MousePos;
 	T2Double V_WinSize;
-public:
+
 	
+public:
+	bool V_MousePrison;
 
 	static CUserInput* getInstance(void)
 	{
@@ -32,7 +34,6 @@ public:
 	{
 		if (Instance) delete Instance;
 	}
-
 
 	void M_PressDown(int key, bool special);
 	void M_PressUp(int key, bool special);

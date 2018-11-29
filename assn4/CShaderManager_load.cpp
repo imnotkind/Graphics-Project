@@ -222,6 +222,7 @@ void CShaderManager::M_LoadPolygon(string data, string name)
 void CShaderManager::M_LoadProgram(string name, string ver, string frag)
 {
 	GLuint id = glCreateProgram();
+
 	glAttachShader(id, V_VerShaders[ver]);
 	glAttachShader(id, V_FragShaders[frag]);
 
