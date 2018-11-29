@@ -6,6 +6,8 @@ in vec3 vnormal;
 in vec4 vpos;
 in vec2 vtex;
 
+in vec3 opos;
+
 uniform mat4 projection;
 uniform mat4 modelview;
 uniform mat4 normaltrans; // supposed to be rotation only from viewtrans
@@ -25,9 +27,6 @@ out vec4 color;
 int max_iter = 50;
 int mandel(double x, double y, double cr, double ci)
 {
-	
-	//if(cr*cr + ci*ci < 0.08) return max_iter;
-
 	float max_d = 10;
 
 	int i;
@@ -41,7 +40,6 @@ int mandel(double x, double y, double cr, double ci)
 		x = nx;
 		y = ny;
 	}
-
 	return i;
 }
 
@@ -51,6 +49,8 @@ void main()
 	if(vtex[0] < 0.5 + 0.5*fk && vtex[0] > 0.5 - 0.5*fk)
 		if(vtex[1] < 0.5 + 0.5*fk && vtex[1] > 0.5 - 0.5*fk)
 		{
+			discard;
+			return;
 			color = vec4(0,1,0,0); return;
 		}
 
@@ -77,5 +77,6 @@ void main()
 	vec4 dif_r = mcolor * katt * max(dot(vnormal,L), 0.0); // NL is negative : backside
 	vec4 spc_r = mcolor * katt * pow(max(dot(R,E), 0.0), 0.8);
 
-	color = amb_r + clamp(dif_r, 0.0, 1.0) + clamp(spc_r, 0.0, 0.5);
+	color = amb_r + clamp(dif_r, 0.0, 1.0) + clamp(spc_r, 0.0, 1.0);
+	//color[3] = 0.5;
 }

@@ -44,7 +44,13 @@ void CGraphics::M_MoveCamera(void)
 	//V_Camera_Look = vec3(0, 0, 0);
 	//V_Camera_Pos = vec3(cos(t) * 3, sin(t) * 3, 2);
 
+
+	
+
+
+
 	return;
+
 
 }
 
@@ -84,8 +90,15 @@ void CGraphics::M_RenderFractal(void)
 	glUniform1f(l, (float)t);
 
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
-	V_Fractals["basic"]->M_Draw(ri, 7);
+	//V_Fractals["basic"]->M_Draw(ri, 7);
 
+	for (int i = -50; i <= 50; i++)
+	{
+		float x = i * 0.1;
+		M_DrawLine(Vec3d(x, -5, 0), Vec3d(x, 5, 0), T4Int(8, 255, 255, 255));
+		M_DrawLine(Vec3d(-5, x, 0), Vec3d(5, x, 0), T4Int(8, 255, 255, 255));
+
+	}
 	//M_DrawModel(Vec3d(0, 0, 0), "sphere", 0.1, 0, T4Int(255, 0, 255, 255));
 }
 
@@ -108,7 +121,7 @@ int CGraphics::M_Initialize(CEngine * P)
 
 	glClearColor(1, 1, 1, 1); //background white
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-	glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
+
 	glEnable(GL_BLEND);
 	glEnable(GL_MULTISAMPLE);
 	glutSetCursor(GLUT_CURSOR_NONE);
@@ -122,8 +135,10 @@ void CGraphics::M_Initialize2(void)
 {
 	glEnable(GL_DEPTH_TEST);
 
-	glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
+
+	//glEnable(GL_CULL_FACE);
 
 	V_SM = CShaderManager::getInstance();
 

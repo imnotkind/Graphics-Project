@@ -30,7 +30,7 @@ void CGraphics::M_SimplePolyFractal(void)
 	
 		t = glm::rotate(t, float(DTR(i * 90)), glm::vec3(0, 0, 1));
 		t = glm::rotate(t, float(-DTR(90)), glm::vec3(0, -1, 0));
-		t = glm::translate(t, glm::vec3(0, 0, d + d * s + 0.01));
+		t = glm::translate(t, glm::vec3(0, 0, d + d * s));
 		t = glm::scale(t, glm::vec3(s, s, s));
 
 		
@@ -39,7 +39,7 @@ void CGraphics::M_SimplePolyFractal(void)
 
 	glm::mat4 t = glm::mat4(1.0);
 
-	t = glm::translate(t, glm::vec3(0, 0, d + d * s +0.01));
+	t = glm::translate(t, glm::vec3(0, 0, d + d * s));
 	t = glm::scale(t, glm::vec3(s, s, s));
 	
 	node.V_Grow.push_back(t);

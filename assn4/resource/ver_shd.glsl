@@ -19,6 +19,8 @@ uniform float t;
 
 
 out vec3 vnormal;
+out vec3 opos;
+
 out vec4 vpos;
 out vec2 vtex;
 
@@ -31,6 +33,7 @@ void main()
 	//for(int i = 0; i < 3; i++) p[i] = sin(p[i] * t) * p[(i+2)%3]  + p[(i+1)%3] * (0.5 + 0.4 * cos(0.8*t));
 
 	vpos = modelview * p;
+	opos = p.xyz;
     gl_Position = projection * vpos;
 	
 }
