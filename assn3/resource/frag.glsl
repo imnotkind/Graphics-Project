@@ -9,13 +9,13 @@ uniform float t;
 void main()
 {
 
-	double x = 0; 
-	double y = 0;
+	double x = 1.5 * coord[0] * sin(t*0.9); 
+	double y = 1.5 * coord[1] * cos(t);
 
-	double cr = coord[0];
-	double ci = coord[1];
+	double cr = 1.5 * coord[0];
+	double ci = 1.5 * coord[1];
 
-	int max_iter = 500;
+	int max_iter = 200;
 
 	float max = 10;
 

@@ -39,8 +39,10 @@ void CGraphics::M_MoveCamera(void)
 
 	V_Camera_Look += V_Camera_Pos;
 
-	//V_Camera_Look = vec3(0, 0, 0);
-	//V_Camera_Pos = vec3(cos(t) * 3, sin(t) * 3, 2);
+	return;
+
+	V_Camera_Look = vec3(0, 0, 0);
+	V_Camera_Pos = vec3(cos(t) * 3, sin(t) * 3, 2);
 
 	return;
 
@@ -78,7 +80,7 @@ void CGraphics::M_RenderFractal(void)
 	ri.light1 = V_CTM_View * Vec4d(V_Light1[0], V_Light1[1], V_Light1[2], 1);
 	ri.normtrans = m;
 
-	V_SM->M_UseProgram("prg4");
+	V_SM->M_UseProgram("prg3");
 	auto l = V_SM->M_GetUniformLoc("t");
 	glUniform1f(l, (float)t);
 

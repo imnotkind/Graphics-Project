@@ -28,7 +28,7 @@ void CShaderManager::M_LoadShader(string path, string name, int type)
 		vector<char> error_msg(InfoLogLength + 1);
 		glGetShaderInfoLog(id, InfoLogLength, NULL, &error_msg[0]);
 		printf("%s\n", &error_msg[0]);
-		CError("Shader code " + path + " can't be compoiled", true);
+		//CError("Shader code " + path + " can't be compoiled", true);
 	}
 
 	if (type == GL_VERTEX_SHADER)
@@ -127,7 +127,7 @@ void CShaderManager::M_LoadProgram(string name, string ver, string frag)
 		vector<char> error_msg(InfoLogLength + 1);
 		glGetProgramInfoLog(id, InfoLogLength, NULL, &error_msg[0]);
 		printf("%s\n", &error_msg[0]);
-		CError("Program " + name + " can't be linked", true);
+		//CError("Program " + name + " can't be linked", true);
 	}
 
 	V_Programs[name] = id;

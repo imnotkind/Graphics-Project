@@ -60,6 +60,9 @@ void main()
 	double cr = opos[0] + opos[2];
 	double ci = opos[2] + opos[1];
 
+	cr = vpos[0]-0.2;
+	ci = vpos[1];
+
 	int z = mandel(x, y, cr, ci);
 
 	vec4 mcolor = vec4(float(z)/max_iter, 0, 0, 1);
@@ -76,7 +79,7 @@ void main()
 	vec4 amb_r = ambient;
 	vec4 dif_r = mcolor * katt * max(dot(vnormal,L), 0.0); // NL is negative : backside
 	vec4 spc_r = mcolor * katt * pow(max(dot(R,E), 0.0), 0.8);
-
+	//
 	color = amb_r + clamp(dif_r, 0.0, 1.0) + clamp(spc_r, 0.0, 1.0);
 	//color[3] = 0.5;
 }

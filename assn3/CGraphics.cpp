@@ -56,7 +56,7 @@ void CGraphics::M_Initialize2(void)
 	V_CurrentDrawing = false;
 	M_SetupHieraModels();
 
-	V_Camera_Pos = Vec3d(0, 0, 10);
+	V_Camera_Pos = Vec3d(0, 0, 2.5);
 	V_Camera_Look = Vec3d(0, 0, 0);
 
 	V_Height = 1;
@@ -170,18 +170,19 @@ void coutmat(glm::mat4 m)
 }
 void CGraphics::M_RenderFractal(void)
 {
-	V_Height -= 0.015;
+	V_Height -= 0.005;
 
 	auto ui = CUserInput::getInstance();
 	
-	V_Camera_Pos[2] = exp(V_Height);
 	
-
+	V_Camera_Pos[2] = exp(V_Height);
 	if (V_Height < 0.9)
 	{
 		V_Camera_Pos[0] += 0.1*(ui->M_MouseGet_Normalized()[0] - 0.5) * atan(V_Camera_Pos[2]);
 		V_Camera_Pos[1] -= 0.1*(ui->M_MouseGet_Normalized()[1] - 0.5) * atan(V_Camera_Pos[2]);
 	}
+	
+	
 
 	Vec3d realcamera = V_Camera_Pos;
 
@@ -194,7 +195,7 @@ void CGraphics::M_RenderFractal(void)
 void CGraphics::M_Mandelbrot(void)
 {
 	static double t = 0.0;
-	t += 0.01;
+	t += 0.001;
 
 	GLuint p = glGetUniformLocation(V_SM->M_GetProgram(), "scale");
 	GLuint q = glGetUniformLocation(V_SM->M_GetProgram(), "t");
