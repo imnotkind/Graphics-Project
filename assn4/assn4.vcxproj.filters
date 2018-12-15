@@ -241,5 +241,11 @@
     <Text Include="resource\OBJ files\cube_meta.txt">
       <Filter>Resource\obj</Filter>
     </Text>
+    <Text Include="resource\OBJ files\sphere_hole_meta.txt">
+      <Filter>Resource\obj</Filter>
+    </Text>
+    <Text Include="resource\OBJ files\wormhole_meta.txt">
+      <Filter>Resource\obj</Filter>
+    </Text>
   </ItemGroup>
 </Project>

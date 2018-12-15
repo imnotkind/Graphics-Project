@@ -213,7 +213,9 @@
     <Text Include="resource\OBJ files\dummy_obj_red_meta.txt" />
     <Text Include="resource\OBJ files\M1911_meta.txt" />
     <Text Include="resource\OBJ files\Skeleton_meta.txt" />
+    <Text Include="resource\OBJ files\sphere_hole_meta.txt" />
     <Text Include="resource\OBJ files\sphere_meta.txt" />
+    <Text Include="resource\OBJ files\wormhole_meta.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

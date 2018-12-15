@@ -543,7 +543,8 @@ void init_shader(int p)
 
 	if (p == -1)
 	{
-		for (int i = 0; i < 29; i++)
+		cout << shapes.size() << endl;
+		for (int i = 0; i < shapes.size(); i++)
 		{
 			cout << shapes[i].name << endl;
 			for (tinyobj::index_t index : shapes[i].mesh.indices)
@@ -556,11 +557,7 @@ void init_shader(int p)
 
 				vertices.push_back(tmp1);
 
-				glm::vec2 tmp2;
-				tmp2.x = attrib.texcoords[2 * index.texcoord_index + 0];
-				tmp2.y = attrib.texcoords[2 * index.texcoord_index + 1];
 
-				uvs.push_back(tmp2);
 
 				glm::vec3 tmp3;
 				tmp3.x = attrib.normals[3 * index.normal_index + 0];
@@ -648,7 +645,7 @@ int main(int argc, char **argv)
 	glClearColor(0.15f, 0.15f, 0.15f, 0.0f);
 
 	// Create and compile our GLSL program from the shaders
-	bool hae = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, "OBJ files/dummy_obj.obj");
+	bool hae = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, "OBJ files/wormhole.obj");
 
 	glutSetCursor(GLUT_CURSOR_NONE);
 

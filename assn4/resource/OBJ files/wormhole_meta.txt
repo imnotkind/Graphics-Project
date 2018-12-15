@@ -1,0 +1,35 @@
+%obj_name
+wormhole
+
+%obj_file_path
+resource/OBJ files/wormhole.obj
+
+%group_number
+1
+
+%group_info
+0
+
+%group_translation
+0, 0, 0
+
+%group_rotation
+0, 0, 0, 1
+
+%group_port
+0
+
+%parent_info
+-1
+
+%parent_rotation
+0, 0, 0, 1
+
+%parent_translation
+0, 0, 0
+
+%line_color
+0, 200, 200, 255
+
+%surface_color
+0, 200, 200, 255
