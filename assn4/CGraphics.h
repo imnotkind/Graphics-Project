@@ -31,6 +31,9 @@ class CGraphics : public CHandler
 	Vec3d V_Light1;
 
 
+	int V_FDepth;
+
+
 	glm::mat4 V_CTM_View;
 	glm::mat4 V_CTM_Project;
 	glm::mat4 V_CTM_Temp;

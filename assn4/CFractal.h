@@ -1,6 +1,7 @@
 #pragma once
 #include "CHandler.h"
 #include "CDrawing.h"
+#include "CHierModel.h"
 
 struct SFractal
 {
@@ -8,7 +9,7 @@ struct SFractal
 	vector<glm::mat4> V_Grow;
 	glm::mat4 V_Trans_S; // no inheritance
 	
-	shared_ptr<CDrawing> V_Draw;
+	shared_ptr<CHierModel> V_Draw;
 
 };
 

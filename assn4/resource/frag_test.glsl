@@ -25,7 +25,7 @@ uniform float t;
 out vec4 color;
 
 int max_iter = 50;
-int mandel(double x, double y, double cr, double ci)
+vec3 mandel(double x, double y, double cr, double ci)
 {
 	float max_d = 10;
 
@@ -40,11 +40,16 @@ int mandel(double x, double y, double cr, double ci)
 		x = nx;
 		y = ny;
 	}
-	return i;
+	return vec3(i, x, y);
 }
-
+float mynorm(float x)
+{
+	return 0.5 + 0.5 * tanh(x);
+}
 void main()
 {
+
+	/*
 	float fk = 0.42;
 	if(vtex[0] < 0.5 + 0.5*fk && vtex[0] > 0.5 - 0.5*fk)
 		if(vtex[1] < 0.5 + 0.5*fk && vtex[1] > 0.5 - 0.5*fk)
@@ -53,6 +58,7 @@ void main()
 			return;
 			color = vec4(0,1,0,0); return;
 		}
+	*/
 
 	double x = vpos[0] * sin(t * 0.9); 
 	double y = vpos[1] * cos(t);
@@ -63,10 +69,10 @@ void main()
 	cr = vpos[0]-0.2;
 	ci = vpos[1];
 
-	int z = mandel(x, y, cr, ci);
+	vec3 z = mandel(x, y, cr, ci);
 
-	vec4 mcolor = vec4(float(z)/max_iter, 0, 0, 1);
-
+	vec4 mcolor = vec4(1, mynorm(z[1] + 2*z[2]) , mynorm(2*z[1] + z[2]), 1) * float(z[0])/max_iter;
+	//mcolor = vec4(float(z[0])/max_iter, 0, 0, 1);
 
 
 

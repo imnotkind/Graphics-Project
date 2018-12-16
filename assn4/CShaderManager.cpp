@@ -75,6 +75,9 @@ CShaderManager::CShaderManager(string config_path)
 	ObjData.insert("resource/OBJ files/cube_meta.txt");
 	ObjData.insert("resource/OBJ files/cube2_meta.txt");
 
+	ObjData.insert("resource/OBJ files/sphere_hole_meta.txt");
+	ObjData.insert("resource/OBJ files/wormhole_meta.txt");
+
 	for (auto p : VerShaderPaths)
 	{
 		M_LoadShader(p.second, p.first, GL_VERTEX_SHADER);

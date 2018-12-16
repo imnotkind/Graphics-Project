@@ -101,7 +101,7 @@ void CShaderManager::M_LoadMesh(string path, string name)
 			for (int j = 0; j < 3; j++)
 				norm[q + j] = normals[i][j];
 			for (int j = 0; j < 2; j++)
-				tex[f + j] = uvs[i][j];
+				tex[f + j] = uvs.empty() ? 0 : uvs[i][j];
 		}
 
 		GLuint vbid;
@@ -241,95 +241,28 @@ void CShaderManager::M_LoadProgram(string name, string ver, string frag)
 		CError("Program " + name + " can't be linked", true);
 	}
 
-	if (name == "prg1")
+	V_Programs[name] = id;
+	auto vl = glGetAttribLocation(id, "position");
+	auto nl = glGetAttribLocation(id, "normal");
+	auto tl = glGetAttribLocation(id, "texcoord");
+
+	for (auto p : V_Polygons)
 	{
-		V_Programs[name] = id;
-		auto vl = glGetAttribLocation(id, "position");
-		auto tl = glGetAttribLocation(id, "texcoord");
+		auto a = p.second;
+		auto b = V_Buffers[p.first];
 
-		for (auto p : V_Polygons)
-		{
-			auto a = p.second;
-			auto b = V_Buffers[p.first];
+		glBindVertexArray(a.aindex);
+		glBindBuffer(GL_ARRAY_BUFFER, b);
 
-			glBindVertexArray(a.aindex);
-			glBindBuffer(GL_ARRAY_BUFFER, b);
+		glEnableVertexAttribArray(vl);
+		glVertexAttribPointer(vl, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-			glEnableVertexAttribArray(vl);
-			glVertexAttribPointer(vl, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glEnableVertexAttribArray(nl);
+		glVertexAttribPointer(nl, 3, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 4 * a.num));
 
-			glEnableVertexAttribArray(tl);
-			glVertexAttribPointer(tl, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 4 * a.num));
-		}
+		glEnableVertexAttribArray(tl);
+		glVertexAttribPointer(tl, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 7 * a.num));
 	}
-	else if(name == "prg2")
-	{
-		V_Programs[name] = id;
-		auto vl = glGetAttribLocation(id, "position");
-		auto tl = glGetAttribLocation(id, "texcoord");
-
-		for (auto p : V_Polygons)
-		{
-			auto a = p.second;
-			auto b = V_Buffers[p.first];
-
-			glBindVertexArray(a.aindex);
-			glBindBuffer(GL_ARRAY_BUFFER, b);
-
-			glEnableVertexAttribArray(vl);
-			glVertexAttribPointer(vl, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-			glEnableVertexAttribArray(tl);
-			glVertexAttribPointer(tl, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 4 * a.num));
-		}
-	}
-	else if (name == "prg3")
-	{
-		V_Programs[name] = id;
-		auto vl = glGetAttribLocation(id, "position");
-		auto nl = glGetAttribLocation(id, "normal");
-
-		for (auto p : V_Polygons)
-		{
-			auto a = p.second;
-			auto b = V_Buffers[p.first];
-
-			glBindVertexArray(a.aindex);
-			glBindBuffer(GL_ARRAY_BUFFER, b);
-
-			glEnableVertexAttribArray(vl);
-			glVertexAttribPointer(vl, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-			glEnableVertexAttribArray(nl);
-			glVertexAttribPointer(nl, 3, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 4 * a.num));
-		}
-	}
-	else if (name == "prg4")
-	{
-		V_Programs[name] = id;
-		auto vl = glGetAttribLocation(id, "position");
-		auto nl = glGetAttribLocation(id, "normal");
-		auto tl = glGetAttribLocation(id, "texcoord");
-
-		for (auto p : V_Polygons)
-		{
-			auto a = p.second;
-			auto b = V_Buffers[p.first];
-
-			glBindVertexArray(a.aindex);
-			glBindBuffer(GL_ARRAY_BUFFER, b);
-
-			glEnableVertexAttribArray(vl);
-			glVertexAttribPointer(vl, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-			glEnableVertexAttribArray(nl);
-			glVertexAttribPointer(nl, 3, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 4 * a.num));
-
-			glEnableVertexAttribArray(tl);
-			glVertexAttribPointer(tl, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 7 * a.num));
-		}
-	}
-	
 
 }
 

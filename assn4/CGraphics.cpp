@@ -32,12 +32,16 @@ void CGraphics::M_MoveCamera(void)
 
 	Vec3d hor = glm::vec3(-sin(-th) *cos(pi), cos(-th) * cos(pi), 0);
 	
-	if (V_UserInput->M_IfPressed('a', false)) V_Camera_Pos += hor *(float)0.01;
-	if (V_UserInput->M_IfPressed('d', false)) V_Camera_Pos -= hor  * (float)0.01;
-	if (V_UserInput->M_IfPressed('s', false)) V_Camera_Pos -= V_Camera_Look * (float)0.01;
-	if (V_UserInput->M_IfPressed('w', false)) V_Camera_Pos += V_Camera_Look * (float)0.01;
+	double speed = 0.03;
+	if (V_UserInput->M_IfPressed('a', false)) V_Camera_Pos += hor *(float)speed;
+	if (V_UserInput->M_IfPressed('d', false)) V_Camera_Pos -= hor  * (float)speed;
+	if (V_UserInput->M_IfPressed('s', false)) V_Camera_Pos -= V_Camera_Look * (float)speed;
+	if (V_UserInput->M_IfPressed('w', false)) V_Camera_Pos += V_Camera_Look * (float)speed;
+
 
 	V_Camera_Look += V_Camera_Pos;
+
+	
 
 	return;
 
@@ -80,12 +84,12 @@ void CGraphics::M_RenderFractal(void)
 	ri.light1 = V_CTM_View * Vec4d(V_Light1[0], V_Light1[1], V_Light1[2], 1);
 	ri.normtrans = m;
 
-	V_SM->M_UseProgram("prg3");
+	V_SM->M_UseProgram("prg4");
 	auto l = V_SM->M_GetUniformLoc("t");
 	glUniform1f(l, (float)t);
 
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
-	V_Fractals["basic"]->M_Draw(ri, 7);
+	V_Fractals["basic"]->M_Draw(ri, 3);
 
 	return;
 	for (int i = -50; i <= 50; i++)
@@ -181,6 +185,8 @@ void CGraphics::M_Initialize2(void)
 	V_UserInput->M_MouseSet(T2Int(0, 0));
 
 	M_SetupHieraModels();
+
+	V_FDepth = 0;
 
 }
 
