@@ -15,6 +15,13 @@ struct SDrawingInfo
 	bool light;
 };
 
+struct SLight
+{
+	glm::vec4 dif;
+	glm::vec4 spc;
+	glm::vec4 pos;
+};
+
 struct SRenderInfo
 {
 	glm::mat4 modelview;
@@ -22,17 +29,14 @@ struct SRenderInfo
 
 	glm::mat4 normtrans;
 
-	glm::vec4 light1;
-	glm::vec4 light2;
-	glm::vec4 light3; //directional
+	vector<SLight> lights;
 
 	glm::vec4 amb;
-	glm::vec4 dif;
-	glm::vec4 spc;
 
 	T4Double color;
 	bool keeplight;
 };
+
 
 class CDrawing :
 	public CHandler

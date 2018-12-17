@@ -90,9 +90,9 @@ void CGraphics::M_SetupHieraModels(void)
 		SDrawingInfo di;
 		di.Global_Color = T4Double(1.0, 1.0, 1.0, 1.0);
 		di.PolygonName = k.first;
-		di.Program = di.PolygonName == "cube1" ?  "prg2" : "prg1";
+		di.Program = di.PolygonName == "star" ?  "prg4" : "prg1";
 		di.Line_Color = T4Double(0.0, 0.0, 0.0, 1.0);
-		di.light = false;
+		di.light = di.PolygonName == "star" ? true : false;
 
 		auto& m = p->V_Polygon_suggested_mode;
 		if (m.find(di.PolygonName) != m.end())

@@ -28,7 +28,8 @@ class CGraphics : public CHandler
 
 	Vec3d V_Camera_Speed;
 
-	Vec3d V_Light1;
+	vector<SLight> V_Lights;
+	bool V_KeepLight;
 
 
 	int V_FDepth;

@@ -21,39 +21,52 @@ void CDrawing::M_Draw(const SRenderInfo& r)
 	glBindVertexArray(V_Array.aindex);
 
 	GLuint p;
-	p = V_PSM->M_GetUniformLoc("projection");
+	p = glGetUniformLocation(V_PSM->M_GetProgram(), "projection");
 	glUniformMatrix4fv(p, 1, GL_FALSE, &r.projection[0][0]);
-	p = V_PSM->M_GetUniformLoc("modelview");
+	p = glGetUniformLocation(V_PSM->M_GetProgram(), "modelview");
 	glUniformMatrix4fv(p, 1, GL_FALSE, &r.modelview[0][0]);
 
-	p = V_PSM->M_GetUniformLoc("vicolor");
+	p = glGetUniformLocation(V_PSM->M_GetProgram(), "vicolor");
 	float col[4];
 	for (int i = 0; i< 4; i++) col[i] = V_Color[i] * r.color[i];
 	glUniform4fv(p, 1, col);
 
+	p = glGetUniformLocation(V_PSM->M_GetProgram(), "normaltrans");
+	glUniformMatrix4fv(p, 1, GL_FALSE, &r.normtrans[0][0]);
+
 	if (V_Light && !r.keeplight)
 	{
-		p = V_PSM->M_GetUniformLoc("normaltrans");
-		glUniformMatrix4fv(p, 1, GL_FALSE, &r.normtrans[0][0]);
 
-		p = V_PSM->M_GetUniformLoc("ambient");
+
+		p = glGetUniformLocation(V_PSM->M_GetProgram(), "ambient");
 		glUniform4fv(p, 1, &r.amb[0]);
-		p = V_PSM->M_GetUniformLoc("diffuse");
-		glUniform4fv(p, 1, &r.dif[0]);
-		p = V_PSM->M_GetUniformLoc("specular");
-		glUniform4fv(p, 1, &r.spc[0]);
 
-		p = V_PSM->M_GetUniformLoc("light1");
-		glUniform4fv(p, 1, &r.light1[0]);
-		p = V_PSM->M_GetUniformLoc("light2");
-		glUniform4fv(p, 1, &r.light2[0]);
-		p = V_PSM->M_GetUniformLoc("lgiht3");
-		glUniform4fv(p, 1, &r.light3[0]);
+		for (int i = 0; i < r.lights.size(); i++)
+		{
+			auto l = r.lights[i];
+			char buf[30];
+			sprintf(buf, "light[%d].%s", i, "diffuse"); //WTF sprintf is too slow
+			p = glGetUniformLocation(V_PSM->M_GetProgram(), buf);
+			glUniform4fv(p, 1, &l.dif[0]);
 
+			sprintf(buf, "light[%d].%s", i, "specular");
+			p = glGetUniformLocation(V_PSM->M_GetProgram(), buf);
+			glUniform4fv(p, 1, &l.spc[0]);
+
+			sprintf(buf, "light[%d].%s", i, "pos");
+			p = glGetUniformLocation(V_PSM->M_GetProgram(), buf);
+			glUniform4fv(p, 1, &l.pos[0]);
+		}
+
+	}
+	if (V_Texture != -1)
+	{
+		p = glGetUniformLocation(V_PSM->M_GetProgram(), "texsam");
+		glUniform1i(p, 0);
 	}
 
 
-	if (V_DrawMode == 2) glDrawArrays(GL_TRIANGLE_STRIP, 0, V_Array.num); 
+	if (V_DrawMode == 2) glDrawArrays(GL_TRIANGLE_STRIP, 0, V_Array.num);
 	else if (V_DrawMode == 1) glDrawArrays(GL_LINE_STRIP, 0, V_Array.num); //wireframe
 	else if (V_DrawMode == 3) // wireframe + color
 	{
@@ -66,7 +79,7 @@ void CDrawing::M_Draw(const SRenderInfo& r)
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, V_Array.num);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // back to default
 	}
-	else if (V_DrawMode == 0)glDrawArrays(GL_POINTS, 0, V_Array.num); 
+	else if (V_DrawMode == 0)glDrawArrays(GL_POINTS, 0, V_Array.num);
 	else if (V_DrawMode == 4)glDrawArrays(GL_TRIANGLES, 0, V_Array.num);
 	else if (V_DrawMode == 5)
 	{
@@ -84,4 +97,3 @@ void CDrawing::M_Draw(const SRenderInfo& r)
 		glDrawArrays(GL_LINES, 0, V_Array.num);
 	}
 }
-
