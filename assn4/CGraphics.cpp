@@ -43,10 +43,8 @@ void CGraphics::M_MoveCamera(void)
 
 	
 
-	return;
-
-	V_Camera_Look = vec3(0, 0, 0);
-	V_Camera_Pos = vec3(cos(t) * 3, sin(t) * 3, 2);
+	V_Camera_Look = vec3(0, 0, 2);
+	V_Camera_Pos = vec3(cos(t) * 6, sin(t) * 6,4);
 
 	return;
 
@@ -88,8 +86,20 @@ void CGraphics::M_RenderFractal(void)
 	auto l = V_SM->M_GetUniformLoc("t");
 	glUniform1f(l, (float)t);
 
+	int s = int(4 * sin(t) + 4 + 0.5);
+	V_FDepth = s;
+	vector<int> trace;
+	for (int i = 0; i < s; i++) trace.push_back(0);
+
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
-	V_Fractals["basic"]->M_Draw(ri, 3);
+	
+	//V_Fractals["basic"]->M_Draw(ri, 3);
+	float test = pow(2.0, s);
+
+	auto tt = V_Fractals["basic"]->M_Trace(trace);
+	auto tv = glm::vec3(tt[3][0], tt[3][1], tt[3][2]);
+	ri.modelview = ri.modelview * glm::translate(glm::mat4(1.0), -tv);
+	V_Fractals["basic"]->M_Draw(ri, trace, s, s + 4);
 
 	return;
 	for (int i = -50; i <= 50; i++)
@@ -99,6 +109,8 @@ void CGraphics::M_RenderFractal(void)
 		M_DrawLine(Vec3d(-5.0, x, 0), Vec3d(5.0, x, 0), T4Int(8, 255, 255, 255));
 
 	}
+
+	
 
 	
 	//M_DrawModel(Vec3d(0, 0, 0), "sphere", 0.1, 0, T4Int(255, 0, 255, 255));

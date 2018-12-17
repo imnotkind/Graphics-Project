@@ -15,7 +15,7 @@ SDrawingInfo temptemp(string s, T4Double c)
 }
 void CGraphics::M_SimplePolyFractal(void)
 {
-	float s = 0.42;
+	float s = 0.5;
 	float h = 80;
 	float r = 95.2628;
 
