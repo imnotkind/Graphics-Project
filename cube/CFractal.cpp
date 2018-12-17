@@ -21,7 +21,9 @@ void CFractal::M_Draw_Rec(glm::mat4 CTM, int depth)
 	tri.modelview = temp;
 	tri.normtrans = tri.modelview;
 
+	
 	V_Info.V_Draw->M_Draw(tri);
+	if (!tri.keeplight) V_RenderInfo.keeplight = true;
 
 	for (auto m : V_Info.V_Grow)
 	{
@@ -55,7 +57,7 @@ void CFractal::M_Draw_Rec_t(glm::mat4 CTM, int depth)
 	tri.modelview = temp;
 	tri.normtrans = tri.modelview;
 	V_Info.V_Draw->M_Draw(tri);
-
+	if (!tri.keeplight) V_RenderInfo.keeplight = true;
 	for (auto m : V_Info.V_Grow)
 	{
 		M_Draw_Rec_t(CTM * m, depth + 1);

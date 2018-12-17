@@ -222,11 +222,17 @@ void CShaderManager::M_LoadPolygon(string data, string name)
 void CShaderManager::M_LoadProgram(string name, string ver, string frag)
 {
 	GLuint id = glCreateProgram();
-
 	glAttachShader(id, V_VerShaders[ver]);
 	glAttachShader(id, V_FragShaders[frag]);
 
 	glBindFragDataLocation(id, 0, "color");
+
+	int vl = 0, nl = 1, tl = 2, fl = 3;
+	glBindAttribLocation(id, vl, "position");
+	glBindAttribLocation(id, nl, "normal");
+	glBindAttribLocation(id, tl, "tex");
+
+
 	glLinkProgram(id);
 
 	GLint Result = GL_FALSE;
@@ -240,11 +246,9 @@ void CShaderManager::M_LoadProgram(string name, string ver, string frag)
 		printf("%s\n", &error_msg[0]);
 		CError("Program " + name + " can't be linked", true);
 	}
+	glUseProgram(id);
 
 	V_Programs[name] = id;
-	auto vl = glGetAttribLocation(id, "position");
-	auto nl = glGetAttribLocation(id, "normal");
-	auto tl = glGetAttribLocation(id, "texcoord");
 
 	for (auto p : V_Polygons)
 	{

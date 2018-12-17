@@ -41,7 +41,7 @@ void CGraphics::M_MoveCamera(void)
 
 	V_Camera_Look += V_Camera_Pos;
 
-	
+	return;
 
 	V_Camera_Look = vec3(0, 0, 2);
 	V_Camera_Pos = vec3(cos(t) * 6, sin(t) * 6,4);
@@ -53,11 +53,40 @@ void CGraphics::M_MoveCamera(void)
 
 void CGraphics::M_RenderFractal(void)
 {
+	for (int i = -50; i <= 50; i++)
+	{
+		float x = i * 0.1;
+		M_DrawLine(Vec3d(x, -5.0, 0), Vec3d(x, 5.0, 0), T4Int(8, 255, 255, 255));
+		M_DrawLine(Vec3d(-5.0, x, 0), Vec3d(5.0, x, 0), T4Int(8, 255, 255, 255));
+	}
+
+	
+
 	static double t = 0.0;
 	t += 0.01;
-	V_Light1[0] = 5 * cos(t);
-	V_Light1[1] = 5 * sin(t);
-	V_Light1[2] = 5;
+
+	V_Lights[0].pos = Vec4d(5 * cos(t), 3 * sin(t), 5.0, 1.0);
+	V_Lights[0].dif = Vec4d(0.2, 0.2, 0.2, 1);
+	V_Lights[0].spc = Vec4d(0.2, 0.2, 0.2, 1);
+
+	V_Lights[1].pos = Vec4d(4.4 * cos(t*0.9), 0, 3.8 * sin(t*0.9), 1.0);
+	V_Lights[1].dif = Vec4d(0.03, 0.03, 0.03, 1);
+	V_Lights[1].spc = Vec4d(0.03, 0.03, 0.03, 1);
+
+	V_Lights[2].pos = Vec4d(cos(t*0.3), sin(t*0.3), 1.0, 0.0);
+	V_Lights[2].dif = Vec4d(0.2, 0.2, 0.2, 1);
+	V_Lights[2].spc = Vec4d(0.2, 0.2, 0.2, 1);
+
+	V_KeepLight = false;
+	//M_DrawModel(Vec3d(-50, -50, 50), "star", 0.001, 1, T4Int(255, 255, 255, 255));
+	
+
+	for (auto l : V_Lights)
+	{
+		M_DrawModel(l.pos, "sphere", 0.1, 0.0, T4Int(220, 220, 20, 255));
+	}
+	V_KeepLight = false;
+
 
 	T4Int rgba(255, 255, 0, 255);
 
@@ -76,41 +105,45 @@ void CGraphics::M_RenderFractal(void)
 	ri.projection = V_CTM_Project;
 
 	ri.keeplight = false;
-	ri.amb = Vec4d(0.1, 0.1, 0.1, 1.0);
-	ri.dif = Vec4d(0.3, 0.3, 0.3, 1.0);
-	ri.spc = Vec4d(0.3, 0.3, 0.3, 1.0);
-	ri.light1 = V_CTM_View * Vec4d(V_Light1[0], V_Light1[1], V_Light1[2], 1);
+	ri.normtrans = m;
+
+	ri.amb = Vec4d(0.0, 0.0, 0.0, 1.0);
+
+	auto vt = V_CTM_View;
+	ri.lights.resize(V_Lights.size());
+	transform(V_Lights.begin(), V_Lights.end(), ri.lights.begin(),
+		[vt](SLight x)->SLight {x.pos = vt * x.pos; return x; });
+
 	ri.normtrans = m;
 
 	V_SM->M_UseProgram("prg4");
 	auto l = V_SM->M_GetUniformLoc("t");
 	glUniform1f(l, (float)t);
 
-	int s = int(4 * sin(t) + 4 + 0.5);
-	V_FDepth = s;
-	vector<int> trace;
-	for (int i = 0; i < s; i++) trace.push_back(0);
-
+	
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
 	
-	//V_Fractals["basic"]->M_Draw(ri, 3);
+	
+
+
+
+	V_Fractals["basic"]->M_Draw(ri, 2);
+	return;
+
+
+	int s = int(3 * sin(t * 2) + 3 + 0.5);
+	V_FDepth = s;
+	vector<int> trace;
+	for (int i = 0; i < s; i++) trace.push_back(i);
 	float test = pow(2.0, s);
 
 	auto tt = V_Fractals["basic"]->M_Trace(trace);
 	auto tv = glm::vec3(tt[3][0], tt[3][1], tt[3][2]);
-	ri.modelview = ri.modelview * glm::translate(glm::mat4(1.0), -tv);
-	V_Fractals["basic"]->M_Draw(ri, trace, s, s + 4);
-
-	return;
-	for (int i = -50; i <= 50; i++)
-	{
-		float x = i * 0.1;
-		M_DrawLine(Vec3d(x, -5.0, 0), Vec3d(x, 5.0, 0), T4Int(8, 255, 255, 255));
-		M_DrawLine(Vec3d(-5.0, x, 0), Vec3d(5.0, x, 0), T4Int(8, 255, 255, 255));
-
-	}
-
+	//ri.modelview = ri.modelview * glm::translate(glm::mat4(1.0), -tv);
+	V_Fractals["basic"]->M_Draw(ri, trace, s, s + 3);
 	
+
+
 
 	
 	//M_DrawModel(Vec3d(0, 0, 0), "sphere", 0.1, 0, T4Int(255, 0, 255, 255));
@@ -168,7 +201,7 @@ int CGraphics::M_Initialize(CEngine * P)
 	int id = glutCreateWindow("Graphics Assn3");
 
 	glClearColor(1, 1, 1, 1); //background white
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glEnable(GL_BLEND);
 	glEnable(GL_MULTISAMPLE);
@@ -199,6 +232,8 @@ void CGraphics::M_Initialize2(void)
 	M_SetupHieraModels();
 
 	V_FDepth = 0;
+	V_KeepLight = false;
+	V_Lights.resize(3);
 
 }
 
@@ -287,13 +322,16 @@ void CGraphics::M_DrawModel(Vec3d p, string name, double r, double rotate, T4Int
 	ri.modelview = m;
 	ri.projection = V_CTM_Project;
 
-	ri.keeplight = false;
-	ri.amb = Vec4d(0.1, 0.1, 0.1, 1.0);
-	ri.dif = Vec4d(0.5, 0.5, 0.5, 1.0);
-	ri.spc = Vec4d(0.0, 0.0, 0.0, 1.0);
-	ri.light1 = V_CTM_View * Vec4d(V_Light1[0], V_Light1[1], V_Light1[2], 1);
+	ri.keeplight = V_KeepLight;
+	if (!V_KeepLight) V_KeepLight = true;
+	ri.amb = Vec4d(0.0, 0.0, 0.0, 1.0);
+
+	auto vt = V_CTM_View;
+	ri.lights.resize(V_Lights.size());
+	transform(V_Lights.begin(), V_Lights.end(), ri.lights.begin(),
+		[vt](SLight x)->SLight {x.pos = vt * x.pos; return x; });
+
 	ri.normtrans = m;
-	
 
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
 	V_Models[name]->M_Draw(ri);
