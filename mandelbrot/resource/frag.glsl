@@ -47,7 +47,7 @@ void main()
 	}
 
 	float z = float(i) / max_iter;
-	
+	float w = mynorm(float(x/(y+0.1)));
 
 	
 	uv.y = 0.5;
@@ -55,11 +55,11 @@ void main()
 	uv.x = z;
 	vec4 color1 = texture2D(pallete, uv) * (1-z);
 
-	uv.x = (1-z);
+	uv.x = (1-z) * w;
 	vec4 color2 = texture2D(pallete, uv) * (1-z);
 
 	uv.x = sin(z*3.1415);
-	vec4 color3 = texture2D(pallete, uv);
+	vec4 color3 = texture2D(pallete, uv) * (0.5* sin(t) + 0.5);
 
 
 	color = color1 + color2 + color3;
