@@ -94,22 +94,22 @@ bool CGraphics::M_Event_KeyPress(int key, bool special)
 	}
 	if (key == 'w' && special == false)
 	{
-		V_Camera_Pos[1] += 0.1;
+		V_Camera_Pos[1] += 0.1* atan(V_Camera_Pos[2]);
 		return true;
 	}
 	if (key == 's' && special == false)
 	{
-		V_Camera_Pos[1] -= 0.1;
+		V_Camera_Pos[1] -= 0.1* atan(V_Camera_Pos[2]);
 		return true;
 	}
 	if (key == 'a' && special == false)
 	{
-		V_Camera_Pos[0] -= 0.1;
+		V_Camera_Pos[0] -= 0.1* atan(V_Camera_Pos[2]);
 		return true;
 	}
 	if (key == 'd' && special == false)
 	{
-		V_Camera_Pos[0] += 0.1;
+		V_Camera_Pos[0] += 0.1* atan(V_Camera_Pos[2]);
 		return true;
 	}
 	if (key == 'o' && special == false)
