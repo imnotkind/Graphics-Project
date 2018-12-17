@@ -9,17 +9,21 @@ uniform float t;
 
 uniform sampler2D pallete;
 
+float mynorm(float x)
+{
+	return 0.5 + 0.5 * tanh(x);
+}
 
 void main()
 {
 
-	double x = 1.5 * coord[0]; //* sin(t*0.9); 
-	double y = 1.5 * coord[1]; //* cos(t);
+	double x = 1.5 * coord[0]* sin(t*0.9); 
+	double y = 1.5 * coord[1]* cos(t);
 
 	double cr = 1.5 * coord[0];
 	double ci = 1.5 * coord[1];
 
-	int max_iter = 500;
+	int max_iter = 200;
 
 	float max = 4;
 	float tmp;
@@ -42,11 +46,33 @@ void main()
 		y = ny;
 	}
 
-	
+	float z = float(i) / max_iter;
 	
 
-	uv.x = float(i) / max_iter;
-	uv.y = clamp(float(ratio), 0.0, 1.0);
-	color = texture2D(pallete, uv);
+	
+	uv.y = 0.5;
+
+	uv.x = z;
+	vec4 color1 = texture2D(pallete, uv) * (1-z);
+
+	uv.x = (1-z);
+	vec4 color2 = texture2D(pallete, uv) * (1-z);
+
+	uv.x = sin(z*3.1415);
+	vec4 color3 = texture2D(pallete, uv);
+
+
+	color = color1 + color2 + color3;
+	color = color * 0.3333;
+	color[3] = 1;
+
+
+
+	return;
+
+
+
+
+
 	//color = vec4(float(i) / max_iter, float(i) / max_iter, float(i) / max_iter, 1);
 }
