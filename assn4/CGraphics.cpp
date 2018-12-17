@@ -41,7 +41,7 @@ void CGraphics::M_MoveCamera(void)
 
 	V_Camera_Look += V_Camera_Pos;
 
-	
+	return;
 
 	V_Camera_Look = vec3(0, 0, 2);
 	V_Camera_Pos = vec3(cos(t) * 6, sin(t) * 6,4);
@@ -53,6 +53,15 @@ void CGraphics::M_MoveCamera(void)
 
 void CGraphics::M_RenderFractal(void)
 {
+	for (int i = -50; i <= 50; i++)
+	{
+		float x = i * 0.1;
+		M_DrawLine(Vec3d(x, -5.0, 0), Vec3d(x, 5.0, 0), T4Int(8, 255, 255, 255));
+		M_DrawLine(Vec3d(-5.0, x, 0), Vec3d(5.0, x, 0), T4Int(8, 255, 255, 255));
+
+	}
+
+
 	static double t = 0.0;
 	t += 0.01;
 	V_Light1[0] = 5 * cos(t);
@@ -86,29 +95,27 @@ void CGraphics::M_RenderFractal(void)
 	auto l = V_SM->M_GetUniformLoc("t");
 	glUniform1f(l, (float)t);
 
-	int s = int(4 * sin(t) + 4 + 0.5);
+	int s = int(3 * sin(t*2) + 3 + 0.5);
 	V_FDepth = s;
 	vector<int> trace;
-	for (int i = 0; i < s; i++) trace.push_back(0);
+	for (int i = 0; i < s; i++) trace.push_back(i);
 
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
 	
-	//V_Fractals["basic"]->M_Draw(ri, 3);
 	float test = pow(2.0, s);
+
+
+
+	V_Fractals["basic"]->M_Draw(ri, 2);
+	return;
 
 	auto tt = V_Fractals["basic"]->M_Trace(trace);
 	auto tv = glm::vec3(tt[3][0], tt[3][1], tt[3][2]);
-	ri.modelview = ri.modelview * glm::translate(glm::mat4(1.0), -tv);
-	V_Fractals["basic"]->M_Draw(ri, trace, s, s + 4);
+	//ri.modelview = ri.modelview * glm::translate(glm::mat4(1.0), -tv);
+	V_Fractals["basic"]->M_Draw(ri, trace, s, s + 3);
+	
 
-	return;
-	for (int i = -50; i <= 50; i++)
-	{
-		float x = i * 0.1;
-		M_DrawLine(Vec3d(x, -5.0, 0), Vec3d(x, 5.0, 0), T4Int(8, 255, 255, 255));
-		M_DrawLine(Vec3d(-5.0, x, 0), Vec3d(5.0, x, 0), T4Int(8, 255, 255, 255));
-
-	}
+	
 
 	
 
@@ -168,7 +175,7 @@ int CGraphics::M_Initialize(CEngine * P)
 	int id = glutCreateWindow("Graphics Assn3");
 
 	glClearColor(1, 1, 1, 1); //background white
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glEnable(GL_BLEND);
 	glEnable(GL_MULTISAMPLE);

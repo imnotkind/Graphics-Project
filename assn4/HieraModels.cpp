@@ -15,9 +15,9 @@ SDrawingInfo temptemp(string s, T4Double c)
 }
 void CGraphics::M_SimplePolyFractal(void)
 {
-	float s = 0.5;
-	float h = 80;
-	float r = 95.2628;
+	float s = 35.0/50.0;
+	float h = 40;
+	float r = 82.5;
 
 	//tapering
 	auto tm = glm::mat4(1.0);
@@ -26,13 +26,15 @@ void CGraphics::M_SimplePolyFractal(void)
 
 	auto tm2 = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, h*0.5));
 	tm = tm2 * tm;
+
+	tm = glm::mat4(1.0); tm[2][2] = -1;
 	
 
 	vector<SHierModelNode> tree;
 	SHierModelNode hroot;
 	hroot.draw.reset(new CDrawing(temptemp("wormhole_0", T4Double(1.0, 1.0, 1.0, 1.0))));
 	hroot.trans = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, h*0.5));
-	hroot.trans_s = glm::mat4(1.0);
+	hroot.trans_s = tm;
 	hroot.left_child = 1;
 	tree.push_back(hroot);
 
