@@ -92,6 +92,39 @@ bool CGraphics::M_Event_KeyPress(int key, bool special)
 		V_Height = 1;
 		return true;
 	}
+	if (key == 'w' && special == false)
+	{
+		V_Camera_Pos[1] += 0.1;
+		return true;
+	}
+	if (key == 's' && special == false)
+	{
+		V_Camera_Pos[1] -= 0.1;
+		return true;
+	}
+	if (key == 'a' && special == false)
+	{
+		V_Camera_Pos[0] -= 0.1;
+		return true;
+	}
+	if (key == 'd' && special == false)
+	{
+		V_Camera_Pos[0] += 0.1;
+		return true;
+	}
+	if (key == 'o' && special == false)
+	{
+		V_Height -= 0.3;
+		return true;
+	}
+	if (key == 'p' && special == false)
+	{
+		V_Height += 0.3;
+		return true;
+	}
+
+	
+
 	return false;
 }
 
@@ -170,7 +203,11 @@ void coutmat(glm::mat4 m)
 }
 void CGraphics::M_RenderFractal(void)
 {
-	V_Height -= 0.005;
+	//V_Height -= 0.005;
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, V_SM->V_Textures["pallete"]->textureID);
+	auto p = glGetUniformLocation(V_SM->M_GetProgram(), "pallete");
+	glUniform1i(p, 0);
 
 	auto ui = CUserInput::getInstance();
 	
@@ -178,8 +215,8 @@ void CGraphics::M_RenderFractal(void)
 	V_Camera_Pos[2] = exp(V_Height);
 	if (V_Height < 0.9)
 	{
-		V_Camera_Pos[0] += 0.1*(ui->M_MouseGet_Normalized()[0] - 0.5) * atan(V_Camera_Pos[2]);
-		V_Camera_Pos[1] -= 0.1*(ui->M_MouseGet_Normalized()[1] - 0.5) * atan(V_Camera_Pos[2]);
+		//V_Camera_Pos[0] += 0.01*(ui->M_MouseGet_Normalized()[0] - 0.5) * atan(V_Camera_Pos[2]);
+		//V_Camera_Pos[1] -= 0.01*(ui->M_MouseGet_Normalized()[1] - 0.5) * atan(V_Camera_Pos[2]);
 	}
 	
 	

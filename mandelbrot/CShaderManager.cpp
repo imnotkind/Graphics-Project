@@ -110,6 +110,8 @@ CShaderManager::CShaderManager(string config_path)
 	SVerArray temp; temp.aindex = -1; temp.num = 0;
 	V_Polygons["NULL"] = temp;
 
+	V_Textures["pallete"] = shared_ptr<CTexture>(new CTexture("resource/pallete.bmp"));
+
 }
 
 CShaderManager::~CShaderManager()

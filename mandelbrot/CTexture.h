@@ -1,8 +1,11 @@
 #pragma once
+#include "CHandler.h"
+
 class CTexture
 {
 public:
-	CTexture();
+	GLuint textureID;
+	CTexture(string imagepath);
 	virtual ~CTexture();
 };
 

@@ -1,5 +1,6 @@
-#version 330 core
+#version 460 core
 precision highp float;
+
 in vec4 position;
 uniform mat4 trans;
 uniform float scale;

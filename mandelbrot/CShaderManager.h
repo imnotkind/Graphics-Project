@@ -3,6 +3,7 @@
 #include "OBJ_Loader.h"
 #include <fstream>
 #include <sstream>
+#include "CTexture.h"
 
 struct SVerArray
 {
@@ -38,6 +39,7 @@ class CShaderManager :
 	~CShaderManager();
 public:
 
+	map<string, shared_ptr<CTexture>> V_Textures;
 	set<string> V_Meshes; // meta path
 	map<string, int> V_Polygon_suggested_mode;
 
