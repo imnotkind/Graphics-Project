@@ -16,18 +16,22 @@ float mynorm(float x)
 void main()
 {
 	double k;
-	k = exp(t);
+	k = (exp(t));
 
-	double px = -0.98972222208;
-	double py = 0;
+	//double px = -1.48458333312;
+	//double py = 0;
+	
+	double px = -0.7280101473;
+	double py = 0.1945;
 
-	double cr = (1.5 * (coord[0]))/k + px*1.5;
-	double ci = (1.5 * (coord[1]))/k + py*1.5;
 
-	double x = cr;//* sin(t*0.9); 
-	double y = ci;//* cos(t);
+	double cr = (1.5 * (coord[0]))/k + px;
+	double ci = (1.5 * (coord[1]))/k + py;
 
-	int max_iter = 5000;
+	double x = cr;//* sin(1 / (t*t*t) * 0.9);
+	double y = ci;//* cos(1/(t*t*t));
+
+	int max_iter = 500;
 
 	float max = 4;
 	float tmp;
@@ -41,10 +45,7 @@ void main()
 		double ny = 2*x*y + ci;
 
 		if (nx*nx + ny * ny > max)
-		{
-			ratio = float((nx*nx) / (ny*ny));
 			break;
-		}
 
 		x = nx;
 		y = ny;
@@ -70,7 +71,7 @@ void main()
 	color = color * 0.3333;
 	color[3] = 1;
 
-	return;
+	
 
 
 	uv.x = z;
@@ -81,4 +82,5 @@ void main()
 	
 
 	color = vec4(float(i) / max_iter, float(i) / max_iter, float(i) / max_iter, 1);
+	return;
 }
