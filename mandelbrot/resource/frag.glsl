@@ -6,7 +6,6 @@ in vec2 coord;
 out vec4 color;
 
 uniform float t;
-
 uniform sampler2D pallete;
 
 float mynorm(float x)
@@ -17,17 +16,17 @@ float mynorm(float x)
 void main()
 {
 
-	double x = 1.5 * coord[0]* sin(t*0.9); 
-	double y = 1.5 * coord[1]* cos(t);
+	double x = 1.5 * coord[0];//* sin(t*0.9); 
+	double y = 1.5 * coord[1];//* cos(t);
 
 	double cr = 1.5 * coord[0];
 	double ci = 1.5 * coord[1];
 
-	int max_iter = 200;
+	int max_iter = 500;
 
 	float max = 4;
 	float tmp;
-	double ratio = 1;
+	float ratio = 1;
 	vec2 uv; //texture doesn't support double vec
 
 	int i;
@@ -38,7 +37,7 @@ void main()
 
 		if (nx*nx + ny * ny > max)
 		{
-			ratio = (nx*nx) / (ny*ny);
+			ratio = float((nx*nx) / (ny*ny));
 			break;
 		}
 
@@ -66,13 +65,15 @@ void main()
 	color = color * 0.3333;
 	color[3] = 1;
 
-
-
 	return;
 
 
+	uv.x = z;
+	uv.y = clamp(z*ratio, 0.0, 1.0);
+	color = texture2D(pallete, uv);
 
 
 
-	//color = vec4(float(i) / max_iter, float(i) / max_iter, float(i) / max_iter, 1);
+
+	color = vec4(float(i) / max_iter, float(i) / max_iter, float(i) / max_iter, 1);
 }

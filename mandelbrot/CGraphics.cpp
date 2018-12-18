@@ -122,6 +122,12 @@ bool CGraphics::M_Event_KeyPress(int key, bool special)
 		V_Height += 0.3;
 		return true;
 	}
+	if (key == 't' && special == false)
+	{
+		cout << "=========================" << endl;
+		cout << "(" << V_Camera_Pos[0] << ", " << V_Camera_Pos[1] << ", " << V_Camera_Pos[2] << ") : " << V_Height << endl;
+		return true;
+	}
 
 	
 
@@ -203,7 +209,9 @@ void coutmat(glm::mat4 m)
 }
 void CGraphics::M_RenderFractal(void)
 {
-	//V_Height -= 0.005;
+
+	
+	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, V_SM->V_Textures["pallete"]->textureID);
 	auto p = glGetUniformLocation(V_SM->M_GetProgram(), "pallete");
@@ -211,7 +219,10 @@ void CGraphics::M_RenderFractal(void)
 
 	auto ui = CUserInput::getInstance();
 	
-	
+
+	V_Height -= 0.005;
+	V_Camera_Pos[0] = -0.989733;
+	V_Camera_Pos[1] = 1.79135e-06;
 	V_Camera_Pos[2] = exp(V_Height);
 	if (V_Height < 0.9)
 	{
@@ -229,7 +240,7 @@ void CGraphics::M_RenderFractal(void)
 
 	M_Mandelbrot();
 }
-void CGraphics::M_Mandelbrot(void)
+void CGraphics::M_Mandelbrot()
 {
 	static double t = 0.0;
 	t += 0.001;
