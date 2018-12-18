@@ -61,7 +61,7 @@ void main()
 	//dvec2 p = dvec2(-1.48458333312, 0.0);
 	dvec2 p = dvec2(-0.7280101473, 0.1945);
 
-	dvec2 c = zoomto(exp(t), coord, p);
+	dvec2 c = zoomto(exp(sin(t)*20), coord, p);
 
 	double x = c.x;//* sin(1 / (t*t*t) * 0.9);
 	double y = c.y;//* cos(1/(t*t*t));
@@ -90,7 +90,7 @@ void main()
 	float b = mynorm(float(x/(y+0.1)));
 
 	
-	color = haebincolor(a, b);
+	color = junhacolor(a, b);
 	return;
 
 	

@@ -213,7 +213,7 @@ void CGraphics::M_RenderFractal(void)
 void CGraphics::M_Mandelbrot()
 {
 	static double t = 0.0;
-	t += 0.01;
+	t += 0.005;
 
 	GLuint p = glGetUniformLocation(V_SM->M_GetProgram(), "scale");
 	GLuint q = glGetUniformLocation(V_SM->M_GetProgram(), "t");
