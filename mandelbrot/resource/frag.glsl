@@ -16,11 +16,11 @@ float mynorm(float x)
 void main()
 {
 
-	double x = 1.5 * coord[0];//* sin(t*0.9); 
-	double y = 1.5 * coord[1];//* cos(t);
+	double x = 1.5 * coord[0] /t;//* sin(t*0.9); 
+	double y = 1.5 * coord[1]/t;//* cos(t);
 
-	double cr = 1.5 * coord[0];
-	double ci = 1.5 * coord[1];
+	double cr = 1.5 * coord[0] / t;
+	double ci = 1.5 * coord[1] / t;
 
 	int max_iter = 500;
 

@@ -56,7 +56,7 @@ void CGraphics::M_Initialize2(void)
 	V_CurrentDrawing = false;
 	M_SetupHieraModels();
 
-	V_Camera_Pos = Vec3d(0, 0, 2.5);
+	V_Camera_Pos = Vec3d(0, 0, 4.5);
 	V_Camera_Look = Vec3d(0, 0, 0);
 
 	V_Height = 1;
@@ -146,6 +146,7 @@ glm::mat4 CGraphics::M_GetBillboardMat(void)
 }
 void CGraphics::M_MoveCamera(void)
 {
+	V_Camera_Pos = Vec3d(0, 0, 4.5);
 	return;
 
 }
@@ -230,7 +231,7 @@ void CGraphics::M_RenderFractal(void)
 		//V_Camera_Pos[1] -= 0.01*(ui->M_MouseGet_Normalized()[1] - 0.5) * atan(V_Camera_Pos[2]);
 	}
 	
-	
+	V_Camera_Pos = Vec3d(0, 0, 4.5);
 
 	Vec3d realcamera = V_Camera_Pos;
 

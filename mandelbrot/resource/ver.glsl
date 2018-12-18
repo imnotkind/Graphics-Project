@@ -13,5 +13,5 @@ void main()
 	coord.x = position.x;
 	coord.y = position.y;
     //coord = (scale*position).xy;
-    gl_Position =  position - t;
+    gl_Position = trans *  position ;
 }
