@@ -13,36 +13,71 @@ float mynorm(float x)
 	return 0.5 + 0.5 * tanh(x);
 }
 
+dvec2 zoomto(double speed, vec2 coord, dvec2 center)
+{
+	return coord / speed + center;
+}
+
+vec4 junhacolor(float a, float b)
+{
+	vec2 uv;
+	uv.y = 0.5;
+
+	uv.x = a;
+	vec4 color1 = texture2D(pallete, uv) * (1 - a);
+
+	uv.x = (1 - a) * b;
+	vec4 color2 = texture2D(pallete, uv) * (1 - a);
+
+	uv.x = sin(a*3.1415);
+	vec4 color3 = texture2D(pallete, uv); //* (0.5* sin(t) + 0.5);
+
+
+	vec4 clr = color1 + color2 + color3;
+	clr = clr * 0.3333;
+	clr[3] = 1;
+
+	return clr;
+}
+
+vec4 haebincolor(float a, float b)
+{
+	vec2 uv;
+	uv.x = a;
+	uv.y = b;
+
+	vec4 clr = texture2D(pallete, uv);
+	return clr;
+}
+
+vec4 defaultmandelbrot(float a)
+{
+	vec4 clr = vec4(a, a, a, 1);
+	return clr;
+}
+
 void main()
 {
-	double k;
-	k = (exp(t));
+	//dvec2 p = dvec2(-1.48458333312, 0.0);
+	dvec2 p = dvec2(-0.7280101473, 0.1945);
 
-	//double px = -1.48458333312;
-	//double py = 0;
-	
-	double px = -0.7280101473;
-	double py = 0.1945;
+	dvec2 c = zoomto(exp(t), coord, p);
 
-
-	double cr = (1.5 * (coord[0]))/k + px;
-	double ci = (1.5 * (coord[1]))/k + py;
-
-	double x = cr;//* sin(1 / (t*t*t) * 0.9);
-	double y = ci;//* cos(1/(t*t*t));
+	double x = c.x;//* sin(1 / (t*t*t) * 0.9);
+	double y = c.y;//* cos(1/(t*t*t));
 
 	int max_iter = 500;
 
 	float max = 4;
 	float tmp;
 	float ratio = 1;
-	vec2 uv; //texture doesn't support double vec
+	
 
 	int i;
 	for(i = 0; i < max_iter; i++)
 	{
-		double nx = x*x-y*y + cr;
-		double ny = 2*x*y + ci;
+		double nx = x*x-y*y + c.x;
+		double ny = 2*x*y + c.y;
 
 		if (nx*nx + ny * ny > max)
 			break;
@@ -51,36 +86,12 @@ void main()
 		y = ny;
 	}
 
-	float z = float(i) / max_iter;
-	float w = mynorm(float(x/(y+0.1)));
+	float a = float(i) / max_iter;
+	float b = mynorm(float(x/(y+0.1)));
 
 	
-	uv.y = 0.5;
-
-	uv.x = z;
-	vec4 color1 = texture2D(pallete, uv) * (1-z);
-
-	uv.x = (1-z) * w;
-	vec4 color2 = texture2D(pallete, uv) * (1-z);
-
-	uv.x = sin(z*3.1415);
-	vec4 color3 = texture2D(pallete, uv); //* (0.5* sin(t) + 0.5);
-
-
-	color = color1 + color2 + color3;
-	color = color * 0.3333;
-	color[3] = 1;
-
-	
-
-
-	uv.x = z;
-	uv.y = clamp(z*ratio, 0.0, 1.0);
-	color = texture2D(pallete, uv);
-
-
-	
-
-	color = vec4(float(i) / max_iter, float(i) / max_iter, float(i) / max_iter, 1);
+	color = haebincolor(a, b);
 	return;
+
+	
 }
