@@ -55,24 +55,18 @@ vec4 defaultmandelbrot(float a)
 	vec4 clr = vec4(a, a, a, 1);
 	return clr;
 }
-
-void main()
+vec4 test(vec2 point)
 {
-	//dvec2 p = dvec2(-1.48458333312, 0.0);
 	dvec2 p = dvec2(-0.7280101473, 0.1945);
-
-	
-
-
 
 	double zoom = exp(sin(t)*4) + 3;
 	dvec2 cen = dvec2(-1, 0) + 0.3 * dvec2(cos(t*0.87), sin(t*0.87));
-	dvec2 c = zoomto(zoom, coord, cen);
+	dvec2 c = zoomto(zoom, point, cen);
 
 	double x = c.x* sin(1/float(zoom-2) * 0.9);
 	double y = c.y* cos(1/float(zoom-2));
 
-	int max_iter = 200;
+	int max_iter = 150;
 
 	float max = 4;
 	float tmp;
@@ -96,8 +90,27 @@ void main()
 	float b = mynorm(float(x/(y+0.1)));
 
 	
-	color = junhacolor(a, b);
-	return;
+	return junhacolor(a, b);
+}
+void main()
+{
+	//dvec2 p = dvec2(-1.48458333312, 0.0);
+
+	vec4 ant[4][4];
+	for(int i = 0; i < 3; i++)
+		for(int j = 0; j < 3; j++)
+			ant[i][j] = test(coord + vec2(0.001*i, 0.001*j));
+
+	color = vec4(0,0,0,0);
+	for(int i = 0; i < 3; i++)
+		for(int j = 0; j < 3; j++)
+			color += ant[i][j];
+
+
+	color = color/9.0;
+	//color = test(coord);
+	
 
 	
+	return;
 }
