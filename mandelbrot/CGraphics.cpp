@@ -146,7 +146,17 @@ glm::mat4 CGraphics::M_GetBillboardMat(void)
 }
 void CGraphics::M_MoveCamera(void)
 {
-	V_Camera_Pos = Vec3d(0, 0, 4.5);
+	//V_Height -= 0.005;
+	//V_Camera_Pos[0] = -0.989733;
+	//V_Camera_Pos[1] = 1.79135e-06;
+	//V_Camera_Pos[2] = exp(V_Height);
+	if (V_Height < 0.9)
+	{
+		//V_Camera_Pos[0] += 0.01*(ui->M_MouseGet_Normalized()[0] - 0.5) * atan(V_Camera_Pos[2]);
+		//V_Camera_Pos[1] -= 0.01*(ui->M_MouseGet_Normalized()[1] - 0.5) * atan(V_Camera_Pos[2]);
+	}
+	V_Camera_Pos = Vec3d(0, 0, 2.4);
+
 	return;
 
 }
@@ -221,18 +231,6 @@ void CGraphics::M_RenderFractal(void)
 	auto ui = CUserInput::getInstance();
 	
 
-	V_Height -= 0.005;
-	V_Camera_Pos[0] = -0.989733;
-	V_Camera_Pos[1] = 1.79135e-06;
-	V_Camera_Pos[2] = exp(V_Height);
-	if (V_Height < 0.9)
-	{
-		//V_Camera_Pos[0] += 0.01*(ui->M_MouseGet_Normalized()[0] - 0.5) * atan(V_Camera_Pos[2]);
-		//V_Camera_Pos[1] -= 0.01*(ui->M_MouseGet_Normalized()[1] - 0.5) * atan(V_Camera_Pos[2]);
-	}
-	
-	V_Camera_Pos = Vec3d(0, 0, 4.5);
-
 	Vec3d realcamera = V_Camera_Pos;
 
 	glm::vec3 up(0, 1, 0);
@@ -244,7 +242,7 @@ void CGraphics::M_RenderFractal(void)
 void CGraphics::M_Mandelbrot()
 {
 	static double t = 0.0;
-	t += 0.001;
+	t += 0.01;
 
 	GLuint p = glGetUniformLocation(V_SM->M_GetProgram(), "scale");
 	GLuint q = glGetUniformLocation(V_SM->M_GetProgram(), "t");

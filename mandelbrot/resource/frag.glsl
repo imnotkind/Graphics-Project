@@ -15,14 +15,19 @@ float mynorm(float x)
 
 void main()
 {
+	double k;
+	k = exp(t);
 
-	double x = 1.5 * coord[0] /t;//* sin(t*0.9); 
-	double y = 1.5 * coord[1]/t;//* cos(t);
+	double px = -0.98972222208;
+	double py = 0;
 
-	double cr = 1.5 * coord[0] / t;
-	double ci = 1.5 * coord[1] / t;
+	double cr = (1.5 * (coord[0]))/k + px*1.5;
+	double ci = (1.5 * (coord[1]))/k + py*1.5;
 
-	int max_iter = 500;
+	double x = cr;//* sin(t*0.9); 
+	double y = ci;//* cos(t);
+
+	int max_iter = 5000;
 
 	float max = 4;
 	float tmp;
@@ -58,7 +63,7 @@ void main()
 	vec4 color2 = texture2D(pallete, uv) * (1-z);
 
 	uv.x = sin(z*3.1415);
-	vec4 color3 = texture2D(pallete, uv) * (0.5* sin(t) + 0.5);
+	vec4 color3 = texture2D(pallete, uv); //* (0.5* sin(t) + 0.5);
 
 
 	color = color1 + color2 + color3;
@@ -73,7 +78,7 @@ void main()
 	color = texture2D(pallete, uv);
 
 
-
+	
 
 	color = vec4(float(i) / max_iter, float(i) / max_iter, float(i) / max_iter, 1);
 }
