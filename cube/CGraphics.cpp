@@ -127,7 +127,7 @@ void CGraphics::M_RenderFractal(void)
 
 
 
-	V_Fractals["basic"]->M_Draw(ri, 2);
+	V_Fractals["basic"]->M_Draw(ri, 3);
 	return;
 
 
