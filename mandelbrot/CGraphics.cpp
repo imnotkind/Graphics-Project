@@ -209,6 +209,8 @@ void coutmat(glm::mat4 m)
 }
 void CGraphics::M_RenderFractal(void)
 {
+
+	
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, V_SM->V_Textures["pallete"]->textureID);
@@ -238,7 +240,7 @@ void CGraphics::M_RenderFractal(void)
 
 	M_Mandelbrot();
 }
-void CGraphics::M_Mandelbrot(void)
+void CGraphics::M_Mandelbrot()
 {
 	static double t = 0.0;
 	t += 0.001;

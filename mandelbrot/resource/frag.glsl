@@ -6,7 +6,6 @@ in vec2 coord;
 out vec4 color;
 
 uniform float t;
-
 uniform sampler2D pallete;
 
 float mynorm(float x)
@@ -23,7 +22,7 @@ void main()
 	double cr = 1.5 * coord[0];
 	double ci = 1.5 * coord[1];
 
-	int max_iter = 200;
+	int max_iter = 500;
 
 	float max = 4;
 	float tmp;
@@ -66,16 +65,15 @@ void main()
 	color = color * 0.3333;
 	color[3] = 1;
 
-	/*
-	uv.x = z;
-	uv.y = clamp(z*ratio, 0.0, 1.0);
-	color = texture2D(pallete, uv);
-	*/
 	return;
 
 
+	uv.x = z;
+	uv.y = clamp(z*ratio, 0.0, 1.0);
+	color = texture2D(pallete, uv);
 
 
 
-	//color = vec4(float(i) / max_iter, float(i) / max_iter, float(i) / max_iter, 1);
+
+	color = vec4(float(i) / max_iter, float(i) / max_iter, float(i) / max_iter, 1);
 }

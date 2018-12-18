@@ -38,6 +38,7 @@ class CGraphics : public CHandler
 
 	void M_RenderWorld(void); // world 3d coord
 	void M_RenderFractal(void); //-1~1 coord
+	void M_Mandelbrot();
 	void M_RenderUI(void); //screen coord
 
 
@@ -51,7 +52,6 @@ class CGraphics : public CHandler
 
 	
 	double V_Height;
-	void M_Mandelbrot(void);
 
 	void M_ListenMessages(void);
 	bool M_Event_KeyPress(int key, bool special);
