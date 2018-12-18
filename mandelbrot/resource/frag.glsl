@@ -61,12 +61,18 @@ void main()
 	//dvec2 p = dvec2(-1.48458333312, 0.0);
 	dvec2 p = dvec2(-0.7280101473, 0.1945);
 
-	dvec2 c = zoomto(exp(sin(t)*20), coord, p);
+	
 
-	double x = c.x;//* sin(1 / (t*t*t) * 0.9);
-	double y = c.y;//* cos(1/(t*t*t));
 
-	int max_iter = 500;
+
+	double zoom = exp(sin(t)*4) + 3;
+	dvec2 cen = dvec2(-1, 0) + 0.3 * dvec2(cos(t*0.87), sin(t*0.87));
+	dvec2 c = zoomto(zoom, coord, cen);
+
+	double x = c.x* sin(1/float(zoom-2) * 0.9);
+	double y = c.y* cos(1/float(zoom-2));
+
+	int max_iter = 200;
 
 	float max = 4;
 	float tmp;
