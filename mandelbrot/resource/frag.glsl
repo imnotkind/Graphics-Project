@@ -50,15 +50,14 @@ vec4 haebincolor(float a, float b)
 	vec2 uv;
 	uv.x = sinnorm(exp(exp(a)) * b);
 	uv.y = sinnorm(exp(exp(b)) * a);
-	vec4 color1 = texture2D(pallete, uv) * (1 - a);
+	vec4 color1 = texture2D(pallete, uv) * (1 - a) * a * b;
 
 	uv.x = sinnorm(exp(exp(a)));
 	uv.y = sinnorm(exp(exp(a)));
-	vec4 color2 = texture2D(pallete, uv) * (1 - a);
+	vec4 color2 = texture2D(pallete, uv) * (1 - a) * a;
 
 
-	vec4 clr = color1 + color2 ;
-	clr = clr * 0.7;
+	vec4 clr = color1 * 2  +  color2 * 2.5;
 	clr[3] = 1;
 
 	return clr;
