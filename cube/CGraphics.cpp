@@ -41,13 +41,29 @@ bool CGraphics::M_MoveRequest(Vec3d d)
 
 	V_Camera_Pos += d;
 
+	T4Int C(0, 0, 0, 255);
+	if (abs(p[0]) < V_FD / V_FH && abs(p[1]) < V_FD / V_FH
+		&& p[2] > 0 && p[2] < (V_FH + V_FD * 2) / V_FH)
+	{
+		C[0] = 255;
+		V_Camera_Pos = np;
+		return true;
+	}
+	else
+	{
+		C[2] = 255;
+		V_Count++;
+		return false;
+	}
+		
+
 }
 
 
 void CGraphics::M_RenderUI(void)
 {
 
-	M_DrawNumber(Vec3d(100, 100, 0), 15, 5, T4Int(255, 255, 255, 255));
+	M_DrawNumber(Vec3d(100, 100, 0), 15, V_Count%10, T4Int(255, 255, 255, 255));
 
 
 }
@@ -324,6 +340,7 @@ void CGraphics::M_Initialize2(void)
 	M_SetupHieraModels();
 
 	V_Camera_Pos[2] = 0.1;
+	V_Count = 0;
 
 }
 

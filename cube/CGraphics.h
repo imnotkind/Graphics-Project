@@ -47,6 +47,8 @@ class CGraphics : public CHandler
 	double V_FD;
 	double V_FH;
 
+	int V_Count;
+
 	vector<int> V_Trace;
 	double V_SpeedScale;
 	bool M_MoveRequest(Vec3d d);
