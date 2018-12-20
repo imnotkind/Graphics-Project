@@ -54,6 +54,13 @@ bool CGraphics::M_MoveRequest(Vec3d d)
 	}
 	else
 	{
+		if (p[0] >= V_FD) V_Trace.push_back(0);
+		else if (p[0] <= -V_FD) V_Trace.push_back(2);
+		else if (p[1] >= V_FD) V_Trace.push_back(1);
+		else if (p[1] <= -V_FD) V_Trace.push_back(3);
+		else if (p[2] >= V_FH + V_FD * 2) V_Trace.push_back(4);
+		else if (p[2] <= 0) V_Trace.pop_back();
+
 		C[2] = 255;
 		V_Count++;
 		return false;
@@ -65,7 +72,9 @@ bool CGraphics::M_MoveRequest(Vec3d d)
 
 void CGraphics::M_RenderUI(void)
 {
-	M_DrawNumber(Vec3d(100, 100, 0), 15, V_Count%10, T4Int(255, 255, 255, 255));
+
+	for(int i = 0; i < V_Trace.size(); i++)
+		M_DrawNumber(Vec3d(100, 100 + 30 * i, 0), 15, V_Trace[i], T4Int(255, 255, 255, 255));
 
 
 }
@@ -336,12 +345,13 @@ void CGraphics::M_RenderFractal(void)
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
 	
 	
+	V_Fractals["basic"]->M_Draw(ri, V_Trace, V_Trace.size(), V_Trace.size() + 2);
 
-
-
-	V_Fractals["basic"]->M_Draw(ri, 3);
+	//V_Fractals["basic"]->M_Draw(ri, 3);
 	return;
 
+
+	/*
 
 	int s = int(3 * sin(t * 2) + 3 + 0.5);
 	V_FDepth = s;
@@ -354,7 +364,7 @@ void CGraphics::M_RenderFractal(void)
 	//ri.modelview = ri.modelview * glm::translate(glm::mat4(1.0), -tv);
 	V_Fractals["basic"]->M_Draw(ri, trace, s, s + 3);
 	
-
+	*/
 
 
 	
@@ -448,13 +458,14 @@ void CGraphics::M_Initialize2(void)
 	V_Lights.resize(3);
 
 	V_FRatio = 35.0 / 50.0;
-	V_FD = 40;
-	V_FH = 82.5;
+	V_FH = 40;
+	V_FD = 82.5;
 
 	M_SetupHieraModels();
 
 	V_Camera_Pos[2] = 0.1;
 	V_Count = 0;
+	V_SpeedScale = 1;
 
 }
 

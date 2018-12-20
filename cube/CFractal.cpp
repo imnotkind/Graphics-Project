@@ -44,11 +44,7 @@ void CFractal::M_Draw(const SRenderInfo& r, int max)
 
 void CFractal::M_Draw_Rec_t(glm::mat4 CTM, int depth)
 {
-	if (depth < V_Back)
-	{
-		M_Draw_Rec_t(CTM * V_Info.V_Grow[V_Trace[depth]], depth + 1);
-		return;
-	}
+	
 	if (depth > V_Front) return;
 	
 	SRenderInfo tri = V_RenderInfo;
@@ -56,8 +52,18 @@ void CFractal::M_Draw_Rec_t(glm::mat4 CTM, int depth)
 	auto temp = CTM * V_Info.V_Trans_S;
 	tri.modelview = temp;
 	tri.normtrans = tri.modelview;
+
+	if(depth == V_Back) tri.color.set(0.0, 1.0, 0.0, 1.0);
+	else  tri.color.set(1.0, 0.0, 0.0, 1.0);
+
 	V_Info.V_Draw->M_Draw(tri);
 	if (!tri.keeplight) V_RenderInfo.keeplight = true;
+	
+	if (depth < V_Back)
+	{
+		M_Draw_Rec_t(CTM * V_Info.V_Grow[V_Trace[depth]], depth + 1);
+		return;
+	}
 
 	for (auto m : V_Info.V_Grow)
 	{

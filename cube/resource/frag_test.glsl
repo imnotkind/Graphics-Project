@@ -63,7 +63,7 @@ void main()
 
 	vec3 z = mandel(x, y, cr, ci);
 
-	vec4 mcolor = vec4(1,0,0,1);
+	vec4 mcolor = vicolor;
 	//mcolor = vec4(1, mynorm(z[1] + 2*z[2]) , mynorm(2*z[1] + z[2]), 1) * float(z[0])/max_iter;
 	//mcolor = vec4(float(z[0])/max_iter, 0, 0, 1);
 
