@@ -1,9 +1,23 @@
 #include "CGraphics.h"
 
+void smoothMove(struct KeyboardValue& v, double t, double speed);
 
 
 CGraphics::CGraphics()
 {
+	for (int i = 0; i < 5; i++) {
+		switch (i) {
+		case 0: Key_Status[i].key = 'a'; break;
+		case 1: Key_Status[i].key = 'd'; break;
+		case 2: Key_Status[i].key = 's'; break;
+		case 3: Key_Status[i].key = 'w'; break;
+		case 4: Key_Status[i].key = ' '; break;
+		default: break;
+		}
+		Key_Status[i].pressed = false;
+		Key_Status[i].moving = false;
+		Key_Status[i].speed = 0;
+	}
 }
 
 CGraphics::~CGraphics()
@@ -31,13 +45,58 @@ void CGraphics::M_MoveCamera(void)
 	V_Camera_Look = glm::vec3(cos(-th) * cos(pi), sin(-th) *cos(pi), sin(-pi));
 
 	Vec3d hor = glm::vec3(-sin(-th) *cos(pi), cos(-th) * cos(pi), 0);
-	
-	double speed = 0.03;
-	if (V_UserInput->M_IfPressed('a', false)) V_Camera_Pos += hor *(float)speed;
-	if (V_UserInput->M_IfPressed('d', false)) V_Camera_Pos -= hor  * (float)speed;
-	if (V_UserInput->M_IfPressed('s', false)) V_Camera_Pos -= V_Camera_Look * (float)speed;
-	if (V_UserInput->M_IfPressed('w', false)) V_Camera_Pos += V_Camera_Look * (float)speed;
+	Vec3d ver = glm::vec3(0, 0, 1);
 
+	double speed = 0.03;
+
+	//pressed
+	if (V_UserInput->M_IfPressed('a', false)) {
+		Key_Status[0].pressed = true;
+		Key_Status[0].moving = true;
+		V_Camera_Pos += hor * (float)speed;
+	} 
+	if (V_UserInput->M_IfPressed('d', false)) {
+		Key_Status[1].pressed = true;
+		Key_Status[1].moving = true;
+		V_Camera_Pos -= hor * (float)speed;
+	} 
+	if (V_UserInput->M_IfPressed('s', false)) {
+		Key_Status[2].pressed = true;
+		Key_Status[2].moving = true;
+		V_Camera_Pos -= V_Camera_Look * (float)speed;
+	} 
+	if (V_UserInput->M_IfPressed('w', false)) {
+		Key_Status[3].pressed = true;
+		Key_Status[3].moving = true;
+		V_Camera_Pos += V_Camera_Look * (float)speed;
+	}
+	if (V_UserInput->M_IfPressed(' ', false)) {
+		Key_Status[4].pressed = true;
+		Key_Status[4].moving = true;
+		V_Camera_Pos += ver * (float)speed;
+	} 
+
+	//stopped
+	if (!V_UserInput->M_IfPressed('a', false)) {
+		smoothMove(Key_Status[0], t, speed);
+		V_Camera_Pos += hor * (float)Key_Status[0].speed;
+	}
+	if (!V_UserInput->M_IfPressed('d', false)) {
+		smoothMove(Key_Status[1], t, speed);
+		V_Camera_Pos -= hor * (float)Key_Status[1].speed;
+	}
+	if (!V_UserInput->M_IfPressed('s', false)) {
+		smoothMove(Key_Status[2], t, speed);
+		V_Camera_Pos -= V_Camera_Look * (float)Key_Status[2].speed;
+	}
+	if (!V_UserInput->M_IfPressed('w', false)) {
+		smoothMove(Key_Status[3], t, speed);	
+		V_Camera_Pos += V_Camera_Look * (float)Key_Status[3].speed;
+	}
+	if (!V_UserInput->M_IfPressed(' ', false)) {
+		smoothMove(Key_Status[4], t, speed);
+		V_Camera_Pos += ver * (float)Key_Status[4].speed;
+	}
 
 	V_Camera_Look += V_Camera_Pos;
 
@@ -387,5 +446,26 @@ void CGraphics::M_DrawNumber(Vec3d p, double r, int num, T4Int rgba)
 		}
 
 		i += Vec3d(r*1.5, 0, 0);
+	}
+}
+
+void smoothMove(struct KeyboardValue& v, double t, double speed) {
+	if (v.pressed) {
+		v.start = t;
+		v.speed = speed;
+	}
+
+	v.pressed = false;
+
+	if (v.moving) {
+		double accel = 0.1 * (t - v.start);
+
+		if (accel < speed) {
+				v.speed = speed - accel;
+		}
+		else if (accel >= speed) {
+			v.moving = false;
+			v.speed = 0;
+		}
 	}
 }

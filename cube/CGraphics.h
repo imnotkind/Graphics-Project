@@ -12,6 +12,14 @@
 
 #include <ctime>
 
+struct KeyboardValue {
+	char key;
+	bool pressed;
+	bool moving;
+	double start;
+	double speed;
+};
+
 class CGraphics : public CHandler
 {
 	CEngine * V_PEngine;
@@ -20,7 +28,7 @@ class CGraphics : public CHandler
 
 	T2Double V_Screen_Size;
 
-
+	struct KeyboardValue Key_Status[5];
 
 	Vec3d V_Camera_Pos;
 	Vec3d V_Camera_Look;
