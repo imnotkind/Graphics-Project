@@ -1,17 +1,14 @@
 #include "CGraphics.h"
 
-void smoothMove(struct KeyboardValue& v, double t, double speed);
+void smoothMove(struct KeyboardValue& v, double t, double speed, double scale);
 
 
 CGraphics::CGraphics()
 {
 	mouse_moving = false;
-	camera_moving = false;
 	prev_th = 0;
 	prev_pi = 0;
-	prev_actual_th = 0;
-	prev_actual_pi = 0;
-	prev_time = 0;
+	start_time = 0;
 
 	for (int i = 0; i < 5; i++) {
 		switch (i) {
@@ -87,88 +84,56 @@ void CGraphics::M_MoveCamera(void)
 	mouse[1] = clamp(mouse[1], DTR(-80), DTR(80));
 
 	double th = mouse[0]; double pi = mouse[1] == 0 ? 0 : mouse[1] / abs(mouse[1]) * std::min(abs(mouse[1]), DTR(80.0));
+	double actual_th = th;
+	double actual_pi = pi;
 
-	prev_actual_th = th;
-	prev_actual_pi = pi;
-	//	cout << "th: " << th << "  pi: " << pi << endl;
+	/*struct MouseValue temp_ms;
+	temp_ms.th = th;
+	temp_ms.pi = pi;
 
-	/*if (th == prev_th && pi == prev_pi) {
-		if (mouse_moving) {
-			target_th = th;
-			target_pi = pi;
+	Mouse_Status.push_back(temp_ms);
+	
+	if (th == prev_th && pi == prev_pi) {
+		if (mouse_moving == true) {
 			stop_time = t;
 		}
 		mouse_moving = false;
 
-		if (camera_moving) {
-			if (target_th == current_th && target_pi == current_pi)
-				camera_moving = false;
-			else {
-				if (th - start_th >= 0) {
-					th = start_th + 0.1 / (t - stop_time);
+		if (display_moving) {
+			th = Mouse_Status.front().th;
+			pi = Mouse_Status.front().pi;
 
-					if (th >= target_th)
-						camera_moving = false;
-				}
-				else {
-					th = start_th - 0.1 / (t - stop_time);
-
-					if (th <= target_th)
-						camera_moving = false;
-				}
-
-				if (pi - start_pi >= 0) {
-					pi = start_pi + 0.1 / (t - stop_time);
-
-					if (pi >= target_pi)
-						camera_moving = false;
-				}
-				else {
-					pi = start_pi - 0.1 / (t - stop_time);
-
-					if (pi <= target_pi)
-						camera_moving = false;
-				}
-
-				current_th = th;
-				current_pi = pi;
-			}
+			if (Mouse_Status.size() != 0)
+				Mouse_Status.erase(Mouse_Status.begin());
+			else
+				display_moving = false;
 		}
 	}
 	else {
-		if (mouse_moving == false) {
-			prev_time = t;
-			start_th = th;
+		if (mouse_moving == false && display_moving == false) {
+			start_time = t;
 			start_pi = pi;
-			camera_moving = true;
+			start_th = th;
 		}
-
 		mouse_moving = true;
-		if (camera_moving) {
-			if (t - prev_time >= 0.01) {
-				if (th - start_th >= 0) {
-					th = start_th + 0.1 * (t - prev_time);
-				}
-				else {
-					th = start_th - 0.1 * (t - prev_time);
-				}
 
-				if (pi - start_pi >= 0) {
-					pi = start_pi + 0.1 * (t - prev_time);
-				}
-				else {
-					pi = start_pi - 0.1 * (t - prev_time);
-				}
+		if (t - start_time >= 0.00000000005) {
+			display_moving = true;
+			th = Mouse_Status.front().th;
+			pi = Mouse_Status.front().pi;
 
-				current_th = th;
-				current_pi = pi;
-			}
-			else {
+			if (Mouse_Status.size() != 0)
+				Mouse_Status.erase(Mouse_Status.begin());
+		}
+		else {
+			if (!display_moving) {
 				th = start_th;
 				pi = start_pi;
 			}
 		}
 	}*/
+
+	//cout << "number: " << Mouse_Status.size() << endl;
 
 	V_Camera_Look = glm::vec3(cos(-th) * cos(pi), sin(-th) *cos(pi), sin(-pi));
 //	cout << "cameraLook  x: " << V_Camera_Look.x << "  y: " << V_Camera_Look.y << "  z: " << V_Camera_Look.z << endl;
@@ -176,7 +141,7 @@ void CGraphics::M_MoveCamera(void)
 	Vec3d hor = glm::vec3(-sin(-th) *cos(pi), cos(-th) * cos(pi), 0);
 	Vec3d ver = glm::vec3(0, 0, 1);
 
-	double speed = 0.005;
+	double speed = V_SpeedScale * 0.005;
 
 	//pressed
 	if (V_UserInput->M_IfPressed('a', false)) {
@@ -222,43 +187,42 @@ void CGraphics::M_MoveCamera(void)
 
 	//stopped
 	if (!V_UserInput->M_IfPressed('a', false)) {
-		smoothMove(Key_Status[0], t, speed);
+		smoothMove(Key_Status[0], t, speed, V_SpeedScale);
 		if (!M_MoveRequest(hor * (float)Key_Status[0].speed)) {
 			Key_Status[0].moving = false;
 			Key_Status[0].speed = 0;
 		}
 	}
 	if (!V_UserInput->M_IfPressed('d', false)) {
-		smoothMove(Key_Status[1], t, speed);
+		smoothMove(Key_Status[1], t, speed, V_SpeedScale);
 		if(!M_MoveRequest(-hor * (float)Key_Status[1].speed)) {
 			Key_Status[1].moving = false;
 			Key_Status[1].speed = 0;
 		}
 	}
 	if (!V_UserInput->M_IfPressed('s', false)) {
-		smoothMove(Key_Status[2], t, speed);
+		smoothMove(Key_Status[2], t, speed, V_SpeedScale);
 		if(!M_MoveRequest(-V_Camera_Look * (float)Key_Status[2].speed)) {
 			Key_Status[2].moving = false;
 			Key_Status[2].speed = 0;
 		}
 	}
 	if (!V_UserInput->M_IfPressed('w', false)) {
-		smoothMove(Key_Status[3], t, speed);
+		smoothMove(Key_Status[3], t, speed, V_SpeedScale);
 		if(!M_MoveRequest(V_Camera_Look * (float)Key_Status[3].speed)) {
 			Key_Status[3].moving = false;
 			Key_Status[3].speed = 0;
 		}
 	}
 	if (!V_UserInput->M_IfPressed(' ', false)) {
-		smoothMove(Key_Status[4], t, speed);
+		smoothMove(Key_Status[4], t, speed, V_SpeedScale);
 		if(!M_MoveRequest(ver * (float)Key_Status[4].speed)) {
 			Key_Status[4].moving = false;
 			Key_Status[4].speed = 0;
 		}
 	}
-
-	prev_pi = prev_actual_pi;
-	prev_th = prev_actual_th;
+	prev_th = actual_th;
+	prev_pi = actual_pi;
 
 	V_Camera_Look += V_Camera_Pos;
 
@@ -622,7 +586,7 @@ void CGraphics::M_DrawNumber(Vec3d p, double r, int num, T4Int rgba)
 	}
 }
 
-void smoothMove(struct KeyboardValue& v, double t, double speed) {
+void smoothMove(struct KeyboardValue& v, double t, double speed, double scale) {
 	if (v.pressed) {
 		v.start = t;
 		v.speed = speed;
@@ -631,7 +595,7 @@ void smoothMove(struct KeyboardValue& v, double t, double speed) {
 	v.pressed = false;
 
 	if (v.moving) {
-		double accel = 0.015 * (t - v.start);
+		double accel = scale * 0.015 * (t - v.start);
 
 		if (accel < speed) {
 				v.speed = speed - accel;
