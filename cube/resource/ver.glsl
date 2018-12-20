@@ -3,7 +3,9 @@ in vec4 position;
 in vec2 texcoord;
 
 uniform mat4 projection;
-uniform mat4 modelview;
+uniform mat4 view;
+uniform mat4 model;
+
 uniform vec4 vicolor;
 
 
@@ -13,5 +15,5 @@ void main()
 {
 
     vocolor = vicolor;// * texcoord[0] * texcoord[1];
-    gl_Position = projection * modelview * position ;
+    gl_Position = projection * view * model * position ;
 }

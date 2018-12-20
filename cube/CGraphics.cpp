@@ -61,7 +61,7 @@ bool CGraphics::M_MoveRequest(Vec3d d)
 		C[2] = 255;
 		V_Count++;
 
-		V_SpeedScale = 1.5 * pow(V_FRatio, V_Trace.size());
+		V_SpeedScale = 1.0 * pow(V_FRatio, V_Trace.size());
 		return false;
 	}
 		
@@ -73,7 +73,7 @@ void CGraphics::M_RenderUI(void)
 {
 
 	for(int i = 0; i < V_Trace.size(); i++)
-		M_DrawNumber(Vec3d(100, 100 + 30 * i, 0), 15, V_Trace[i], T4Int(255, 255, 255, 255));
+		M_DrawNumber(Vec3d(100, 100 + 35 * i, 0), 15, V_Trace[i], T4Int(255, 255, 255, 255));
 
 
 }
@@ -283,35 +283,32 @@ void CGraphics::M_RenderFractal(void)
 	glm::vec3 p(0.0);
 	double scale = 1.0;
 
-	glm::mat4 m = V_CTM_View;
+	glm::mat4 m = glm::mat4(1.0);
 	m = glm::translate(m, p);
 	m = glm::rotate(m, float(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
 	m = glm::scale(m, glm::vec3(scale, scale, scale));
-
-	ri.modelview = m;
+	
+	ri.view = V_CTM_View;
+	ri.model = m;
 	ri.projection = V_CTM_Project;
 
 	ri.keeplight = false;
-	ri.normtrans = m;
+	ri.normtrans = V_CTM_View * m;
 
-	ri.amb = Vec4d(0.0, 0.0, 0.0, 1.0);
+	ri.amb = Vec4d(0.1, 0.1, 0.1, 1.0);
 
 	auto vt = V_CTM_View;
 	ri.lights.resize(V_Lights.size());
 	transform(V_Lights.begin(), V_Lights.end(), ri.lights.begin(),
 		[vt](SLight x)->SLight {x.pos = vt * x.pos; return x; });
 
-	ri.normtrans = m;
-
 	V_SM->M_UseProgram("prg4");
 	auto l = V_SM->M_GetUniformLoc("t");
 	glUniform1f(l, (float)t);
 
-	
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
-	
 
-	V_DistortScale = 0.95 * V_DistortScale + 0.05 * V_SpeedScale;
+	V_DistortScale = sqrt(pow(V_DistortScale, 1.999)  * pow(V_SpeedScale, 0.001));
 	l = V_SM->M_GetUniformLoc("fractal1");
 	glUniform1f(l, V_DistortScale);
 	
@@ -491,12 +488,12 @@ void CGraphics::M_DrawLine(Vec3d p1, Vec3d p2, T4Int rgba)
 {
 	SRenderInfo r;
 
-	glm::mat4 m = V_CTM_View;
-	m = V_CTM_View;
+	glm::mat4 m = glm::mat4(1.0);
 	m = glm::translate(m, glm::vec3(p1));
 	m = glm::scale(m, glm::vec3(p2 - p1));
 
-	r.modelview = m;
+	r.view = V_CTM_View;
+	r.model = m;
 	r.projection = V_CTM_Project;
 	
 	for (int i = 0; i < 4; i++) r.color[i] = rgba[i] / 255.0;
@@ -507,13 +504,14 @@ void CGraphics::M_DrawModel(Vec3d p, string name, double r, double rotate, T4Int
 {
 	SRenderInfo ri;
 
-	glm::mat4 m = V_CTM_View;
+	glm::mat4 m = glm::mat4(1.0);
 	m = glm::translate(m, glm::vec3(p));
 	m = glm::rotate(m, float(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
 	m = glm::scale(m, glm::vec3(r, r, r));
 	m = m * V_CTM_Temp; //billboard
 
-	ri.modelview = m;
+	ri.view = V_CTM_View;
+	ri.model = m;
 	ri.projection = V_CTM_Project;
 
 	ri.keeplight = V_KeepLight;
@@ -525,7 +523,7 @@ void CGraphics::M_DrawModel(Vec3d p, string name, double r, double rotate, T4Int
 	transform(V_Lights.begin(), V_Lights.end(), ri.lights.begin(),
 		[vt](SLight x)->SLight {x.pos = vt * x.pos; return x; });
 
-	ri.normtrans = m;
+	ri.normtrans = V_CTM_View * m;
 
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
 	V_Models[name]->M_Draw(ri);

@@ -23,8 +23,10 @@ void CDrawing::M_Draw(const SRenderInfo& r)
 	GLuint p;
 	p = glGetUniformLocation(V_PSM->M_GetProgram(), "projection");
 	glUniformMatrix4fv(p, 1, GL_FALSE, &r.projection[0][0]);
-	p = glGetUniformLocation(V_PSM->M_GetProgram(), "modelview");
-	glUniformMatrix4fv(p, 1, GL_FALSE, &r.modelview[0][0]);
+	p = glGetUniformLocation(V_PSM->M_GetProgram(), "model");
+	glUniformMatrix4fv(p, 1, GL_FALSE, &r.model[0][0]);
+	p = glGetUniformLocation(V_PSM->M_GetProgram(), "view");
+	glUniformMatrix4fv(p, 1, GL_FALSE, &r.view[0][0]);
 
 	p = glGetUniformLocation(V_PSM->M_GetProgram(), "vicolor");
 	float col[4];

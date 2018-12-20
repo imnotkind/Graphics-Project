@@ -18,8 +18,8 @@ void CFractal::M_Draw_Rec(glm::mat4 CTM, int depth)
 	SRenderInfo tri = V_RenderInfo;
 	
 	auto temp = CTM * V_Info.V_Trans_S;
-	tri.modelview = temp;
-	tri.normtrans = tri.modelview;
+	tri.model = temp;
+	tri.normtrans = tri.model;
 
 	
 	V_Info.V_Draw->M_Draw(tri);
@@ -38,7 +38,7 @@ void CFractal::M_Draw(const SRenderInfo& r, int max)
 
 	for (auto m : V_Info.V_Initial)
 	{
-		M_Draw_Rec(r.modelview * m, 0);
+		M_Draw_Rec(r.model * m, 0);
 	}
 }
 
@@ -51,8 +51,8 @@ void CFractal::M_Draw_Rec_t(glm::mat4 CTM, int depth)
 	SRenderInfo tri = V_RenderInfo;
 
 	auto temp = CTM * V_Info.V_Trans_S;
-	tri.modelview = temp;
-	tri.normtrans = tri.modelview;
+	tri.model= temp;
+	tri.normtrans = tri.view*tri.model;
 
 	if(depth == V_Back) tri.color.set(0.0, 1.0, 0.0, 1.0);
 	else  tri.color.set(1.0, 0.0, 0.0, 1.0);
@@ -83,6 +83,6 @@ void CFractal::M_Draw(const SRenderInfo& r, vector<int> trace, int back, int fro
 
 	for (auto m : V_Info.V_Initial)
 	{
-		M_Draw_Rec_t(r.modelview * m, 0);
+		M_Draw_Rec_t(r.model * m, 0);
 	}
 }

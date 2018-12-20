@@ -7,11 +7,10 @@ in vec4 vpos;
 in vec2 vtex;
 
 in vec3 opos;
+in vec3 mpos;
 
-uniform mat4 projection;
-uniform mat4 modelview;
-uniform mat4 normaltrans; // supposed to be rotation only from viewtrans
 uniform vec4 vicolor;
+uniform float fractal1;
 
 struct SLight
 {
@@ -53,30 +52,33 @@ void main()
 {
 
 	
+	float mx = (opos[0] + opos[2])/fractal1;
+	float my = (opos[2] + opos[1])/fractal1;
 
-	double cr = opos[0] + opos[2];
-	double ci = opos[2] + opos[1];
+	mx = sin(mx);
+	my = sin(my);
+
+	double cr = double(mx);
+	double ci = double(my);
+
 
 	double x = cr * sin(t * 0.9); 
 	double y = ci * cos(t);
 
-	cr = vpos[0]-0.2;
-	ci = vpos[1];
 
 	vec3 z = mandel(x, y, cr, ci);
 
 	vec4 mcolor = vicolor;
-	mcolor[0] = 0.5 + 0.5*sin(opos[0] + opos[1]);
-	mcolor[1] = 0.5 + 0.5*sin(opos[1] + opos[2]);
-	mcolor[2] = 0.5 + 0.5*sin(opos[0] + opos[2]);
+	mcolor[0] = 0.5 + 0.5*sin(10/fractal1*(opos[0] + opos[1]));
+	mcolor[1] = 0.5 + 0.5*sin(10/fractal1*(opos[1] + opos[2]));
+	mcolor[2] = 0.5 + 0.5*sin(10/fractal1*(opos[0] + opos[2]));
 
-	//mcolor = vec4(1, mynorm(z[1] + 2*z[2]) , mynorm(2*z[1] + z[2]), 1) * float(z[0])/max_iter;
-	mcolor = vec4(float(z[0])/max_iter, 0, 0, 1);
+	mcolor = vec4(float(z[0] + 25)/(max_iter + 25), 0, 0, 1);
 
 	mcolor[3] = 1;
 
 	vec4 amb_r = ambient;
-	color = amb_r;
+	color = vec4(0);
 
 	for(int i = 0; i < 3; i++)
 	{
@@ -93,6 +95,6 @@ void main()
 		color += clamp(dif_r, 0.0, 1.0) + clamp(spc_r, 0.0, 0.5);
 	}
 	
-	color = clamp(color, 0.0, 1.0);
+	color = clamp(color + mcolor*amb_r, 0.0, 1.0);
 	color[3] = mcolor[3];
 }

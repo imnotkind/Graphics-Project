@@ -23,6 +23,7 @@ uniform vec4 ambient;
 
 uniform SLight light[3];
 
+
 out vec4 color;
 
 void main()
