@@ -212,7 +212,8 @@ void main()
 	mcolor[3] = 1;
 
 	vec4 amb_r = ambient;
-	color = noanti(vec2(cr, ci));
+	color = vec4(0);
+	mcolor = noanti(vec2(cr, ci));
 
 	for(int i = 0; i < 3; i++)
 	{
@@ -226,7 +227,7 @@ void main()
 
 		vec4 dif_r = mcolor*light[i].diffuse * katt * max(dot(vnormal,L), 0.0); // NL is negative : backside
 		vec4 spc_r = mcolor*light[i].specular * katt * pow(max(dot(R,E), 0.0), 0.8);
-		color += clamp(dif_r, 0.0, 1.0) + clamp(spc_r, 0.0, 0.5);
+		color += clamp(dif_r, 0.0, 1.0) + clamp(spc_r, 0.0, 1.0);
 	}
 	
 	color = clamp(color + mcolor*amb_r, 0.0, 1.0);

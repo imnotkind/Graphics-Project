@@ -256,7 +256,7 @@ void CGraphics::M_RenderFractal(void)
 
 	V_Lights[0].pos = Vec4d(5 * cos(t), 3 * sin(t), 5.0, 1.0);
 	V_Lights[0].dif = Vec4d(0.2, 0.2, 0.2, 1);
-	V_Lights[0].spc = Vec4d(0.2, 0.2, 0.2, 1);
+	V_Lights[0].spc = Vec4d(0.6, 0.6, 0.6, 1);
 
 	V_Lights[1].pos = Vec4d(4.4 * cos(t*0.9), 0, 3.8 * sin(t*0.9), 1.0);
 	V_Lights[1].dif = Vec4d(0.03, 0.03, 0.03, 1);
@@ -264,7 +264,7 @@ void CGraphics::M_RenderFractal(void)
 
 	V_Lights[2].pos = Vec4d(cos(t*0.3), sin(t*0.3), 1.0, 0.0);
 	V_Lights[2].dif = Vec4d(0.2, 0.2, 0.2, 1);
-	V_Lights[2].spc = Vec4d(0.2, 0.2, 0.2, 1);
+	V_Lights[2].spc = Vec4d(0.4, 0.4, 0.4, 1);
 
 	V_KeepLight = false;
 	//M_DrawModel(Vec3d(-50, -50, 50), "star", 0.001, 1, T4Int(255, 255, 255, 255));
@@ -297,7 +297,7 @@ void CGraphics::M_RenderFractal(void)
 	ri.keeplight = false;
 	ri.normtrans = V_CTM_View * m;
 
-	ri.amb = Vec4d(0.1, 0.1, 0.1, 1.0);
+	ri.amb = Vec4d(0.3, 0.3, 0.3, 1.0);
 
 	auto vt = V_CTM_View;
 	ri.lights.resize(V_Lights.size());
