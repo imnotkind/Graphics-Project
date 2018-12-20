@@ -5,6 +5,12 @@ void smoothMove(struct KeyboardValue& v, double t, double speed);
 
 CGraphics::CGraphics()
 {
+/*	mouse_moving = false;
+	prev_th = 0;
+	prev_pi = 0;
+	prev_actual_th = 0;
+	prev_actual_pi = 0;
+	prev_time = 0;*/
 	for (int i = 0; i < 5; i++) {
 		switch (i) {
 		case 0: Key_Status[i].key = 'a'; break;
@@ -43,11 +49,12 @@ void CGraphics::M_MoveCamera(void)
 	double th = mouse[0]; double pi = mouse[1] == 0 ? 0 : mouse[1] / abs(mouse[1]) * std::min(abs(mouse[1]), DTR(80.0));
 
 	V_Camera_Look = glm::vec3(cos(-th) * cos(pi), sin(-th) *cos(pi), sin(-pi));
+//	cout << "cameraLook  x: " << V_Camera_Look.x << "  y: " << V_Camera_Look.y << "  z: " << V_Camera_Look.z << endl;
 
 	Vec3d hor = glm::vec3(-sin(-th) *cos(pi), cos(-th) * cos(pi), 0);
 	Vec3d ver = glm::vec3(0, 0, 1);
 
-	double speed = 0.03;
+	double speed = 0.005;
 
 	//pressed
 	if (V_UserInput->M_IfPressed('a', false)) {
@@ -97,6 +104,9 @@ void CGraphics::M_MoveCamera(void)
 		smoothMove(Key_Status[4], t, speed);
 		V_Camera_Pos += ver * (float)Key_Status[4].speed;
 	}
+
+	//prev_pi = prev_actual_pi;
+	//prev_th = prev_actual_th;;
 
 	V_Camera_Look += V_Camera_Pos;
 
@@ -458,7 +468,7 @@ void smoothMove(struct KeyboardValue& v, double t, double speed) {
 	v.pressed = false;
 
 	if (v.moving) {
-		double accel = 0.1 * (t - v.start);
+		double accel = 0.015 * (t - v.start);
 
 		if (accel < speed) {
 				v.speed = speed - accel;
