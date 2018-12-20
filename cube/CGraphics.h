@@ -30,6 +30,21 @@ class CGraphics : public CHandler
 
 	struct KeyboardValue Key_Status[5];
 
+	bool mouse_moving;
+	bool camera_moving;
+	double prev_time;
+	double prev_th;
+	double prev_pi;
+	double prev_actual_th;
+	double prev_actual_pi;
+	double start_th;
+	double start_pi;
+	double target_th;
+	double target_pi;
+	double current_th;
+	double current_pi;
+	double stop_time;
+
 	Vec3d V_Camera_Pos;
 	Vec3d V_Camera_Look;
 	Vec2d V_Camera_Look_Angle;
