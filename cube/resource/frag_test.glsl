@@ -64,6 +64,10 @@ void main()
 	vec3 z = mandel(x, y, cr, ci);
 
 	vec4 mcolor = vicolor;
+	mcolor[0] = 0.5 + 0.5*sin(opos[0] + opos[1]);
+	mcolor[1] = 0.5 + 0.5*sin(opos[1] + opos[2]);
+	mcolor[2] = 0.5 + 0.5*sin(opos[0] + opos[2]);
+
 	//mcolor = vec4(1, mynorm(z[1] + 2*z[2]) , mynorm(2*z[1] + z[2]), 1) * float(z[0])/max_iter;
 	//mcolor = vec4(float(z[0])/max_iter, 0, 0, 1);
 

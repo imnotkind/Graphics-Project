@@ -63,6 +63,8 @@ bool CGraphics::M_MoveRequest(Vec3d d)
 
 		C[2] = 255;
 		V_Count++;
+
+		V_SpeedScale = pow(V_FRatio, V_Trace.size());
 		return false;
 	}
 		
