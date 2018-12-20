@@ -27,9 +27,9 @@ void main()
 	
 	vpos = modelview * p;
 
-	vpos[0] += fractal1 * 0.1*sin(t * vpos[1] + 0.8*vpos[2]);
-	vpos[1] += fractal1 * 0.1*sin(0.9 * t * vpos[2] + 0.3*vpos[0]);
-	vpos[2] += fractal1 * 0.1*sin(0.7 * t * vpos[1] + 0.5*vpos[0]);
+	vpos[0] += fractal1 * 0.1*sin(sin(0.3*t) * vpos[1] + 1.8*vpos[2]);
+	vpos[1] += fractal1 * 0.1*sin(0.9 * cos(0.8*t) * vpos[2] + 1.3*vpos[0]);
+	vpos[2] += fractal1 * 0.1*sin(0.7 * cos(t) * vpos[1] + 1.5*vpos[0]);
 
 	opos = p.xyz;
     gl_Position = projection * vpos;

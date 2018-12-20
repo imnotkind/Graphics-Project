@@ -52,11 +52,13 @@ float mynorm(float x)
 void main()
 {
 
-	double x = vpos[0] * sin(t * 0.9); 
-	double y = vpos[1] * cos(t);
+	
 
 	double cr = opos[0] + opos[2];
 	double ci = opos[2] + opos[1];
+
+	double x = cr * sin(t * 0.9); 
+	double y = ci * cos(t);
 
 	cr = vpos[0]-0.2;
 	ci = vpos[1];
@@ -69,7 +71,7 @@ void main()
 	mcolor[2] = 0.5 + 0.5*sin(opos[0] + opos[2]);
 
 	//mcolor = vec4(1, mynorm(z[1] + 2*z[2]) , mynorm(2*z[1] + z[2]), 1) * float(z[0])/max_iter;
-	//mcolor = vec4(float(z[0])/max_iter, 0, 0, 1);
+	mcolor = vec4(float(z[0])/max_iter, 0, 0, 1);
 
 	mcolor[3] = 1;
 

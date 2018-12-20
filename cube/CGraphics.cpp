@@ -317,28 +317,6 @@ void CGraphics::M_RenderFractal(void)
 	
 	V_Fractals["basic"]->M_Draw(ri, V_Trace, V_Trace.size(), V_Trace.size() + 2);
 
-	//V_Fractals["basic"]->M_Draw(ri, 3);
-	return;
-
-
-	/*
-
-	int s = int(3 * sin(t * 2) + 3 + 0.5);
-	V_FDepth = s;
-	vector<int> trace;
-	for (int i = 0; i < s; i++) trace.push_back(i);
-	float test = pow(2.0, s);
-
-	auto tt = V_Fractals["basic"]->M_Trace(trace);
-	auto tv = glm::vec3(tt[3][0], tt[3][1], tt[3][2]);
-	//ri.modelview = ri.modelview * glm::translate(glm::mat4(1.0), -tv);
-	V_Fractals["basic"]->M_Draw(ri, trace, s, s + 3);
-	
-	*/
-
-
-	
-	//M_DrawModel(Vec3d(0, 0, 0), "sphere", 0.1, 0, T4Int(255, 0, 255, 255));
 }
 void CGraphics::M_CallbackDisplay()
 {
@@ -347,8 +325,9 @@ void CGraphics::M_CallbackDisplay()
 	V_CTM_Temp = glm::mat4(1.0);
 
 	static double count = 0;
-	count += 0.02;
-	M_MoveCamera();
+	count += 0.005;
+	
+	
 
 	V_CurrentDrawing = false;
 
@@ -367,8 +346,20 @@ void CGraphics::M_CallbackDisplay()
 	glm::vec3 v(0.0f);
 	glm::vec3 up(0.0, 0.0, 1.0);
 
+	if (V_ViewMode)
+	{
+		M_MoveCamera();
+		V_CTM_View = glm::lookAt(V_Camera_Pos, V_Camera_Look, up);
+	}
+	else
+	{
+		auto look = vec3(0, 0, 2);
+		auto pos = vec3(cos(count) * 6, sin(count) * 6, 4);
+		V_CTM_View = glm::lookAt(pos, look, up);
+	}
+
 	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1.0f, 0.05f * float(V_SpeedScale), 1000.0f);
-	V_CTM_View = glm::lookAt(V_Camera_Pos, V_Camera_Look, up);
+	
 
 	//world
 	M_RenderFractal();
@@ -415,7 +406,7 @@ void CGraphics::M_Initialize2(void)
 
 	V_SM = CShaderManager::getInstance();
 
-	V_ViewMode = false;
+	V_ViewMode = true;
 	V_CurrentDrawing = false;
 
 	//V_Camera_Pos = Vec3d(-3, -3, 2.5);
