@@ -125,7 +125,7 @@ vec4 defaultmandelbrot(float a)
 
 vec4 noanti(vec2 point)
 {
-	double zoom = exp(sinnorm(t*0.05) * 20);
+	double zoom = exp(sinnorm(t*0.03) * 20);
 	dvec2 cen = dvec2(-0.7280101473, 0.1945);
 	dvec2 c = zoomto(zoom, point, cen);
 
@@ -189,8 +189,8 @@ void main()
 	float mx = (opos[0] + opos[2])/fractal1;
 	float my = (opos[2] + opos[1])/fractal1;
 
-	mx = sin(mx);
-	my = sin(my);
+	mx = sin(mx*0.5);
+	my = sin(my*0.5);
 
 	double cr = double(mx);
 	double ci = double(my);

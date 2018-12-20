@@ -33,9 +33,9 @@ void main()
 	opos = temp.xyz;
 	mpos = p.xyz * 0.01;
 
-	vpos[0] += fractal1 * 0.1*sin(sin(0.3*t) * vpos[1] + 1.8*vpos[2]);
-	vpos[1] += fractal1 * 0.1*sin(0.9 * cos(0.8*t) * vpos[2] + 1.3*vpos[0]);
-	vpos[2] += fractal1 * 0.1*sin(0.7 * cos(t) * vpos[1] + 1.5*vpos[0]);
+	vpos[0] += fractal1 * 0.15*sin(sin(0.3*t) * vpos[1] + 1.8*vpos[2]);
+	vpos[1] += fractal1 * 0.15*sin(0.9 * cos(0.8*t) * vpos[2] + 1.3*vpos[0]);
+	vpos[2] += fractal1 * 0.15*sin(0.7 * cos(t) * vpos[1] + 1.5*vpos[0]);
 
     gl_Position = projection * vpos;
 }

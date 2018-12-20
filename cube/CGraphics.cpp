@@ -357,7 +357,7 @@ void CGraphics::M_CallbackDisplay()
 		V_CTM_View = glm::lookAt(pos, look, up);
 	}
 
-	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1.0f, 0.05f * float(V_SpeedScale), 1000.0f);
+	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1920/1080.0f, 0.05f * float(V_SpeedScale), 1000.0f);
 	
 
 	//world
@@ -376,7 +376,7 @@ int CGraphics::M_Initialize(CEngine * P)
 
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
 	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(1080, 1080);
+	glutInitWindowSize(1920, 1080);
 
 	int id = glutCreateWindow("Graphics Project");
 
