@@ -42,8 +42,9 @@ bool CGraphics::M_MoveRequest(Vec3d d)
 	V_Camera_Pos += d;
 
 	T4Int C(0, 0, 0, 255);
-	if (abs(p[0]) < V_FD / V_FH && abs(p[1]) < V_FD / V_FH
-		&& p[2] > 0 && p[2] < (V_FH + V_FD * 2) / V_FH)
+
+	if (abs(p[0]) < V_FD && abs(p[1]) < V_FD 
+		&& p[2] > 0 && p[2] < (V_FH + V_FD * 2) )
 	{
 		C[0] = 255;
 		V_Camera_Pos = np;
@@ -62,7 +63,6 @@ bool CGraphics::M_MoveRequest(Vec3d d)
 
 void CGraphics::M_RenderUI(void)
 {
-
 	M_DrawNumber(Vec3d(100, 100, 0), 15, V_Count%10, T4Int(255, 255, 255, 255));
 
 
