@@ -21,8 +21,11 @@ struct KeyboardValue {
 };
 
 struct MouseValue {
-	double th;
-	double pi;
+	bool mouse_moving;
+	double prev_x;
+	double prev_y;
+	double start_time;
+	double stop_time;
 };
 
 class CGraphics : public CHandler
@@ -33,17 +36,8 @@ class CGraphics : public CHandler
 
 	T2Double V_Screen_Size;
 
-	struct KeyboardValue Key_Status[5];
-	vector<struct MouseValue> Mouse_Status;
-
-	bool mouse_moving;
-	bool display_moving;
-	double prev_th;
-	double prev_pi;
-	double start_time;
-	double stop_time;
-	double start_th;
-	double start_pi;
+	struct KeyboardValue Key_Status[6];
+	struct MouseValue Mouse_Status;
 
 	Vec3d V_Camera_Pos;
 	Vec3d V_Camera_Look;

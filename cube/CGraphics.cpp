@@ -1,22 +1,23 @@
 #include "CGraphics.h"
 
 void smoothMove(struct KeyboardValue& v, double t, double speed, double scale);
+bool doubleSame(double a, double b);
 
 
 CGraphics::CGraphics()
 {
-	mouse_moving = false;
-	prev_th = 0;
-	prev_pi = 0;
-	start_time = 0;
+	Mouse_Status.mouse_moving = false;
+	Mouse_Status.start_time = 0;
+	Mouse_Status.stop_time = 0;
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 6; i++) {
 		switch (i) {
 		case 0: Key_Status[i].key = 'a'; break;
 		case 1: Key_Status[i].key = 'd'; break;
 		case 2: Key_Status[i].key = 's'; break;
 		case 3: Key_Status[i].key = 'w'; break;
 		case 4: Key_Status[i].key = ' '; break;
+		case 5: Key_Status[i].key = GLUT_KEY_SHIFT_L; break;
 		default: break;
 		}
 		Key_Status[i].pressed = false;
@@ -83,59 +84,37 @@ void CGraphics::M_MoveCamera(void)
 	t += 0.00461;
 	
 	T2Double mouse = V_UserInput->M_MouseGet_Normalized();
+
+	double d = 0;
+
+	if (Mouse_Status.mouse_moving)
+		d = 1 - exp(log(0.5) * 5 * (Mouse_Status.stop_time - Mouse_Status.start_time));
+	else d = 1;
+
+
+//	cout << "d: " << d << endl;
+
+	mouse[0] = Mouse_Status.prev_x +  (Mouse_Status.prev_x - mouse[0]) * d;
+	mouse[1] = Mouse_Status.prev_y +  (Mouse_Status.prev_y - mouse[1]) * d;
+
 	mouse[1] = clamp(mouse[1], DTR(-80), DTR(80));
 
 	double th = mouse[0]; double pi = mouse[1] == 0 ? 0 : mouse[1] / abs(mouse[1]) * std::min(abs(mouse[1]), DTR(80.0));
-	double actual_th = th;
-	double actual_pi = pi;
 
-	/*struct MouseValue temp_ms;
-	temp_ms.th = th;
-	temp_ms.pi = pi;
-
-	Mouse_Status.push_back(temp_ms);
-	
-	if (th == prev_th && pi == prev_pi) {
-		if (mouse_moving == true) {
-			stop_time = t;
+	if (Mouse_Status.prev_x == mouse[0] && Mouse_Status.prev_y == mouse[1]) {
+		if (Mouse_Status.mouse_moving) {
+			Mouse_Status.stop_time = t;
 		}
-		mouse_moving = false;
+		Mouse_Status.mouse_moving = false;
 
-		if (display_moving) {
-			th = Mouse_Status.front().th;
-			pi = Mouse_Status.front().pi;
-
-			if (Mouse_Status.size() != 0)
-				Mouse_Status.erase(Mouse_Status.begin());
-			else
-				display_moving = false;
-		}
 	}
 	else {
-		if (mouse_moving == false && display_moving == false) {
-			start_time = t;
-			start_pi = pi;
-			start_th = th;
+		if (!Mouse_Status.mouse_moving) {
+			Mouse_Status.start_time = t;
 		}
-		mouse_moving = true;
 
-		if (t - start_time >= 0.00000000005) {
-			display_moving = true;
-			th = Mouse_Status.front().th;
-			pi = Mouse_Status.front().pi;
-
-			if (Mouse_Status.size() != 0)
-				Mouse_Status.erase(Mouse_Status.begin());
-		}
-		else {
-			if (!display_moving) {
-				th = start_th;
-				pi = start_pi;
-			}
-		}
-	}*/
-
-	//cout << "number: " << Mouse_Status.size() << endl;
+		Mouse_Status.mouse_moving = true;
+	}
 
 	V_Camera_Look = glm::vec3(cos(-th) * cos(pi), sin(-th) *cos(pi), sin(-pi));
 //	cout << "cameraLook  x: " << V_Camera_Look.x << "  y: " << V_Camera_Look.y << "  z: " << V_Camera_Look.z << endl;
@@ -185,7 +164,15 @@ void CGraphics::M_MoveCamera(void)
 		if (!M_MoveRequest(ver * (float)speed)) {
 			Key_Status[4].moving = false;
 		}
-	} 
+	}
+	if (V_UserInput->M_IfPressed(GLUT_KEY_SHIFT_L, true)) {
+		Key_Status[5].pressed = true;
+		Key_Status[5].moving = true;
+
+		if (!M_MoveRequest(-ver * (float)speed)) {
+			Key_Status[5].moving = false;
+		}
+	}
 
 	//stopped
 	if (!V_UserInput->M_IfPressed('a', false)) {
@@ -223,8 +210,17 @@ void CGraphics::M_MoveCamera(void)
 			Key_Status[4].speed = 0;
 		}
 	}
-	prev_th = actual_th;
-	prev_pi = actual_pi;
+	if (!V_UserInput->M_IfPressed(GLUT_KEY_SHIFT_L, true)) {
+		smoothMove(Key_Status[5], t, speed, V_SpeedScale);
+		if (!M_MoveRequest(-ver * (float)Key_Status[5].speed)) {
+			Key_Status[5].moving = false;
+			Key_Status[5].speed = 0;
+		}
+	}
+
+
+	Mouse_Status.prev_x = mouse[0];
+	Mouse_Status.prev_y = mouse[1];
 
 	V_Camera_Look += V_Camera_Pos;
 
@@ -601,4 +597,14 @@ void smoothMove(struct KeyboardValue& v, double t, double speed, double scale) {
 			v.speed = 0;
 		}
 	}
+}
+
+
+bool doubleSame(double a, double b) {
+	double offset = 0.000001;
+
+	if (abs(a - b) < offset)
+		return true;
+	else
+		return false;
 }
