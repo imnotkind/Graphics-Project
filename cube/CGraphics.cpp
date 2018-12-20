@@ -61,7 +61,7 @@ bool CGraphics::M_MoveRequest(Vec3d d)
 		C[2] = 255;
 		V_Count++;
 
-		V_SpeedScale = pow(V_FRatio, V_Trace.size());
+		V_SpeedScale = 1.5 * pow(V_FRatio, V_Trace.size());
 		return false;
 	}
 		
@@ -363,7 +363,7 @@ void CGraphics::M_CallbackDisplay()
 	glm::vec3 v(0.0f);
 	glm::vec3 up(0.0, 0.0, 1.0);
 
-	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 1000.0f);
+	V_CTM_Project = glm::perspective(glm::radians(45.0f), 1.0f, 0.05f * float(V_SpeedScale), 1000.0f);
 	V_CTM_View = glm::lookAt(V_Camera_Pos, V_Camera_Look, up);
 
 	//world
