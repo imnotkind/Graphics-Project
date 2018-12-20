@@ -60,10 +60,16 @@ vec4 haebincolor(float a, float b)
 	vec4 clr = color1 * 2  +  color2 * 2.5;
 	clr[3] = 1;
 
-	return clr;
+	uv.x = coord.x * coord.x;
+	uv.y = 1 - (coord.x)*(coord.x);
+	vec4 bgcolor = vec4(0,0,0,1);
+
+	if (a != 1)
+		return clr;
+	else
+		return bgcolor;
+
 }
-
-
 
 
 
@@ -103,9 +109,8 @@ vec4 test(vec2 point)
 		y = ny;
 	}
 
-	float a = float(i) / max_iter;
+	float a = float(i) / (max_iter);
 	float b = tanhnorm(float(x/(y)));
-	float d = sinnorm(float(x / y));
 
 	
 	return haebincolor(a,b);
