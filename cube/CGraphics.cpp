@@ -39,6 +39,7 @@ bool CGraphics::M_MoveRequest(Vec3d d)
 
 	p = trans * p;
 
+	V_Camera_Pos += d;
 
 }
 
@@ -321,6 +322,8 @@ void CGraphics::M_Initialize2(void)
 	V_FH = 82.5;
 
 	M_SetupHieraModels();
+
+	V_Camera_Pos[2] = 0.1;
 
 }
 
