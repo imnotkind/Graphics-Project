@@ -24,11 +24,23 @@ CGraphics::~CGraphics()
 {
 }
 
+bool CGraphics::M_MoveRequest(Vec3d d)
+{
+	glm::mat4 trans = glm::inverse(V_Fractals["basic"]->M_Trace(V_Trace));
+
+	auto np = V_Camera_Pos + d;
+	glm::vec4 p = glm::vec4(np[0], np[1], np[2], 1);
+
+	p = trans * p;
+
+
+}
+
 
 void CGraphics::M_RenderUI(void)
 {
 
-	
+	M_DrawNumber(Vec3d(100, 100, 0), 15, 5, T4Int(255, 255, 255, 255));
 
 
 }
@@ -288,11 +300,17 @@ void CGraphics::M_Initialize2(void)
 	//V_Camera_Pos = Vec3d(-3, -3, 2.5);
 	V_UserInput->M_MouseSet(T2Int(0, 0));
 
-	M_SetupHieraModels();
+	
 
 	V_FDepth = 0;
 	V_KeepLight = false;
 	V_Lights.resize(3);
+
+	V_FRatio = 35.0 / 50.0;
+	V_FD = 40;
+	V_FH = 82.5;
+
+	M_SetupHieraModels();
 
 }
 

@@ -43,6 +43,16 @@ class CGraphics : public CHandler
 	int V_FDepth;
 
 
+	double V_FRatio;
+	double V_FD;
+	double V_FH;
+
+	vector<int> V_Trace;
+	double V_SpeedScale;
+	bool M_MoveRequest(Vec3d d);
+
+
+
 	glm::mat4 V_CTM_View;
 	glm::mat4 V_CTM_Project;
 	glm::mat4 V_CTM_Temp;

@@ -59,6 +59,9 @@ void CGraphics::M_Initialize2(void)
 	V_Camera_Pos = Vec3d(0, 0, 4.5);
 	V_Camera_Look = Vec3d(0, 0, 0);
 
+	
+
+
 	V_Height = 1;
 }
 

@@ -15,9 +15,11 @@ SDrawingInfo temptemp(string s, T4Double c)
 }
 void CGraphics::M_SimplePolyFractal(void)
 {
-	float s = 35.0/50.0;
-	float h = 40;
-	float r = 82.5;
+	float s = V_FRatio;
+	float h = V_FD;
+	float r = V_FH;
+
+	
 
 	//tapering
 	auto tm = glm::mat4(1.0);
