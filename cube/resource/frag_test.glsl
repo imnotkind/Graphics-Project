@@ -11,6 +11,7 @@ in vec3 mpos;
 
 uniform vec4 vicolor;
 uniform float fractal1;
+uniform sampler2D pallete;
 
 struct SLight
 {

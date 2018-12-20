@@ -1,12 +1,11 @@
 #pragma once
 #include "CHandler.h"
-#include "readbmp.h"
 
 class CTexture
 {
 public:
-	CTexture();
+	GLuint textureID;
+	CTexture(string imagepath);
 	virtual ~CTexture();
-	void M_LoadTexture(string path);
 };
 

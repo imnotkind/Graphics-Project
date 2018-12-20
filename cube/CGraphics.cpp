@@ -236,6 +236,12 @@ void CGraphics::M_MoveCamera(void)
 
 void CGraphics::M_RenderFractal(void)
 {
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, V_SM->V_Textures["pallete"]->textureID);
+	auto k = glGetUniformLocation(V_SM->M_GetProgram(), "pallete");
+	glUniform1i(k, 0);
+
 	for (int i = -50; i <= 50; i++)
 	{
 		float x = i * 0.1;
@@ -361,8 +367,6 @@ void CGraphics::M_CallbackDisplay()
 }
 int CGraphics::M_Initialize(CEngine * P)
 {
-	CTexture t;
-	t.M_LoadTexture("resource/OBJ files/wall/normal.bmp");
 
 	V_PEngine = P;
 	V_Screen_Size = T2Double(1080, 1080);
@@ -374,7 +378,7 @@ int CGraphics::M_Initialize(CEngine * P)
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(1080, 1080);
 
-	int id = glutCreateWindow("Graphics Assn3");
+	int id = glutCreateWindow("Graphics Project");
 
 	glClearColor(1, 1, 1, 1); //background white
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
