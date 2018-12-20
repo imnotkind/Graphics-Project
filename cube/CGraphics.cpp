@@ -310,6 +310,10 @@ void CGraphics::M_RenderFractal(void)
 	
 	for (int i = 0; i < 4; i++) ri.color[i] = rgba[i] / 255.0;
 	
+
+	V_DistortScale = 0.95 * V_DistortScale + 0.05 * V_SpeedScale;
+	l = V_SM->M_GetUniformLoc("fractal1");
+	glUniform1f(l, V_DistortScale);
 	
 	V_Fractals["basic"]->M_Draw(ri, V_Trace, V_Trace.size(), V_Trace.size() + 2);
 
@@ -423,6 +427,7 @@ void CGraphics::M_Initialize2(void)
 	V_KeepLight = false;
 	V_Lights.resize(3);
 
+	V_DistortScale = 1.0;
 	V_FRatio = 35.0 / 50.0;
 	V_FH = 40;
 	V_FD = 82.5;

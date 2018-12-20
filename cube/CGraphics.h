@@ -66,6 +66,7 @@ class CGraphics : public CHandler
 
 	vector<int> V_Trace;
 	double V_SpeedScale;
+	double V_DistortScale;
 	bool M_MoveRequest(Vec3d d);
 
 

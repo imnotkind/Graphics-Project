@@ -46,6 +46,7 @@ void CFractal::M_Draw_Rec_t(glm::mat4 CTM, int depth)
 {
 	
 	if (depth > V_Front) return;
+
 	
 	SRenderInfo tri = V_RenderInfo;
 
@@ -73,6 +74,7 @@ void CFractal::M_Draw_Rec_t(glm::mat4 CTM, int depth)
 }
 void CFractal::M_Draw(const SRenderInfo& r, vector<int> trace, int back, int front)
 {
+
 	V_Trace = trace;
 	V_Back = back;
 	V_Front = front;
