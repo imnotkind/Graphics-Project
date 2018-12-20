@@ -72,7 +72,7 @@ vec4 defaultmandelbrot(float a)
 
 vec4 noanti(vec2 point)
 {
-	double zoom = exp(sinnorm(t) * 20);
+	double zoom = exp(sinnorm(t*0.5) * 20);
 	dvec2 cen = dvec2(-0.7280101473, 0.1945);
 	dvec2 c = zoomto(zoom, point, cen);
 
