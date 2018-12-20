@@ -8,9 +8,14 @@ out vec4 color;
 uniform float t;
 uniform sampler2D pallete;
 
-float mynorm(float x)
+float tanhnorm(float x)
 {
 	return 0.5 + 0.5 * tanh(x);
+}
+
+float sinnorm(float x)
+{
+	return 0.5 + 0.5 * sin(x);
 }
 
 dvec2 zoomto(double zoom, vec2 coord, dvec2 center)
@@ -40,56 +45,27 @@ vec4 junhacolor(float a, float b)
 	return clr;
 }
 
-vec4 picassocolor(float a, float b)
+vec4 haebincolor(float a, float b)
 {
 	vec2 uv;
-	uv.x = a;
-	uv.y = b;
+	uv.x = sinnorm(exp(exp(a)) * b);
+	uv.y = sinnorm(exp(exp(b)) * a);
+	vec4 color1 = texture2D(pallete, uv) * (1 - a);
 
-	vec4 clr = texture2D(pallete, uv);
+	uv.x = sinnorm(exp(exp(a)));
+	uv.y = sinnorm(exp(exp(a)));
+	vec4 color2 = texture2D(pallete, uv) * (1 - a);
+
+
+	vec4 clr = color1 + color2 ;
+	clr = clr * 0.7;
+	clr[3] = 1;
+
 	return clr;
 }
 
-vec4 goghcolor(float a, float b)
-{
-	vec2 uv;
-	uv.x = sin(a);
-	uv.y = cos(a);
 
-	vec4 clr = texture2D(pallete, uv) * b;
 
-	return clr;
-}
-
-vec4 monetcolor(float a, float b)
-{
-	vec2 uv;
-	uv.x = exp(a);
-	uv.y = exp(b);
-
-	vec4 clr = texture2D(pallete, uv);
-	return clr;
-}
-
-vec4 davincicolor(float a, float b)
-{
-	vec2 uv;
-	uv.x = exp(exp(a));
-	uv.y = exp(exp(b));
-
-	vec4 clr = texture2D(pallete, uv);
-	return clr;
-}
-
-vec4 dicapriocolor(float a, float b)
-{
-	vec2 uv;
-	uv.x = exp(exp(a)) * b;
-	uv.y = exp(exp(b)) * a;
-
-	vec4 clr = texture2D(pallete, uv);
-	return clr;
-}
 
 
 vec4 defaultmandelbrot(float a)
@@ -101,7 +77,7 @@ vec4 test(vec2 point)
 {
 	dvec2 p = dvec2(-0.7280101473, 0.1945);
 
-	double zoom = exp(sin(t)*20) + 3;
+	double zoom = exp(sinnorm(t)*20) + 3;
 	dvec2 cen = p;//dvec2(-1, 0)+ 0.3 * dvec2(cos(t*0.87), sin(t*0.87));
 	dvec2 c = zoomto(zoom, point, cen);
 
@@ -129,10 +105,11 @@ vec4 test(vec2 point)
 	}
 
 	float a = float(i) / max_iter;
-	float b = mynorm(float(x/(y+0.1)));
+	float b = tanhnorm(float(x/(y)));
+	float d = sinnorm(float(x / y));
 
 	
-	return dicapriocolor(a, b);
+	return haebincolor(a,b);
 }
 void main()
 {
