@@ -35,7 +35,7 @@ vec4 junhacolor(float a, float b)
 	vec4 color2 = texture2D(pallete, uv) * (1 - a);
 
 	uv.x = sin(a*3.1415);
-	vec4 color3 = texture2D(pallete, uv); //* (0.5* sin(t) + 0.5);
+	vec4 color3 = texture2D(pallete, uv) * (0.5* sin(t) + 0.5);
 
 
 	vec4 clr = color1 + color2 + color3;
@@ -60,40 +60,28 @@ vec4 haebincolor(float a, float b)
 	vec4 clr = color1 * 2  +  color2 * 2.5;
 	clr[3] = 1;
 
-	uv.x = coord.x * coord.x;
-	uv.y = 1 - (coord.x)*(coord.x);
-	vec4 bgcolor = vec4(0,0,0,1);
-
-	if (a != 1)
-		return clr;
-	else
-		return bgcolor;
+	return clr;
 
 }
-
-
 
 vec4 defaultmandelbrot(float a)
 {
 	vec4 clr = vec4(a, a, a, 1);
 	return clr;
 }
-vec4 test(vec2 point)
-{
-	dvec2 p = dvec2(-0.7280101473, 0.1945);
 
-	double zoom = exp(sinnorm(t)*20) + 3;
-	dvec2 cen = p;//dvec2(-1, 0)+ 0.3 * dvec2(cos(t*0.87), sin(t*0.87));
+vec4 noanti(vec2 point)
+{
+	double zoom = exp(sinnorm(t) * 20);
+	dvec2 cen = dvec2(-0.7280101473, 0.1945);
 	dvec2 c = zoomto(zoom, point, cen);
 
-	double x = c.x;//* sin(1/float(zoom-2) * 0.9);
-	double y = c.y;//* cos(1/float(zoom-2));
+	double x = c.x; // * sin(1/float(zoom + 1) * 0.9);
+	double y = c.y; // * cos(1/float(zoom + 1));
 
-	int max_iter = 150;
+	int max_iter = 200;
 
 	float max = 4;
-	float tmp;
-	float ratio = 1;
 	
 
 	int i;
@@ -115,27 +103,31 @@ vec4 test(vec2 point)
 	
 	return haebincolor(a,b);
 }
+
+vec4 anti(vec2 point)
+{
+	vec4 ant[4][4];
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+			ant[i][j] = noanti(coord + vec2(0.001*i, 0.001*j));
+
+	vec4 clr = vec4(0, 0, 0, 0);
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+			clr += ant[i][j];
+
+
+	clr = clr / 9.0;
+	return clr;
+}
+
 void main()
 {
 	//dvec2 p = dvec2(-1.48458333312, 0.0);
+	//dvec2 p = dvec2(-0.7280101473, 0.1945);
 
-	/*
-	vec4 ant[4][4];
-	for(int i = 0; i < 3; i++)
-		for(int j = 0; j < 3; j++)
-			ant[i][j] = test(coord + vec2(0.001*i, 0.001*j));
-
-	color = vec4(0,0,0,0);
-	for(int i = 0; i < 3; i++)
-		for(int j = 0; j < 3; j++)
-			color += ant[i][j];
-
-
-	color = color/9.0;
-	*/
-	color = test(coord);
 	
-
+	color = noanti(coord);
 	
 	return;
 }
