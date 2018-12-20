@@ -89,49 +89,79 @@ void CGraphics::M_MoveCamera(void)
 	if (V_UserInput->M_IfPressed('a', false)) {
 		Key_Status[0].pressed = true;
 		Key_Status[0].moving = true;
-		V_Camera_Pos += hor * (float)speed;
+		
+		if (!M_MoveRequest(hor * (float)speed)) {
+			Key_Status[0].moving = false;
+		}
 	} 
 	if (V_UserInput->M_IfPressed('d', false)) {
 		Key_Status[1].pressed = true;
 		Key_Status[1].moving = true;
-		V_Camera_Pos -= hor * (float)speed;
+
+		if (!M_MoveRequest(-hor * (float)speed)) {
+			Key_Status[1].moving = false;
+		}
 	} 
 	if (V_UserInput->M_IfPressed('s', false)) {
 		Key_Status[2].pressed = true;
 		Key_Status[2].moving = true;
-		V_Camera_Pos -= V_Camera_Look * (float)speed;
+
+		if (!M_MoveRequest(-V_Camera_Look * (float)speed)) {
+			Key_Status[2].moving = false;
+		}
 	} 
 	if (V_UserInput->M_IfPressed('w', false)) {
 		Key_Status[3].pressed = true;
 		Key_Status[3].moving = true;
-		V_Camera_Pos += V_Camera_Look * (float)speed;
+
+		if (!M_MoveRequest(V_Camera_Look * (float)speed)) {
+			Key_Status[3].moving = false;
+		}
 	}
 	if (V_UserInput->M_IfPressed(' ', false)) {
 		Key_Status[4].pressed = true;
 		Key_Status[4].moving = true;
-		V_Camera_Pos += ver * (float)speed;
+
+		if (!M_MoveRequest(ver * (float)speed)) {
+			Key_Status[4].moving = false;
+		}
 	} 
 
 	//stopped
 	if (!V_UserInput->M_IfPressed('a', false)) {
 		smoothMove(Key_Status[0], t, speed);
-		V_Camera_Pos += hor * (float)Key_Status[0].speed;
+		if (!M_MoveRequest(hor * (float)Key_Status[0].speed)) {
+			Key_Status[0].moving = false;
+			Key_Status[0].speed = 0;
+		}
 	}
 	if (!V_UserInput->M_IfPressed('d', false)) {
 		smoothMove(Key_Status[1], t, speed);
-		V_Camera_Pos -= hor * (float)Key_Status[1].speed;
+		if(!M_MoveRequest(-hor * (float)Key_Status[1].speed)) {
+			Key_Status[0].moving = false;
+			Key_Status[0].speed = 0;
+		}
 	}
 	if (!V_UserInput->M_IfPressed('s', false)) {
 		smoothMove(Key_Status[2], t, speed);
-		V_Camera_Pos -= V_Camera_Look * (float)Key_Status[2].speed;
+		if(!M_MoveRequest(-V_Camera_Look * (float)Key_Status[2].speed)) {
+			Key_Status[0].moving = false;
+			Key_Status[0].speed = 0;
+		}
 	}
 	if (!V_UserInput->M_IfPressed('w', false)) {
-		smoothMove(Key_Status[3], t, speed);	
-		V_Camera_Pos += V_Camera_Look * (float)Key_Status[3].speed;
+		smoothMove(Key_Status[3], t, speed);
+		if(!M_MoveRequest(V_Camera_Look * (float)Key_Status[3].speed)) {
+			Key_Status[0].moving = false;
+			Key_Status[0].speed = 0;
+		}
 	}
 	if (!V_UserInput->M_IfPressed(' ', false)) {
 		smoothMove(Key_Status[4], t, speed);
-		V_Camera_Pos += ver * (float)Key_Status[4].speed;
+		if(!M_MoveRequest(ver * (float)Key_Status[4].speed)) {
+			Key_Status[0].moving = false;
+			Key_Status[0].speed = 0;
+		}
 	}
 
 	//prev_pi = prev_actual_pi;
