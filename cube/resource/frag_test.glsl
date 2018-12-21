@@ -200,20 +200,9 @@ void main()
 	double y = ci * cos(t);
 
 
-	vec3 z = mandel(x, y, cr, ci);
-
-	vec4 mcolor = vicolor;
-	mcolor[0] = 0.5 + 0.5*sin(10/fractal1*(opos[0] + opos[1]));
-	mcolor[1] = 0.5 + 0.5*sin(10/fractal1*(opos[1] + opos[2]));
-	mcolor[2] = 0.5 + 0.5*sin(10/fractal1*(opos[0] + opos[2]));
-
-	mcolor = vec4(float(z[0] + 25)/(max_iter + 25), 0, 0, 1);
-	mcolor = vec4(1, 0, 0, 1);
-	mcolor[3] = 1;
-
 	vec4 amb_r = ambient;
 	color = vec4(0);
-	mcolor = noanti(vec2(cr, ci));
+	vec4 mcolor = noanti(vec2(cr, ci));
 
 	for(int i = 0; i < 3; i++)
 	{
