@@ -79,7 +79,20 @@
 
 
 \section{Ideas and Implmentation}
-\subsection{Development Enviornment}
+\subsection{Development Enviornment and Codes}
+We develop everything in C++ and OpenGL only.
+As we mentioned in proposal, utilizing shaders directly is essential for what we do.
+Thus we chose OpenGL for our development environment.
+
+If you want to know about details about our codes,
+we recommend you to read Assignment 2-4 report of Yang and Sung, because we adopt basic OpenGL structure from those.
+Here are some notable source codes.
+\begin{itemize}
+  \item void CGraphics::M\_SimplePolyFractal(void) constructs hierarchy for fractal.
+  \item void CGraphics::M\_RenderFractal(void) renders fractal.
+  \item bool CGraphics::M\_MoveRequest(Vec3d d) takes movement info and expands. (see \ref{sssec:num1}.)
+  \item `ver\_shd.glsl' and `frag\_test.glsl' are shaders for fractal.
+\end{itemize}
 \subsection{Rendering a Mandelbrot set}
 
 \begin{lstlisting}[style=CStyle]
@@ -90,24 +103,68 @@ int main(void)
 \end{lstlisting}
 \subsection{3D Geometric Fractals}
 \subsubsection{Meshes}
+\subsubsection{Hiearchy}
+Geometric fractals can be regarded as a special case of \textit{hierarchical model}.
+But, the hierarchical transfomrations are given \textit{recursively}, and each nodes have same rendering function.
+If we give two recursive hierarchical transfomrations, then the fractal will grow double for each step, because the tree will be branched twice.
+Then specify the maximum depth, and we can get a nice geometric fractal.
 
+In this project, we construct the geometric fractal with 5 recursive transformation.
+\begin{figure}[H]
+\centering
+\subfigure[5 direction of recursive transformations]
+{
+    \label{fig:subfig1}
+    \includegraphics[scale=0.2]{hier.PNG}
+}
+\subfigure[Exapnded in maximum steps of 2]
+{
+    \label{fig:subfig1}
+    \includegraphics[scale=0.2]{expand.PNG}
+}
+\caption[1]{Hierarchical model for fractal.}
+\end{figure}
+
+\subsubsection{Path Tracking}\label{sssec:num1}
 \subsection{Texture Mapping}
+Now we have to combine thos
 
 \subsection{Deformations}
 
 \subsection{Camera control}
 \subsection{Antialiasing}
+Antialiasing is one of the important process in high-quality rendering.
+For the geometric fractal, only multi-sampling is ok because it consists of just polygons.
+However the textured Mandelbrot set can't be antialiased in that way because it shows very complex structrue in \textit{pixel level}.
+Of course all pixel-level rendering doesn't have to be antialiased.
+For example, antialiasing the shading won't that helpful because it is inherently smooth.
+But Mandelbrot set is very complicatedly structured and the pixels vary greatly, so antialisaing maybe essential.
 
+Unfortunately, we concluded that the only way to perform antialiasing is by super-sampling because there's no way to infer something, but only calculating multiple times.
+Thus we tried to perform antialiasing in fragment shader by doing Mandelbrot set membership test multiple times.
+We varies testing coordinates slightly within an one pixel size for each sampling, and blend them for final output.
 
-\section{Gallery}
 \begin{figure}[H]
 \centering
-\subfigure[scene from a Youtube video(\url{https://youtu.be/S530Vwa33G0})]
+\subfigure[Mandelbrot set without antialiasing]
 {
     \label{fig:subfig1}
-    \includegraphics[scale=0.3]{cap1.PNG}
+    \includegraphics[scale=0.2]{noanti.PNG}
 }
+\subfigure[Mandelbrot set with antialiasing]
+{
+    \label{fig:subfig1}
+    \includegraphics[scale=0.2]{anti.PNG}
+}
+\caption[1]{Antialiasing comparison}
 \end{figure}
+
+\section{Gallery}
+
+
+We found that rendering quality has been improved but the rendering cost gets very expensive. (fps becomes $<20$)
+One of our goal for this project is `real time', so we just discard the antialising.
+
 \section{Discussion}
 There are some issues in this project.
 \begin{description}[style=nextline]
