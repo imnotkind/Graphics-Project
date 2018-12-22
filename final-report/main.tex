@@ -431,10 +431,15 @@ Therefore it is difficult to determine when the movement of the mouse starts or 
 Currently, we only gives interpolation to move the mouse, so it moves smoothly, but it only moves as much as the mouse did because it does not have a momentum.
 Adding a term that changes the interpolation through how much the coordinate values have changed can make movement as if it were moving like an object with momentum like keyboard movement.
 \item[Infinite Mandelbrot zoom]
-It would be nice if infinite mandelbrot zooming is possible, but we concluded that it is impossible.
+It would be nice if infinite mandelbrot zooming is possible, but we concluded that it is impossible in our knowledge.
 First, it is impossible to determine a point converges or not, because we are using an iterative algorithm.
 But there is no known method for deciding convergence without doing the iteration, so the complexity of the fractal must have a limitation (the divergence determination depends on the number of loops in the iteration).
 Second, the input coordinate has an accuracy problem because we use a floating point mechanism, and the floating point problem leads to poor accuracy in deep zoom depth.
+Of course ther would be another level of mathematical formulation that solve all those problem, but we were not able to search that easily.
+\item[Further deformation]
+Current deformation on geometric fractal is limitted. The distortion stays only in each nodes, and never inherits down to further level.
+This is because it is hard to keep camera's position consistent and check collision properly.
+If we can do some distortion on hierarchy, then the result will be even more dramatic and complex.
 \end{description}
 
 \section{Contribution}
