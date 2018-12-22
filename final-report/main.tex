@@ -79,20 +79,20 @@ Fractals are so beautiful.
 
 \section{Theoretical Backgrounds}
 \subsection{Fractal}
-A fractal is a recursive, infinitely self-reproductive geometric pattern. 
-Fractals have similar patterns at smaller scales. 
-So if we zoom into a fractal, we could experience a delicate and complex, repetitive and diverse pattern. 
-A fractal is usually defined as a mathematical equation, or a recursive equation. 
-There are some known techniques of generating a fractal; 
-One could be Escape-time fractals, and another one could be Finite subdivision rules. 
-We use each fractal of those categories in this project. 
-Escape time fractals use a formula at each point in a space to determine the pattern. 
-Finite subdivision rules use a recursive topoligical algorithm to define the pattern. 
-We use the terms pixel level fractal for the escape time fractal, and 3D geometric polygonal fractal for the finite subdivision rule. 
+A fractal is a recursive, infinitely self-reproductive geometric pattern.
+Fractals have similar patterns at smaller scales.
+So if we zoom into a fractal, we could experience a delicate and complex, repetitive and diverse pattern.
+A fractal is usually defined as a mathematical equation, or a recursive equation.
+There are some known techniques of generating a fractal;
+One could be Escape-time fractals, and another one could be Finite subdivision rules.
+We use each fractal of those categories in this project.
+Escape time fractals use a formula at each point in a space to determine the pattern.
+Finite subdivision rules use a recursive topoligical algorithm to define the pattern.
+We use the terms pixel level fractal for the escape time fractal, and 3D geometric polygonal fractal for the finite subdivision rule.
 \subsection{Mandelbrot Set}
-The mandelbrot set is an example of escape time fractals. 
-It is defined as whether a function $f_c(z) = z^2 + c$ diverges or not if the point is $c$ and it is iterated from $z = 0$. 
-It is useless to Mandelbrot set images may be created by sampling the complex numbers and testing, for each sample point c, whether the sequence goes to infinity. 
+The mandelbrot set is an example of escape time fractals.
+It is defined as whether a function $f_c(z) = z^2 + c$ diverges or not if the point is $c$ and it is iterated from $z = 0$.
+It is useless to Mandelbrot set images may be created by sampling the complex numbers and testing, for each sample point c, whether the sequence goes to infinity.
 Images of the Mandelbrot set exhibit an elaborate and infinitely complicated boundary that reveals progressively ever-finer recursive detail at increasing magnifications.
 
 \section{Task}
@@ -359,8 +359,11 @@ Unlike movements using a keyboard, mouse movement is a way to obtain the coordin
 Therefore, it is difficult to calculate momentum.
 Currently, we only gives interpolation to move the mouse, so it moves smoothly, but it only moves as much as the mouse did because it does not have a momentum.
 Adding a term that changes the interpolation through how much the coordinate values have changed can make movement as if it were moving like an object with momentum like keyboard movement.
-\item[hihi?]
-byebye
+
+\item[Further deformation]
+Current deformation on geometric fractal is limitted. The distortion stays only in each nodes, and never inherits down to further level.
+This is because it is hard to keep camera's position consistent and check collision properly.
+If we can do some distortion on hierarchy, then the result will be even more dramatic and complex.
 \end{description}
 
 \begin{thebibliography}{1}
