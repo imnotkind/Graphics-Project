@@ -32,13 +32,15 @@ CGraphics::~CGraphics()
 
 bool CGraphics::M_MoveRequest(Vec3d d)
 {
+	
+
 	glm::mat4 trans = glm::inverse(V_Fractals["basic"]->M_Trace(V_Trace));
 
 	auto np = V_Camera_Pos + d;
 	glm::vec4 p = glm::vec4(np[0], np[1], np[2], 1);
 
 	p = trans * p;
-
+	if (V_Trace.empty() && p[2] <= 0) return false;
 	V_Camera_Pos += d;
 
 	T4Int C(0, 0, 0, 255);
