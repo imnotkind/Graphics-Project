@@ -342,6 +342,11 @@ One of our goal for this project is `real time', so we just discard the antialis
 \section{Discussion}
 There are some issues in this project.
 \begin{description}[style=nextline]
+\item[Smooth Camera Movement]
+Unlike movements using a keyboard, mouse movement is a way to obtain the coordinates of the mouse whenever a function is called, rather than pressing button, so it is difficult to determine when the movement of the mouse starts or stops.
+Therefore, it is difficult to calculate momentum.
+Currently, we only gives interpolation to move the mouse, so it moves smoothly, but it only moves as much as the mouse did because it does not have a momentum.
+Adding a term that changes the interpolation through how much the coordinate values have changed can make movement as if it were moving like an object with momentum like keyboard movement.
 \item[hihi?]
 byebye
 \end{description}
