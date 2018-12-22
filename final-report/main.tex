@@ -6,7 +6,7 @@
 \usepackage[T1]{fontenc}
 
 %% Sets page size and margins
-\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,marginparwidth=1.75cm]{geometry}
 
 %% Useful packages
 \usepackage{amsmath}
@@ -26,6 +26,8 @@
 
 \usepackage{xcolor}
 \usepackage{indentfirst}
+
+\linespread{1.1}
 
 \definecolor{mGreen}{rgb}{0,0.6,0}
 \definecolor{mGray}{rgb}{0.5,0.5,0.5}
@@ -108,7 +110,6 @@ Geometric fractals can be regarded as a special case of \textit{hierarchical mod
 But, the hierarchical transfomrations are given \textit{recursively}, and each nodes have same rendering function.
 If we give two recursive hierarchical transfomrations, then the fractal will grow double for each step, because the tree will be branched twice.
 Then specify the maximum depth, and we can get a nice geometric fractal.
-
 In this project, we construct the geometric fractal with 5 recursive transformation.
 \begin{figure}[H]
 \centering
@@ -126,8 +127,48 @@ In this project, we construct the geometric fractal with 5 recursive transformat
 \end{figure}
 
 \subsubsection{Path Tracking}\label{sssec:num1}
+To `wander' into the fractal world, that geometric fractal should be somewhat `surrounding' environment for viewer.
+That means the camera will move \textit{inside} the fractal, and the should able to explore deeply.
+This going-through must be availiable infinitely, and this is a problem.
+
+If we simply expand fractal in more depth, the program will die soon. (remember that the nodes grow exponentially.)
+Even 10 steps require $5^{10}=9,765,6254$ nodes in the scene.
+Thus we should render only relevant nodes according to current position of camera.
+The idea here is to keep track of recursion path of current node.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{tree.png}
+\caption[q]{Recursive hierarchy tree. Note that the branches are reduced in 2 steps for simplicity.}
+\label{fig:tree}
+\end{figure}
+
+If the program keep track of the path which the camera had moved along, then we know exactly where we are in big tree of hierarchy.
+Then, the rendering pipeline can choose \textit{relevant} nodes to camera, and can partially render them.
+For example, in \ref{marker}, those nodes in the green line will be chosen to be rendered.
+
+To track the path(or trace), we should check every single movement of camera.
+If the camera goes outside of current node, then see the direction(one of 5) and push it on path stack.
+\begin{enumerate}
+  \item Accumulate all recursive transformation using the path.
+  \item Get the transformation M.
+  \item Take inverse of M and multiply on my position to take everything into node(model) space.
+  \item Perform a collision detection for each 6 sides of node.
+  \item Find out the branch of recursion and stack on my path.
+\end{enumerate}
+
+
 \subsection{Texture Mapping}
-Now we have to combine thos
+Now we have to combine those seemingly independent two fractals (Mandelbrot and geometric).
+Again, our approach is `fractal on fractal' and key idea is take Mandelbrot set as a `texture' for the polygons, the geometric fractal.
+
+
+
+\subsection{Shading}
+Shading is important for viewer to percept spatial structure even in non realistic fractal world.
+It could be confusing to wander 6-sided chambers freely in 3D dimension.
+So we applied basic shading (diffuse, specular ...) on polygons.
+Assignment4 was helpful for this.
 
 \subsection{Deformations}
 
