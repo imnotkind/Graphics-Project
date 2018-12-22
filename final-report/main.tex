@@ -70,17 +70,27 @@
 
 \end{abstract}
 \section{Motivation}
+Fractals are so beautiful
 
 \section{Theoretical Backgrounds}
 \subsection{Fractal}
 \subsection{Mandelbrot Set}
 
 \section{Task}
-\subsection{Overall Structure}
-\subsection{Tasks}
+Again, we're goal is to implement a program that present real-time rendering of 3D fractal world with interaction.
+There are some fractals which are pixel-level but also in 3D space.
+One of example is `Mandelbulb', which is kind of generalization of Mandelbrot set onto 3D coordinates.
+That kind of fractals of course can yield beautiful 3D fractal world, however very exepensive because it is basically voxel calculation.
+
+Instead, we take our approach as `fractal on fractal'.
+That means \textbf{Mandelbrot set, the pixel level fractal is textured on 3D geometric polygonal fractal}.
+By doing this, we can get nice 3D fractal world with relatively reasonable cost.
+To give impression of `wandering in the fractal world', the camera will stay \textit{inside} the geometric fractal, whereas the Mandelbrot set is covered on that.
+There are many issues with doing this, and we solve them one by one with our own ideas. (will be explained in \ref{sec:2})
+Our goal is to design well-structured rendering pipeline and to implement all required process into real executable program.
 
 
-\section{Ideas and Implmentation}
+\section{Ideas and Implmentation}\label{sec:2}
 \subsection{Development Enviornment and Codes}
 We develop everything in C++ and OpenGL only.
 As we mentioned in proposal, utilizing shaders directly is essential for what we do.
@@ -281,12 +291,16 @@ We varies testing coordinates slightly within an one pixel size for each samplin
 }
 \caption[1]{Antialiasing comparison}
 \end{figure}
+We found that rendering quality has been improved but the rendering cost gets very expensive. (fps becomes $<20$)
+One of our goal for this project is `real time', so we just discard the antialising.
+
+\section{Program}
+
 
 \section{Gallery}
 
 
-We found that rendering quality has been improved but the rendering cost gets very expensive. (fps becomes $<20$)
-One of our goal for this project is `real time', so we just discard the antialising.
+
 
 \section{Discussion}
 There are some issues in this project.
