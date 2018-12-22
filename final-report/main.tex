@@ -79,21 +79,30 @@ Fractals are so beautiful.
 
 \section{Theoretical Backgrounds}
 \subsection{Fractal}
-A fractal is a recursive, infinitely self-reproductive geometric pattern.
-Fractals have similar patterns at smaller scales.
-So if we zoom into a fractal, we could experience a delicate and complex, repetitive and diverse pattern.
-A fractal is usually defined as a mathematical equation, or a recursive equation.
-There are some known techniques of generating a fractal;
-One could be Escape-time fractals, and another one could be Finite subdivision rules.
-We use each fractal of those categories in this project.
-Escape time fractals use a formula at each point in a space to determine the pattern.
-Finite subdivision rules use a recursive topoligical algorithm to define the pattern.
-We use the terms pixel level fractal for the escape time fractal, and 3D geometric polygonal fractal for the finite subdivision rule.
+A fractal is a recursive, infinitely self-reproductive geometric pattern. 
+Fractals have similar patterns at smaller scales. 
+So if we zoom into a fractal, we could experience a delicate, complex, repetitive, and varying pattern. 
+A fractal is usually defined as a mathematical recursive equation. 
+There are some known techniques of generating a fractal; 
+The types that we used are Escape-time fractals and Finite subdivision rules. 
+Escape time fractals use a formula at each point in a space to determine the pattern. 
+Finite subdivision rules use a recursive topological algorithm to define the pattern. 
+We use the terms \textit{pixel level fractal} for the escape time fractal, and \textit{geometric polygonal fractal} for the finite subdivision rule in this report. 
 \subsection{Mandelbrot Set}
-The mandelbrot set is an example of escape time fractals.
-It is defined as whether a function $f_c(z) = z^2 + c$ diverges or not if the point is $c$ and it is iterated from $z = 0$.
-It is useless to Mandelbrot set images may be created by sampling the complex numbers and testing, for each sample point c, whether the sequence goes to infinity.
-Images of the Mandelbrot set exhibit an elaborate and infinitely complicated boundary that reveals progressively ever-finer recursive detail at increasing magnifications.
+The mandelbrot set is an example of escape time fractals. 
+It is defined as whether a function $f_c(z) = z^2 + c$ diverges or not if the point is $c$ in a complex plane, while the function is iterated from $z = 0$. 
+If it the value remains bounded, then it is part of a mandelbrot set.
+It is hard to check if it diverges or not in reality, so we just take an approximative method; iterate the function for a certain number of loops, and check if it has an L2-norm value bigger than 2. 
+But this iteration causes some bottleneck if the iteration count gets higher, so we have a limitation on the complexity of the Mandelbrot.
+The definition of mandelbrot set is just a set with only binary information, so we often make use of additional metrics to gather some additional visual information.
+\begin{figure}[H]
+\centering
+\subfigure[Mandelbrot set]
+{
+    \label{fig:subfig1}
+    \includegraphics[scale=0.3]{mandel.jpg}
+}
+\end{figure}
 
 \section{Task}
 Again, we're goal is to implement a program that present real-time rendering of 3D fractal world with interaction.
@@ -110,7 +119,7 @@ Our goal is to design well-structured rendering pipeline and to implement all re
 
 
 \section{Ideas and Implmentation}\label{sec:2}
-\subsection{Development Enviornment and Codes}
+\subsection{Development Environment and Codes}
 We develop everything in C++ and OpenGL only.
 As we mentioned in proposal, utilizing shaders directly is essential for what we do.
 Thus we chose OpenGL for our development environment.
@@ -125,13 +134,67 @@ Here are some notable source codes.
   \item `ver\_shd.glsl' and `frag\_test.glsl' are shaders for fractal.
 \end{itemize}
 \subsection{Rendering a Mandelbrot set}
-
+As stated in the above, the mandelbrot set itself is just binary classification; whether it is in the mandelbrot set or not.
+For better visualization rather than two colors, we gather some information derived from the mandelbrot iteration.
+The first information we gathered is the amount of iterations when the non-mandelbrot set point has diverged (got bigger than our threshold).
+The second information is the ratio of real value and imaginative value of $f_c(z)$ when the iteration ended.
+Using these metrics, we generated a colorful and beautiful visualization of Mandebrot set.
+We also chose an adequate coordinate to zoom up the fractal, and this constant zooming up and down is the final texture we are going to use in the 3d polygon fractal.
+When we zoomed the fractal, we did not manipulate the camera position in OpenGL, because we needed to integrate this mandelbrot into texture of the polygon fractal. 
+Instead, we used a zooming mechanism solely in the shader, an that is what we call camera seperation (geometric and pixel).
 \begin{lstlisting}[style=CStyle]
-int main(void)
+//fragment shader code
+
+//mandelbrot set iteration
+int i;
+for(i = 0; i < max_iter; i++)
 {
-  printf("If you want to paste code here then do this way");
+  double nx = x*x-y*y + c.x;
+  double ny = 2*x*y + c.y;
+
+  if (nx*nx + ny * ny > max)
+    break;
+
+  x = nx;
+  y = ny;
 }
+
+//additional metrics for visualization
+float a = float(i) / (max_iter);
+float b = tanhnorm(float(x/(y)));
+
+//combine metrics with texture to create pattern
+vec2 uv;
+uv.x = sinnorm(exp(exp(a)) * b);
+uv.y = sinnorm(exp(exp(b)) * a);
+vec4 color1 = texture2D(pallete, uv) * (1 - a) * a * b;
+
+uv.x = sinnorm(exp(exp(a)));
+uv.y = sinnorm(exp(exp(a)));
+vec4 color2 = texture2D(pallete, uv) * (1 - a) * a;
+
+
+vec4 clr = color1 * 2  +  color2 * 2.5;
+clr[3] = 1;
+color = clr;
 \end{lstlisting}
+\begin{figure}[H]
+\centering
+\subfigure[Texture Pallete for Mandelbrot Visualization]
+{
+    \label{fig:subfig1}
+    \includegraphics[scale=0.3]{pallete.png}
+}
+\end{figure}
+\begin{figure}[H]
+\centering
+\subfigure[Result of Mandelbrot Visualization]
+{
+    \label{fig:subfig1}
+    \includegraphics[scale=0.5]{beauty.png}
+}
+\end{figure}
+
 \subsection{3D Geometric Fractals}
 \subsubsection{Meshes}
 We have two basic meshs to implement geometric fractals.
@@ -359,11 +422,11 @@ Unlike movements using a keyboard, mouse movement is a way to obtain the coordin
 Therefore, it is difficult to calculate momentum.
 Currently, we only gives interpolation to move the mouse, so it moves smoothly, but it only moves as much as the mouse did because it does not have a momentum.
 Adding a term that changes the interpolation through how much the coordinate values have changed can make movement as if it were moving like an object with momentum like keyboard movement.
-
-\item[Further deformation]
-Current deformation on geometric fractal is limitted. The distortion stays only in each nodes, and never inherits down to further level.
-This is because it is hard to keep camera's position consistent and check collision properly.
-If we can do some distortion on hierarchy, then the result will be even more dramatic and complex.
+\item[Infinite Mandelbrot zoom]
+It would be nice if infinite mandelbrot zooming is possible, but we concluded that it is impossible. 
+First, it is impossible to determine a point converges or not, because we are using an iterative algorithm. 
+But there is no known method for deciding convergence without doing the iteration, so the complexity of the fractal must have a limitation (the divergence determination depends on the number of loops in the iteration). 
+Second, the input coordinate has an accuracy problem because we use a floating point mechanism, and the floating point problem leads to poor accuracy in deep zoom depth. 
 \end{description}
 
 \begin{thebibliography}{1}
