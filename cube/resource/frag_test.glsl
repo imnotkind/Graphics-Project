@@ -192,7 +192,7 @@ void main()
 	mx = sin(mx*0.5);
 	my = sin(my*0.5);
 
-	double cr = double(mx);
+	double cr = double(mx) - 0.2;
 	double ci = double(my);
 
 
@@ -202,7 +202,7 @@ void main()
 
 	vec4 amb_r = ambient;
 	color = vec4(0);
-	vec4 mcolor = vec4(1 ,0, 0, 1); // noanti(vec2(cr, ci));
+	vec4 mcolor = noanti(vec2(cr, ci));
 
 	for(int i = 0; i < 3; i++)
 	{
