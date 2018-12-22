@@ -105,8 +105,9 @@ int main(void)
 \end{lstlisting}
 \subsection{3D Geometric Fractals}
 \subsubsection{Meshes}
-We have two basic meshs to implement geometric fractals. One is sphere with 6 holes, another is wormhole to connect between spheres. Because we have to connect to meshes smoothly, we construct wormhole with splines covering sphere using Loft NURBS in MAXON Cinema 4D, and apply subdivision surface.
-
+We have two basic meshs to implement geometric fractals.
+One is sphere with 6 holes, another is wormhole to connect between spheres
+Because we have to connect to meshes smoothly, we construct wormhole with splines covering sphere using Loft NURBS in MAXON Cinema 4D, and apply subdivision surface.
 Mesh with one sphere and one wormhole is one node in hierachical structure, and basic unit of expansion.
 \begin{figure}[H]
 \centering
@@ -191,12 +192,16 @@ Assignment4 was helpful for this.
 \subsection{Deformations}
 
 \subsection{Camera control}
-We have two methods moving camera. One is with keyborad input, another is with mouse moving. When we give keyboard input, camera moves to 6 direction without rotation. When we give mouse moving, camera rotates. To implement advanced camera, that is, to implement smooth movement when we give input, we introduced time variation to movement.
+We have two methods moving camera.
+One is with keyborad input, another is with mouse moving.
+When we give keyboard input, camera moves to 6 direction without rotation.
+When we give mouse moving, camera rotates.
+To implement advanced camera, that is, to implement smooth movement when we give input, we introduced time variation to movement.
 \begin{itemize}
   \item void CGraphics::M\_MoveCamera(void) moves camera with smooth motion.
 \end{itemize}
-
-In case of keyboard, we just give acceleration when camera starts and stops moving. In case of mouse, we interpolated mouse position with logarithmic term that depends on time.
+In case of keyboard, we just give acceleration when camera starts and stops moving.
+In case of mouse, we interpolated mouse position with logarithmic term that depends on time.
 
 \subsection{Antialiasing}
 Antialiasing is one of the important process in high-quality rendering.
