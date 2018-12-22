@@ -125,7 +125,7 @@ Mesh with one sphere and one wormhole is one node in hierachical structure, and 
 \end{figure}
 
 \subsubsection{Hiearchy}
-Geometric fractals can be regarded as a special case of \textit{hierarchical model}.
+Geometric fractals can be regarded as a special case of hierarchical model.
 But, the hierarchical transfomrations are given \textit{recursively}, and each nodes have same rendering function.
 If we give two recursive hierarchical transfomrations, then the fractal will grow double for each step, because the tree will be branched twice.
 Then specify the maximum depth, and we can get a nice geometric fractal.
@@ -164,7 +164,7 @@ The idea here is to keep track of recursion path of current node.
 
 If the program keep track of the path which the camera had moved along, then we know exactly where we are in big tree of hierarchy.
 Then, the rendering pipeline can choose \textit{relevant} nodes to camera, and can partially render them.
-For example, in \ref{marker}, those nodes in the green line will be chosen to be rendered.
+For example, in figure \ref{fig:tree}, those nodes in the green line will be chosen to be rendered.
 
 To track the path(or trace), we should check every single movement of camera.
 If the camera goes outside of current node, then see the direction(one of 5) and push it on path stack.
@@ -176,13 +176,47 @@ If the camera goes outside of current node, then see the direction(one of 5) and
   \item Find out the branch of recursion and stack on my path.
 \end{enumerate}
 
+\begin{figure}[H]
+\centering
+\subfigure[Partial rendering by path tracking. Note that this viewing is from another camera, and real camera is now inside the polygon.]
+{
+    \label{fig:subfig1}
+    \includegraphics[scale=0.5]{path1.PNG}
+}
+\subfigure[From another view.]
+{
+    \label{fig:subfig1}
+    \includegraphics[scale=0.5]{path2.PNG}
+}
+\caption[1]{Path tracking is now on.}
+\end{figure}
 
 \subsection{Texture Mapping}
 Now we have to combine those seemingly independent two fractals (Mandelbrot and geometric).
 Again, our approach is `fractal on fractal' and key idea is take Mandelbrot set as a `texture' for the polygons, the geometric fractal.
+The texture coordinate from polygon will be used as coordinate in Mandelbrot set,
+Note that the program keep two camera, one for Mandelbrot set and one for 3D world(with geometric fractal).
+Then it will be like that Mandelbrot set is traversed with some movement, while being projected on fractalistic polygons.
 
+We tried to assign pre-determined texture coordinates on mesh itself,
+but it was very difficult to match continuity between wormhole and sphere. (Remeber there are 8 holes and all should be synchronized)
+Instead, we just dynamically assign texture coordinate via simple mathematical formulation.
 
+For this, two things musd be considered very carefully.
+\begin{itemize}
+  \item Texture coordinates should be continuous everwhere.
+  \item Mandelbrot set lies on limited space, somewhere around (-1, 1).
+\end{itemize}
 
+Keeping texture coordinate continous can be achieved by using vertices' world coordinate, because they are also continous in world.
+Of course the 3D coordinates should be transformed into 2D one, so we combined them linearly.
+And for the domain (-1, 1), we just take sin of cooridnates.
+
+\begin{align*}
+T_x&=sin(F(P_x+P_y))\\
+T_y&=sin(F(P_y+P_z))
+\end{align*}
+Here $T$ is texture coordinate, $P$ is world coordinate, and $F$ is coefficient about fractal scale.
 \subsection{Shading}
 Shading is important for viewer to percept spatial structure even in non realistic fractal world.
 It could be confusing to wander 6-sided chambers freely in 3D dimension.
@@ -190,6 +224,22 @@ So we applied basic shading (diffuse, specular ...) on polygons.
 Assignment4 was helpful for this.
 
 \subsection{Deformations}
+We apply realtime deformation on geometric fractal, to get some interesting spatial effect.
+We can easily impose some distortion on vertices in vertex shader, with time variable $t$ and sin.
+The problem is keeping both C0 continuity and C1 continuity on the sphere and wormhole.
+That's because we always put them together but they are separated meshes in program, for further flexible reconstruction of geometry.
+C0 continuity is easy because it's not a problem if we can apply same transformation on joint.
+
+C1 continuity, or smoothness is hard to achieve, so we just rather make `illusion' of smoothness.
+The idea is \textit{not} transforming normal vectors together.
+Since we already created the meshes with smooth normal vectors, if we transform only positions, then the smoothness via shading will be preserved.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{smooth.png}
+\caption[q]{If we take green arrows (not transformed normal vectors) the normals are smooth although actual curve is not smooth.}
+\label{fig:tree}
+\end{figure}
 
 \subsection{Camera control}
 We have two methods moving camera.
