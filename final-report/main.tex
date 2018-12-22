@@ -75,30 +75,35 @@ And finally we've succeeded on implementing actual program with OpenGL.
 \end{abstract}
 \section{Motivation}
 Fractals are so beautiful.
-Their structures are so delicate and
+Their structures are so delicate and impressive, with very simple mathematical underlying principle.
+Just watching fractal growing is enough to bring inner peace to you.
+For example in Youtube, tons of video just rendering fractals earn million views.
 
-This program is definetly not a game, nor a solution to a mathematical problem.
-It just renders fractals
+We thought that developing a realtime interactive 3D fractal renderer would be awesome,
+because it'll be fun to design our own fractal, and meaningful to share our experience of fractals to others.
+This program is definetly not a game, nor a solution to a certain mathematical problem.
+We'll just say that our project is a `visual experience' of the fractals.
+It would be for fun, for education, for some artistic production, or even for Youtube!
 
-We thought that rendering 
-
+Another aim of this project is to practice various concepts covered in lecture and get more skillful in computer graphics.
+We've tried adopt basic principles of computer graphics as many as possible(OpenGL, shaders, shading, modeling, deformation, texture, hierarchy, antialiasing, animation..)
 
 \section{Theoretical Backgrounds}
 \subsection{Fractal}
-A fractal is a recursive, infinitely self-reproductive geometric pattern. 
-Fractals have similar patterns at smaller scales. 
-So if we zoom into a fractal, we could experience a delicate, complex, repetitive, and varying pattern. 
-A fractal is usually defined as a mathematical recursive equation. 
-There are some known techniques of generating a fractal; 
-The types that we used are Escape-time fractals and Finite subdivision rules. 
-Escape time fractals use a formula at each point in a space to determine the pattern. 
-Finite subdivision rules use a recursive topological algorithm to define the pattern. 
-We use the terms \textit{pixel level fractal} for the escape time fractal, and \textit{geometric polygonal fractal} for the finite subdivision rule in this report. 
+A fractal is a recursive, infinitely self-reproductive geometric pattern.
+Fractals have similar patterns at smaller scales.
+So if we zoom into a fractal, we could experience a delicate, complex, repetitive, and varying pattern.
+A fractal is usually defined as a mathematical recursive equation.
+There are some known techniques of generating a fractal;
+The types that we used are Escape-time fractals and Finite subdivision rules.
+Escape time fractals use a formula at each point in a space to determine the pattern.
+Finite subdivision rules use a recursive topological algorithm to define the pattern.
+We use the terms \textit{pixel level fractal} for the escape time fractal, and \textit{geometric polygonal fractal} for the finite subdivision rule in this report.
 \subsection{Mandelbrot Set}
-The mandelbrot set is an example of escape time fractals. 
-It is defined as whether a function $f_c(z) = z^2 + c$ diverges or not if the point is $c$ in a complex plane, while the function is iterated from $z = 0$. 
+The mandelbrot set is an example of escape time fractals.
+It is defined as whether a function $f_c(z) = z^2 + c$ diverges or not if the point is $c$ in a complex plane, while the function is iterated from $z = 0$.
 If it the value remains bounded, then it is part of a mandelbrot set.
-It is hard to check if it diverges or not in reality, so we just take an approximative method; iterate the function for a certain number of loops, and check if it has an L2-norm value bigger than 2. 
+It is hard to check if it diverges or not in reality, so we just take an approximative method; iterate the function for a certain number of loops, and check if it has an L2-norm value bigger than 2.
 But this iteration causes some bottleneck if the iteration count gets higher, so we have a limitation on the complexity of the Mandelbrot.
 The definition of mandelbrot set is just a set with only binary information, so we often make use of additional metrics to gather some additional visual information.
 \begin{figure}[H]
@@ -146,7 +151,7 @@ The first information we gathered is the amount of iterations when the non-mande
 The second information is the ratio of real value and imaginative value of $f_c(z)$ when the iteration ended.
 Using these metrics, we generated a colorful and beautiful visualization of Mandebrot set.
 We also chose an adequate coordinate to zoom up the fractal, and this constant zooming up and down is the final texture we are going to use in the 3d polygon fractal.
-When we zoomed the fractal, we did not manipulate the camera position in OpenGL, because we needed to integrate this mandelbrot into texture of the polygon fractal. 
+When we zoomed the fractal, we did not manipulate the camera position in OpenGL, because we needed to integrate this mandelbrot into texture of the polygon fractal.
 Instead, we used a zooming mechanism solely in the shader, an that is what we call camera seperation (geometric and pixel).
 \begin{lstlisting}[style=CStyle]
 //fragment shader code
@@ -191,9 +196,6 @@ color = clr;
     \label{fig:subfig1}
     \includegraphics[scale=0.3]{pallete.png}
 }
-\end{figure}
-\begin{figure}[H]
-\centering
 \subfigure[Result of Mandelbrot Visualization]
 {
     \label{fig:subfig1}
@@ -429,10 +431,10 @@ Therefore it is difficult to determine when the movement of the mouse starts or 
 Currently, we only gives interpolation to move the mouse, so it moves smoothly, but it only moves as much as the mouse did because it does not have a momentum.
 Adding a term that changes the interpolation through how much the coordinate values have changed can make movement as if it were moving like an object with momentum like keyboard movement.
 \item[Infinite Mandelbrot zoom]
-It would be nice if infinite mandelbrot zooming is possible, but we concluded that it is impossible. 
-First, it is impossible to determine a point converges or not, because we are using an iterative algorithm. 
-But there is no known method for deciding convergence without doing the iteration, so the complexity of the fractal must have a limitation (the divergence determination depends on the number of loops in the iteration). 
-Second, the input coordinate has an accuracy problem because we use a floating point mechanism, and the floating point problem leads to poor accuracy in deep zoom depth. 
+It would be nice if infinite mandelbrot zooming is possible, but we concluded that it is impossible.
+First, it is impossible to determine a point converges or not, because we are using an iterative algorithm.
+But there is no known method for deciding convergence without doing the iteration, so the complexity of the fractal must have a limitation (the divergence determination depends on the number of loops in the iteration).
+Second, the input coordinate has an accuracy problem because we use a floating point mechanism, and the floating point problem leads to poor accuracy in deep zoom depth.
 \end{description}
 
 \section{Contribution}
