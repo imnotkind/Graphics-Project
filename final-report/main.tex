@@ -196,7 +196,9 @@ We have two methods moving camera.
 One is with keyborad input, another is with mouse moving.
 When we give keyboard input, camera moves to 6 direction without rotation.
 When we give mouse moving, camera rotates.
-To implement advanced camera, that is, to implement smooth movement when we give input, we introduced time variation to movement.
+These are very basic camera movement, so we want more cinematic movement.
+Basic camera model gives us jerky movement, that is, it responses immediately and honestly like normal FPS game when we give input.
+But we want more smooth movement, we introduced momentum and time variation to movement.
 \begin{itemize}
   \item void CGraphics::M\_MoveCamera(void) moves camera with smooth motion.
 \end{itemize}
