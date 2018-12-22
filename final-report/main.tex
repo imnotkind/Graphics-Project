@@ -75,6 +75,12 @@ And finally we've succeeded on implementing actual program with OpenGL.
 \end{abstract}
 \section{Motivation}
 Fractals are so beautiful.
+Their structures are so delicate and
+
+This program is definetly not a game, nor a solution to a mathematical problem.
+It just renders fractals
+
+We thought that rendering 
 
 
 \section{Theoretical Backgrounds}
@@ -273,7 +279,7 @@ Since we already created the meshes with smooth normal vectors, if we transform 
 \subsection{Camera control}
 We have two methods moving camera.
 One is with keyborad input, another is with mouse moving.
-When we give keyboard input, camera moves to 6 direction without rotation.
+When we give keyboard input, camera moves to 6 direction without rotation. (wasd, space bar and shift)
 When we give mouse moving, camera rotates.
 These are very basic camera movement, so we want more cinematic movement.
 Basic camera model gives us jerky movement, that is, it responses immediately and honestly like normal FPS game when we give input.
@@ -352,11 +358,11 @@ One of our goal for this project is `real time', so we just discard the antialis
 
 
 \section{Discussion}
-There are some issues in this project.
+There are some issues in this project to develop further.
 \begin{description}[style=nextline]
 \item[Smooth Camera Movement]
-Unlike movements using a keyboard, mouse movement is a way to obtain the coordinates of the mouse whenever a function is called, rather than pressing button, so it is difficult to determine when the movement of the mouse starts or stops.
-Therefore, it is difficult to calculate momentum.
+Unlike movements using a keyboard, mouse movement is calculated whenever a call-back function is called, rather than pressing a button.
+Therefore it is difficult to determine when the movement of the mouse starts or stops, and so is the momentum.
 Currently, we only gives interpolation to move the mouse, so it moves smoothly, but it only moves as much as the mouse did because it does not have a momentum.
 Adding a term that changes the interpolation through how much the coordinate values have changed can make movement as if it were moving like an object with momentum like keyboard movement.
 
@@ -364,6 +370,16 @@ Adding a term that changes the interpolation through how much the coordinate val
 Current deformation on geometric fractal is limitted. The distortion stays only in each nodes, and never inherits down to further level.
 This is because it is hard to keep camera's position consistent and check collision properly.
 If we can do some distortion on hierarchy, then the result will be even more dramatic and complex.
+\end{description}
+
+\section{Contribution}
+\begin{description}[style=nextline]
+\item[Yang Junha]
+Team leader, Overall design, Geometric fractal, Deformation, Texture mapping, Antialiasing, and Path tracking.
+\item[Ryu Sangwoo]
+3D Meshes, Camera movement, Video export and editing.
+\item[Sung Haebin]
+Mandelbrot set visualization, obj and Texture loading.
 \end{description}
 
 \begin{thebibliography}{1}
