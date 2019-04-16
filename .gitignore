@@ -5,7 +5,6 @@
 *.fls
 *.log
 *.out
-*.pdf
 *.gz
 
 # from any subdir, matching this name
